@@ -1,0 +1,32 @@
+# Lain Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.8] - 2017-04-03
+- Minor bug fixes
+
+## [1.7] - 2017-02-17
+- Added random password generator
+
+## [1.6] - 2017-02-03
+- Cosmetic changes
+
+## [1.5] - 2016-12-14
+- Addressed various issues
+
+## [1.4] - 2016-12-12
+- Added backup/restore profile and accounts
+
+## [1.3] - 2016-12-05
+- Minor bug fixes
+
+## [1.2] - 2016-11-27
+- Major bug fixes
+
+## [1.1] - 2016-11-25
+- Added automatic lock option
+- Added start with Windows option
+- Security improvements
+
+## [1.0] - 2016-11-24
+- Initial release
