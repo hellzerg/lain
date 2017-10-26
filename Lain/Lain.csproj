@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="Required.cs" />
     <Compile Include="ToolStripRendererMaterial.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="WizardForm.cs">
       <SubType>Form</SubType>
     </Compile>

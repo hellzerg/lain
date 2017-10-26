@@ -9,11 +9,11 @@ using System.Security;
 
 namespace Lain
 {
-    public class CryLain
+    internal class CryLain
     {
-        const string Salt = "e3080105715443ef14ef2a09be11fa9d";
+        const string _salt = "e3080105715443ef14ef2a09be11fa9d";
 
-        public static string GenerateRandomPassword(int length)
+        internal static string GenerateRandomPassword(int length)
         {
             RNGCryptoServiceProvider cryptRNG = new RNGCryptoServiceProvider();
             byte[] tokenBuffer = new byte[length];
@@ -21,16 +21,16 @@ namespace Lain
             return Convert.ToBase64String(tokenBuffer);
         }
 
-        public static string HashKey(string key)
+        internal static string HashKey(string key)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
-                byte[] hashed = sha256.ComputeHash(Encoding.UTF8.GetBytes(key + Salt));
+                byte[] hashed = sha256.ComputeHash(Encoding.UTF8.GetBytes(key + _salt));
                 return Convert.ToBase64String(hashed);
             }
         }
 
-        public static SecureString ToSecureString(string key)
+        internal static SecureString ToSecureString(string key)
         {
             SecureString ss = new SecureString();
 
@@ -43,7 +43,7 @@ namespace Lain
             return ss;
         }
 
-        public static string ToInsecureString(SecureString key)
+        internal static string ToInsecureString(SecureString key)
         {
             string s = string.Empty;
             IntPtr ip = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(key);
@@ -60,7 +60,7 @@ namespace Lain
             return s;
         }
 
-        public string Encrypt(string key, string data)
+        internal string Encrypt(string key, string data)
         {
             string encrypted = null;
             byte[][] keys = GetHashKeys(key);
@@ -74,7 +74,7 @@ namespace Lain
             return encrypted;
         }
 
-        public string Decrypt(string key, string data)
+        internal string Decrypt(string key, string data)
         {
             string decrypted = null;
             byte[][] keys = GetHashKeys(key);
@@ -91,11 +91,19 @@ namespace Lain
         private string Protect(string plainText, byte[] Key, byte[] IV)
         {
             if (plainText == null || plainText.Length <= 0)
+            {
                 throw new ArgumentNullException("plainText");
+            }
+                
             if (Key == null || Key.Length <= 0)
+            {
                 throw new ArgumentNullException("Key");
+            }
+                
             if (IV == null || IV.Length <= 0)
+            {
                 throw new ArgumentNullException("IV");
+            }
 
             byte[] encrypted;
 
@@ -119,6 +127,7 @@ namespace Lain
                     }
                 }
             }
+
             return Convert.ToBase64String(encrypted);
         }
 
@@ -127,13 +136,21 @@ namespace Lain
             byte[] cipherText = Convert.FromBase64String(cipherTextString);
 
             if (cipherText == null || cipherText.Length <= 0)
+            {
                 throw new ArgumentNullException("cipherText");
+            }
+                
             if (Key == null || Key.Length <= 0)
+            {
                 throw new ArgumentNullException("Key");
+            }
+                
             if (IV == null || IV.Length <= 0)
+            {
                 throw new ArgumentNullException("IV");
+            }
 
-            string plaintext = null;
+            string plainText = null;
 
             using (Aes aesAlg = Aes.Create())
             {
@@ -149,12 +166,13 @@ namespace Lain
                     {
                         using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                         {
-                            plaintext = srDecrypt.ReadToEnd();
+                            plainText = srDecrypt.ReadToEnd();
                         }
                     }
                 }
             }
-            return plaintext;
+
+            return plainText;
         }
 
         private byte[][] GetHashKeys(string key)

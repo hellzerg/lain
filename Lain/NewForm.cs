@@ -12,18 +12,19 @@ namespace Lain
 {
     public partial class NewForm : Form
     {
-        CryLain cryLain = new CryLain();
+        CryLain _cryLain = new CryLain();
+
         NewType _type;
-        string _Name;
+        string _name;
 
-        bool ShowPassword = false;
+        bool _showPassword = false;
 
-        public NewForm(NewType type, string info = null)
+        internal NewForm(NewType type, string info = null)
         {
             InitializeComponent();
             Options.ApplyTheme(this);
             _type = type;
-            _Name = info;
+            _name = info;
 
             switch (_type)
             {
@@ -31,21 +32,21 @@ namespace Lain
                     btnOk.Text = "Save";
                     if (!string.IsNullOrEmpty(info))
                     {
-                        this.Text = string.Format("Modify account - {0}", info);
+                        this.Text = string.Format("Edit account - {0}", info);
                     }
                     else
                     {
-                        this.Text = "Create new account...";
+                        this.Text = "Add new account...";
                     }
                     
-                    int i = MainForm.Accounts.FindIndex(x => x.Name() == cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), _Name));
+                    int i = MainForm.Accounts.FindIndex(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), _name));
                     
                     if (i > -1)
                     {
-                        txtName.Text = cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Name());
-                        txtMail.Text = cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Email());
-                        txtPassword.Text = cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Password());
-                        txtNote.Text = cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Note());
+                        txtName.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Name());
+                        txtMail.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Email());
+                        txtPassword.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Password());
+                        txtNote.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Note());
                     }
 
                     break;
@@ -59,12 +60,12 @@ namespace Lain
                 switch (_type)
                 {
                     case NewType.Modify:
-                        int i = MainForm.Accounts.FindIndex(x => x.Name() == cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), _Name));
+                        int i = MainForm.Accounts.FindIndex(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), _name));
                         if (i > -1) { MainForm.Accounts.RemoveAt(i); }
                         break;
                 }
 
-                LainAccount account = new LainAccount(cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtName.Text), cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtMail.Text), cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtPassword.Text), cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtNote.Text));
+                LainAccount account = new LainAccount(_cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtName.Text), _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtMail.Text), _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtPassword.Text), _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtNote.Text));
                 MainForm.Accounts.Add(account);
 
                 txtName.Text = string.Empty;
@@ -94,25 +95,25 @@ namespace Lain
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            if (ShowPassword)
+            if (_showPassword)
             {
                 pictureBox1.BackColor = Options.BackgroundColor;
                 txtPassword.UseSystemPasswordChar = true;
-                ShowPassword = false;
+                _showPassword = false;
                 return;
             }
             else
             {
                 pictureBox1.BackColor = Options.ForegroundColor;
                 txtPassword.UseSystemPasswordChar = false;
-                ShowPassword = true;
+                _showPassword = true;
                 return;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            txtPassword.Text = CryLain.GenerateRandomPassword(25);
+            txtPassword.Text = CryLain.GenerateRandomPassword(32);
         }
     }
 }

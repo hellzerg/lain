@@ -14,7 +14,7 @@ namespace Lain
 {
     public partial class WizardForm : Form
     {
-        bool ShowPassword = false;
+        bool _showPassword = false;
 
         public WizardForm()
         {
@@ -24,13 +24,13 @@ namespace Lain
 
         private void PasswordVisibility()
         {
-            if (ShowPassword)
+            if (_showPassword)
             {
                 pictureBox1.BackColor = Options.BackgroundColor;
                 pictureBox2.BackColor = Options.BackgroundColor;
                 txtPassword.UseSystemPasswordChar = true;
                 txtVerify.UseSystemPasswordChar = true;
-                ShowPassword = false;
+                _showPassword = false;
                 return;
             }
             else
@@ -39,7 +39,7 @@ namespace Lain
                 pictureBox2.BackColor = Options.ForegroundColor;
                 txtPassword.UseSystemPasswordChar = false;
                 txtVerify.UseSystemPasswordChar = false;
-                ShowPassword = true;
+                _showPassword = true;
                 return;
             }
         }

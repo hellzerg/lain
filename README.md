@@ -23,6 +23,6 @@ Does not work with Windows XP or Vista
 
 ## Details: ##
 
-Latest version: 1.8
+Latest version: 1.9
 
-Released: April 3, 2017
+Released: October 26, 2017

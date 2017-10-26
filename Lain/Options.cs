@@ -19,32 +19,19 @@ namespace Lain
         public int Minutes { get; set; }
     }
 
-    public static class Options
+    internal static class Options
     {
         internal static Color ForegroundColor = Color.MediumOrchid;
         internal static Color ForegroundAccentColor = Color.DarkOrchid;
         internal static Color BackgroundColor = Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
 
         internal readonly static string ThemeFlag = "themeable";
-        readonly static string SettingsFile = Required.DataFolder + "Lain.json";
+        readonly static string _settingsFile = Required.DataFolder + "Lain.json";
 
         internal static SettingsJson CurrentOptions = new SettingsJson();
 
         // use this to determine if changes have been made
-        private static SettingsJson Flag = new SettingsJson();
-
-        internal static IEnumerable<Control> GetSelfAndChildrenRecursive(Control parent)
-        {
-            List<Control> controls = new List<Control>();
-
-            foreach (Control child in parent.Controls)
-            {
-                controls.AddRange(GetSelfAndChildrenRecursive(child));
-            }
-
-            controls.Add(parent);
-            return controls;
-        }
+        static SettingsJson _flag = new SettingsJson();
 
         internal static void ApplyTheme(Form f)
         {
@@ -76,19 +63,19 @@ namespace Lain
             ForegroundColor = c1;
             ForegroundAccentColor = c2;
 
-            GetSelfAndChildrenRecursive(f).OfType<Button>().ToList().ForEach(b => b.BackColor = c1);
-            GetSelfAndChildrenRecursive(f).OfType<Button>().ToList().ForEach(b => b.FlatAppearance.BorderColor = c1);
-            GetSelfAndChildrenRecursive(f).OfType<Button>().ToList().ForEach(b => b.FlatAppearance.MouseDownBackColor = c2);
-            GetSelfAndChildrenRecursive(f).OfType<Button>().ToList().ForEach(b => b.FlatAppearance.MouseOverBackColor = c2);
+            Utilities.GetSelfAndChildrenRecursive(f).OfType<Button>().ToList().ForEach(b => b.BackColor = c1);
+            Utilities.GetSelfAndChildrenRecursive(f).OfType<Button>().ToList().ForEach(b => b.FlatAppearance.BorderColor = c1);
+            Utilities.GetSelfAndChildrenRecursive(f).OfType<Button>().ToList().ForEach(b => b.FlatAppearance.MouseDownBackColor = c2);
+            Utilities.GetSelfAndChildrenRecursive(f).OfType<Button>().ToList().ForEach(b => b.FlatAppearance.MouseOverBackColor = c2);
 
-            foreach (Label tmp in GetSelfAndChildrenRecursive(f).OfType<Label>().ToList())
+            foreach (Label tmp in Utilities.GetSelfAndChildrenRecursive(f).OfType<Label>().ToList())
             {
                 if ((string)tmp.Tag == ThemeFlag)
                 {
                     tmp.ForeColor = c1;
                 }
             }
-            foreach (LinkLabel tmp in GetSelfAndChildrenRecursive(f).OfType<LinkLabel>().ToList())
+            foreach (LinkLabel tmp in Utilities.GetSelfAndChildrenRecursive(f).OfType<LinkLabel>().ToList())
             {
                 if ((string)tmp.Tag == ThemeFlag)
                 {
@@ -97,7 +84,7 @@ namespace Lain
                     tmp.ActiveLinkColor = c2;
                 }
             }
-            foreach (CheckBox tmp in GetSelfAndChildrenRecursive(f).OfType<CheckBox>().ToList())
+            foreach (CheckBox tmp in Utilities.GetSelfAndChildrenRecursive(f).OfType<CheckBox>().ToList())
             {
                 if ((string)tmp.Tag == ThemeFlag)
                 {
@@ -108,13 +95,13 @@ namespace Lain
 
         internal static void SaveSettings()
         {
-            if (File.Exists(SettingsFile))
+            if (File.Exists(_settingsFile))
             {
-                if ((Flag.Color != CurrentOptions.Color) || (Flag.Authorize != CurrentOptions.Authorize) || (Flag.AutoLock != CurrentOptions.AutoLock) || (Flag.AutoStart != CurrentOptions.AutoStart) || (Flag.Minutes != CurrentOptions.Minutes))
+                if ((_flag.Color != CurrentOptions.Color) || (_flag.Authorize != CurrentOptions.Authorize) || (_flag.AutoLock != CurrentOptions.AutoLock) || (_flag.AutoStart != CurrentOptions.AutoStart) || (_flag.Minutes != CurrentOptions.Minutes))
                 {
-                    File.Delete(SettingsFile);
+                    File.Delete(_settingsFile);
 
-                    using (FileStream fs = File.Open(SettingsFile, FileMode.OpenOrCreate))
+                    using (FileStream fs = File.Open(_settingsFile, FileMode.OpenOrCreate))
                     using (StreamWriter sw = new StreamWriter(fs))
                     using (JsonWriter jw = new JsonTextWriter(sw))
                     {
@@ -124,16 +111,12 @@ namespace Lain
                         serializer.Serialize(jw, CurrentOptions);
                     }
                 }
-                else
-                {
-                    // no changes have been made, no need to save
-                }
             }
         }
 
         internal static void LoadSettings()
         {
-            if (!File.Exists(SettingsFile))
+            if (!File.Exists(_settingsFile))
             {
                 CurrentOptions.Color = Theme.Zerg;
                 CurrentOptions.Authorize = true;
@@ -141,7 +124,7 @@ namespace Lain
                 CurrentOptions.Minutes = 2;
                 CurrentOptions.AutoStart = false;
 
-                using (FileStream fs = File.Open(SettingsFile, FileMode.CreateNew))
+                using (FileStream fs = File.Open(_settingsFile, FileMode.CreateNew))
                 using (StreamWriter sw = new StreamWriter(fs))
                 using (JsonWriter jw = new JsonTextWriter(sw))
                 {
@@ -153,14 +136,14 @@ namespace Lain
             }
             else
             {
-                CurrentOptions = JsonConvert.DeserializeObject<SettingsJson>(File.ReadAllText(SettingsFile));
+                CurrentOptions = JsonConvert.DeserializeObject<SettingsJson>(File.ReadAllText(_settingsFile));
 
                 // initialize flag
-                Flag.Color = CurrentOptions.Color;
-                Flag.Authorize = CurrentOptions.Authorize;
-                Flag.AutoLock = CurrentOptions.AutoLock;
-                Flag.AutoStart = CurrentOptions.AutoStart;
-                Flag.Minutes = CurrentOptions.Minutes;
+                _flag.Color = CurrentOptions.Color;
+                _flag.Authorize = CurrentOptions.Authorize;
+                _flag.AutoLock = CurrentOptions.AutoLock;
+                _flag.AutoStart = CurrentOptions.AutoStart;
+                _flag.Minutes = CurrentOptions.Minutes;
             }
         }
     }

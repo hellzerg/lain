@@ -16,22 +16,17 @@ namespace Lain
 
         // Enter current version here
         internal readonly static float Major = 1;
-        internal readonly static float Minor = 8;
+        internal readonly static float Minor = 9;
 
         /* END OF VERSION PROPERTIES */
 
-        static ApplicationContext MainContext = new ApplicationContext();
+        static ApplicationContext _mainContext = new ApplicationContext();
 
-        const string JsonAssembly = @"Lain.Newtonsoft.Json.dll";
+        const string _jsonAssembly = @"Lain.Newtonsoft.Json.dll";
 
-        internal static string GetCurrentVersionToString()
+        internal static string GetCurrentVersion()
         {
             return Major.ToString() + "." + Minor.ToString();
-        }
-
-        internal static float GetCurrentVersion()
-        {
-            return float.Parse(GetCurrentVersionToString());
         }
 
         [STAThread]
@@ -40,7 +35,7 @@ namespace Lain
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            EmbeddedAssembly.Load(JsonAssembly, JsonAssembly.Replace("Lain.", string.Empty));
+            EmbeddedAssembly.Load(_jsonAssembly, _jsonAssembly.Replace("Lain.", string.Empty));
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
             if (!Directory.Exists(Required.DataFolder))
@@ -52,19 +47,19 @@ namespace Lain
 
             if (!File.Exists(Required.LainSerial))
             {
-                MainContext.MainForm = new WizardForm();
+                _mainContext.MainForm = new WizardForm();
             }
             else
             {
-                MainContext.MainForm = new LoginForm(LoginType.Login);
+                _mainContext.MainForm = new LoginForm(LoginType.Login);
             }
             
-            Application.Run(MainContext);
+            Application.Run(_mainContext);
         }
 
         public static void SetMainForm(Form form)
         {
-            MainContext.MainForm = form;
+            _mainContext.MainForm = form;
             form.FormClosed += form_FormClosed;
         }
 
@@ -85,22 +80,20 @@ namespace Lain
             {
                 File.WriteAllBytes(Required.LainData, bytes);
             }
-            catch
-            {
-                bytes = null;
-                ms = null;
-            }
             finally
             {
+                if (ms != null) ms.Close();
+
                 bytes = null;
                 ms = null;
+
                 Options.SaveSettings();
             }
         }
 
         public static void ShowMainForm()
         {
-            MainContext.MainForm.Show();
+            _mainContext.MainForm.Show();
         }
 
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)

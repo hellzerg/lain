@@ -16,13 +16,16 @@ namespace Lain
     public partial class MainForm : Form
     {
         const int ONE_MINUTE_IN_MILLISECONDS = 60000;
+
         bool IsDialogOpen = false;
 
         internal static List<LainAccount> Accounts = new List<LainAccount>();
         internal static SecureString Key;
-        CryLain cryLain = new CryLain();
 
-        string temp, term = string.Empty;
+        CryLain _cryLain = new CryLain();
+
+        string _temp = string.Empty;
+        string _term = string.Empty;
 
         public MainForm(SecureString key)
         {
@@ -30,7 +33,7 @@ namespace Lain
             Options.ApplyTheme(this);
             FixColor();
             TriggerTimer();
-            HelperMenu.Renderer = new ToolStripRendererMaterial();
+            helperMenu.Renderer = new ToolStripRendererMaterial();
 
             DeserializeAccounts();
             Key = key;
@@ -52,14 +55,14 @@ namespace Lain
             else
             {
                 pictureBox1.Visible = true;
-                term = txtSearch.Text.Trim().ToLowerInvariant();
+                _term = txtSearch.Text.Trim().ToLowerInvariant();
                 AccountView.Nodes.Clear();
                 foreach (LainAccount la in Accounts)
                 {
-                    temp = cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name());
-                    if (temp.ToLowerInvariant().Contains(term))
+                    _temp = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name());
+                    if (_temp.ToLowerInvariant().Contains(_term))
                     {
-                        TreeNode node = new TreeNode(cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name()));
+                        TreeNode node = new TreeNode(_cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name()));
                         node.ForeColor = Options.ForegroundColor;
                         node.Tag = Options.ThemeFlag;
                         node.Nodes.Add("Name/Email: ");
@@ -148,8 +151,10 @@ namespace Lain
             bool result = false;
             LoginForm f = new LoginForm(type);
             IsDialogOpen = true;
+
             DialogResult dr = f.ShowDialog();
             IsDialogOpen = false;
+
             if (dr == DialogResult.Yes)
             {
                 result = true;
@@ -169,6 +174,7 @@ namespace Lain
                 if (Authorize(LoginType.Remove))
                 {
                     string name = string.Empty;
+
                     if (AccountView.SelectedNode.Parent == null)
                     {
                         name = AccountView.SelectedNode.Text;
@@ -177,8 +183,10 @@ namespace Lain
                     {
                         name = AccountView.SelectedNode.Parent.Text;
                     }
-                    int i = Accounts.FindIndex(x => x.Name() == cryLain.Encrypt(CryLain.ToInsecureString(Key), name));
+
+                    int i = Accounts.FindIndex(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(Key), name));
                     if (i > -1) { Accounts.RemoveAt(i); }
+
                     LoadAccounts();
                 }
             }
@@ -231,7 +239,7 @@ namespace Lain
 
             foreach (LainAccount x in Accounts)
             {
-                TreeNode node = new TreeNode(cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Name()));
+                TreeNode node = new TreeNode(_cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Name()));
                 node.ForeColor = Options.ForegroundColor;
                 node.Tag = Options.ThemeFlag;
                 node.Nodes.Add("Name/Email: ");
@@ -241,7 +249,7 @@ namespace Lain
             }
 
             txtSearch.Clear();
-            this.Text = string.Format("Lain {0} [{1} accounts]", Program.GetCurrentVersionToString(), Accounts.Count);
+            this.Text = string.Format("Lain {0} [{1} accounts]", Program.GetCurrentVersion(), Accounts.Count);
 
             AccountView.Sort();
         }
@@ -253,7 +261,7 @@ namespace Lain
             LoadAccounts();
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnAdd_Click(object sender, EventArgs e)
         {
             NewForm f = new NewForm(NewType.New);
             IsDialogOpen = true;
@@ -268,13 +276,13 @@ namespace Lain
         {
             if (Authorize(LoginType.Authorize))
             {
-                LainAccount account = Accounts.Find(x => x.Name() == cryLain.Encrypt(CryLain.ToInsecureString(Key), e.Node.Text));
+                LainAccount account = Accounts.Find(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(Key), e.Node.Text));
 
                 if (account != null)
                 {
-                    e.Node.Nodes[0].Text = "Name/Email: " + cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Email());
-                    e.Node.Nodes[1].Text = "Password: " + cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Password());
-                    e.Node.Nodes[2].Text = "Note: " + cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Note());
+                    e.Node.Nodes[0].Text = "Name/Email: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Email());
+                    e.Node.Nodes[1].Text = "Password: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Password());
+                    e.Node.Nodes[2].Text = "Note: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Note());
                 }
 
                 account = null;
@@ -299,27 +307,27 @@ namespace Lain
             Copy();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnModify_Click(object sender, EventArgs e)
         {
             Modify();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void btnRemoveAll_Click(object sender, EventArgs e)
         {
             RemoveAll();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnRemove_Click(object sender, EventArgs e)
         {
             Remove();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnLock_Click(object sender, EventArgs e)
         {
             Lock();
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void btnOptions_Click(object sender, EventArgs e)
         {
             OptionsForm f = new OptionsForm(this);
             IsDialogOpen = true;
@@ -328,18 +336,19 @@ namespace Lain
             TriggerTimer();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnReset_Click(object sender, EventArgs e)
         {
             IsDialogOpen = true;
             DialogResult r = MessageBox.Show("Do you really want to reset Lain?\nThis will delete everything!", "Reset Lain?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             IsDialogOpen = false;
+
             if (r == DialogResult.Yes)
             {
                 Reset();
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void btnAbout_Click(object sender, EventArgs e)
         {
             AboutForm f = new AboutForm();
             IsDialogOpen = true;
@@ -368,11 +377,6 @@ namespace Lain
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Remove();
-        }
-
-        private void removeAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            RemoveAll();
         }
 
         private void timerAutoLock_Tick(object sender, EventArgs e)

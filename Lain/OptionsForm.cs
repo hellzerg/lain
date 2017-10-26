@@ -30,15 +30,17 @@ namespace Lain
         {
             try
             {
-                RegistryKey k = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                if (!remove)
+                using (RegistryKey k = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
                 {
-                    k.SetValue("Lain", Application.ExecutablePath);
-                }
-                else
-                {
-                    k.DeleteValue("Lain", false);
-                }
+                    if (!remove)
+                    {
+                        k.SetValue("Lain", Application.ExecutablePath);
+                    }
+                    else
+                    {
+                        k.DeleteValue("Lain", false);
+                    }
+                } 
             }
             catch
             {
@@ -52,6 +54,8 @@ namespace Lain
             checkBox2.Checked = Options.CurrentOptions.AutoLock;
             txtTimer.Text = Options.CurrentOptions.Minutes.ToString();
             checkBox3.Checked = Options.CurrentOptions.AutoStart;
+
+            RegisterAutoStart(!Options.CurrentOptions.AutoStart);
             
             switch (Options.CurrentOptions.Color)
             {
@@ -158,7 +162,8 @@ namespace Lain
 
         private void txtTimer_TextChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.Minutes = Convert.ToInt32(txtTimer.Text);
+            if (Convert.ToInt32(txtTimer.Text.Trim()) <= 0) Options.CurrentOptions.Minutes = 1;
+            else Options.CurrentOptions.Minutes = Convert.ToInt32(txtTimer.Text);
         }
 
         private void CreateBackup()

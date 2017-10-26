@@ -18,10 +18,16 @@ namespace Lain
         LoginType _type;
         bool _showPassword = false;
 
-        public LoginForm(LoginType type, FormWindowState state = FormWindowState.Normal)
+        internal LoginForm(LoginType type, FormWindowState state = FormWindowState.Normal)
         {
             InitializeComponent();
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
             this.WindowState = state;
+
             Options.ApplyTheme(this);
             _type = type;
         }
@@ -129,14 +135,14 @@ namespace Lain
                     btnExit.Text = "Cancel";
                     btnReset.Visible = false;
                     btnRestore.Visible = false;
-                    status.Text = "Enter your password\nto remove this account";
+                    status.Text = "Enter your password\nto delete this account";
                     break;
 
                 case LoginType.RemoveAll:
                     btnExit.Text = "Cancel";
                     btnReset.Visible = false;
                     btnRestore.Visible = false;
-                    status.Text = "Enter your password\nto remove all accounts";
+                    status.Text = "Enter your password\nto delete all your accounts";
                     break;
             }
         }

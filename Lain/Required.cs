@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Lain
 {
-    public class Required
+    internal class Required
     {
         internal readonly static string DataFolder = Application.StartupPath + "\\Data\\";
         internal readonly static string LainSerial = DataFolder + "Lain.Serial";

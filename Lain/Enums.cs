@@ -16,7 +16,7 @@ namespace Lain
         Minimal
     }
 
-    public enum LoginType
+    internal enum LoginType
     {
         Login,
         Authorize,
@@ -24,7 +24,7 @@ namespace Lain
         RemoveAll
     }
 
-    public enum NewType
+    internal enum NewType
     {
         New,
         Modify
