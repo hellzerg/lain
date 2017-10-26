@@ -8,15 +8,15 @@ using System.Windows.Forms;
 
 namespace Lain
 {
-    public class ToolStripRendererMaterial : ToolStripProfessionalRenderer
+    internal class ToolStripRendererMaterial : ToolStripProfessionalRenderer
     {
-        public ToolStripRendererMaterial() : base(new ColorsMaterial())
+        internal ToolStripRendererMaterial() : base(new ColorsMaterial())
         {
 
         }
     }
 
-    public class ColorsMaterial : ProfessionalColorTable
+    internal class ColorsMaterial : ProfessionalColorTable
     {
         public override Color ToolStripBorder
         {

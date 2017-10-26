@@ -22,11 +22,14 @@ namespace Lain
         {
             InitializeComponent();
 
-            if (this.WindowState == FormWindowState.Maximized)
+            if (state == FormWindowState.Maximized)
             {
                 this.WindowState = FormWindowState.Normal;
             }
-            this.WindowState = state;
+            else
+            {
+                this.WindowState = state;
+            }
 
             Options.ApplyTheme(this);
             _type = type;

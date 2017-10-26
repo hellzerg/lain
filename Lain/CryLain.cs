@@ -91,19 +91,11 @@ namespace Lain
         private string Protect(string plainText, byte[] Key, byte[] IV)
         {
             if (plainText == null || plainText.Length <= 0)
-            {
                 throw new ArgumentNullException("plainText");
-            }
-                
             if (Key == null || Key.Length <= 0)
-            {
                 throw new ArgumentNullException("Key");
-            }
-                
             if (IV == null || IV.Length <= 0)
-            {
                 throw new ArgumentNullException("IV");
-            }
 
             byte[] encrypted;
 
@@ -136,19 +128,11 @@ namespace Lain
             byte[] cipherText = Convert.FromBase64String(cipherTextString);
 
             if (cipherText == null || cipherText.Length <= 0)
-            {
                 throw new ArgumentNullException("cipherText");
-            }
-                
             if (Key == null || Key.Length <= 0)
-            {
                 throw new ArgumentNullException("Key");
-            }
-                
             if (IV == null || IV.Length <= 0)
-            {
                 throw new ArgumentNullException("IV");
-            }
 
             string plainText = null;
 

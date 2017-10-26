@@ -51,11 +51,13 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
             this.timerAutoLock = new System.Windows.Forms.Timer(this.components);
+            this.helperPanel = new System.Windows.Forms.Panel();
             this.helperMenu.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.rightPanel.SuspendLayout();
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.helperPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // AccountView
@@ -69,7 +71,7 @@
             this.AccountView.Location = new System.Drawing.Point(0, 0);
             this.AccountView.Margin = new System.Windows.Forms.Padding(2);
             this.AccountView.Name = "AccountView";
-            this.AccountView.Size = new System.Drawing.Size(729, 569);
+            this.AccountView.Size = new System.Drawing.Size(719, 569);
             this.AccountView.TabIndex = 22;
             this.AccountView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.AccountView_BeforeExpand);
             this.AccountView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.AccountView_NodeMouseClick);
@@ -95,7 +97,7 @@
             this.copyToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(112, 32);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
@@ -104,7 +106,7 @@
             this.newToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(112, 32);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -113,7 +115,7 @@
             this.ediToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ediToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.ediToolStripMenuItem.Name = "ediToolStripMenuItem";
-            this.ediToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
+            this.ediToolStripMenuItem.Size = new System.Drawing.Size(112, 32);
             this.ediToolStripMenuItem.Text = "Edit";
             this.ediToolStripMenuItem.Click += new System.EventHandler(this.ediToolStripMenuItem_Click);
             // 
@@ -288,15 +290,13 @@
             // 
             // leftPanel
             // 
-            this.leftPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.leftPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.leftPanel.Controls.Add(this.AccountView);
-            this.leftPanel.Location = new System.Drawing.Point(0, 42);
+            this.leftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.leftPanel.Location = new System.Drawing.Point(0, 0);
             this.leftPanel.Margin = new System.Windows.Forms.Padding(2);
             this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(731, 571);
+            this.leftPanel.Size = new System.Drawing.Size(721, 571);
             this.leftPanel.TabIndex = 71;
             // 
             // rightPanel
@@ -377,15 +377,24 @@
             this.timerAutoLock.Interval = 120000;
             this.timerAutoLock.Tick += new System.EventHandler(this.timerAutoLock_Tick);
             // 
+            // helperPanel
+            // 
+            this.helperPanel.Controls.Add(this.leftPanel);
+            this.helperPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.helperPanel.Location = new System.Drawing.Point(0, 43);
+            this.helperPanel.Name = "helperPanel";
+            this.helperPanel.Size = new System.Drawing.Size(721, 571);
+            this.helperPanel.TabIndex = 74;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(853, 614);
+            this.Controls.Add(this.helperPanel);
             this.Controls.Add(this.topPanel);
             this.Controls.Add(this.rightPanel);
-            this.Controls.Add(this.leftPanel);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -402,6 +411,7 @@
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.helperPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -429,5 +439,6 @@
         private System.Windows.Forms.ToolStripMenuItem ediToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
         private System.Windows.Forms.Timer timerAutoLock;
+        private System.Windows.Forms.Panel helperPanel;
     }
 }

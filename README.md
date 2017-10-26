@@ -21,5 +21,5 @@ https://github.com/hellzerg/lain/releases
 
 ## Details: ##
 
-* Latest version: 1.8
-* Released: April 3, 2017
+* Latest version: 1.9
+* Released: October 26, 2017

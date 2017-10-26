@@ -9,10 +9,10 @@ namespace Lain
     [Serializable]
     public class LainAccount
     {
-        string _name;
-        string _email;
-        string _password;
-        string _note;
+        string _Name;
+        string _Email;
+        string _Password;
+        string _Note;
 
         public LainAccount()
         {
@@ -21,10 +21,10 @@ namespace Lain
 
         public LainAccount(string name, string email, string password, string note)
         {
-            _name = name;
-            _email = email;
-            _password = password;
-            _note = note;
+            _Name = name;
+            _Email = email;
+            _Password = password;
+            _Note = note;
 
             name = string.Empty;
             email = string.Empty;
@@ -34,22 +34,22 @@ namespace Lain
 
         public string Name()
         {
-            return _name;
+            return _Name;
         }
 
         public string Email()
         {
-            return _email;
+            return _Email;
         }
 
         public string Password()
         {
-            return _password;
+            return _Password;
         }
 
         public string Note()
         {
-            return _note;
+            return _Note;
         }
     }
 }

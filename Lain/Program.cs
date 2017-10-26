@@ -57,7 +57,7 @@ namespace Lain
             Application.Run(_mainContext);
         }
 
-        public static void SetMainForm(Form form)
+        internal static void SetMainForm(Form form)
         {
             _mainContext.MainForm = form;
             form.FormClosed += form_FormClosed;
@@ -82,8 +82,6 @@ namespace Lain
             }
             finally
             {
-                if (ms != null) ms.Close();
-
                 bytes = null;
                 ms = null;
 
@@ -91,7 +89,7 @@ namespace Lain
             }
         }
 
-        public static void ShowMainForm()
+        internal static void ShowMainForm()
         {
             _mainContext.MainForm.Show();
         }

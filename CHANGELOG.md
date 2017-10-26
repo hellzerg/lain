@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9] - 2017-10-26
+- Minor bug fixes
+- General improvements
+- UI changes, everything is clear now
+
 ## [1.8] - 2017-04-03
 - Minor bug fixes
 
