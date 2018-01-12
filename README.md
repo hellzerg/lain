@@ -13,6 +13,9 @@ Simple, secure and portable password manager
 ## Downloads: ##
 https://github.com/hellzerg/lain/releases
 
+## Screenshots: ##
+https://github.com/hellzerg/lain/blob/master/IMAGES.md
+
 ## Compatibility: ##
 
 * .NET Framework 4.5.2
