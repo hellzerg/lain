@@ -10,11 +10,19 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security;
+using System.Net;
+using System.Diagnostics;
 
 namespace Lain
 {
     public partial class MainForm : Form
     {
+        readonly string _latestVersionLink = "https://raw.githubusercontent.com/hellzerg/lain/master/version.txt";
+        readonly string _releasesLink = "https://github.com/hellzerg/lain/releases";
+
+        readonly string _noNewVersionMessage = "You already have the latest version!";
+        readonly string _betaVersionMessage = "You are using an experimental version!";
+
         const int ONE_MINUTE_IN_MILLISECONDS = 60000;
 
         bool IsDialogOpen = false;
@@ -40,9 +48,55 @@ namespace Lain
             this.Text = string.Format("Lain [{0} accounts]", Accounts.Count);
         }
 
+        private string NewVersionMessage(string latest)
+        {
+            return string.Format("There is a new version available!\n\nLatest version: {0}\nCurrent version: {1}\n\nDo you want to download it now?", latest, Program.GetCurrentVersionToString());
+        }
+
         private void TriggerTimer()
         {
             timerAutoLock.Interval = Options.CurrentOptions.Minutes * ONE_MINUTE_IN_MILLISECONDS;
+        }
+
+        private void CheckForUpdate()
+        {
+            WebClient client = new WebClient
+            {
+                Encoding = Encoding.UTF8
+            };
+
+            string latestVersion = string.Empty;
+            try
+            {
+                latestVersion = client.DownloadString(_latestVersionLink);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            if (!string.IsNullOrEmpty(latestVersion))
+            {
+                if (float.Parse(latestVersion) > Program.GetCurrentVersion())
+                {
+                    if (MessageBox.Show(NewVersionMessage(latestVersion), "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            Process.Start(_releasesLink);
+                        }
+                        catch { }
+                    }
+                }
+                else if (float.Parse(latestVersion) == Program.GetCurrentVersion())
+                {
+                    MessageBox.Show(_noNewVersionMessage, "No update available", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(_betaVersionMessage, "No update available", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
 
         private void Search()
@@ -65,7 +119,7 @@ namespace Lain
                         TreeNode node = new TreeNode(_cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name()));
                         node.ForeColor = Options.ForegroundColor;
                         node.Tag = Options.ThemeFlag;
-                        node.Nodes.Add("Name/Email: ");
+                        node.Nodes.Add("Account: ");
                         node.Nodes.Add("Password: ");
                         node.Nodes.Add("Note: ");
                         AccountView.Nodes.Add(node);
@@ -104,7 +158,7 @@ namespace Lain
         private void Copy()
         {
             string s = AccountView.SelectedNode.Text;
-            s = s.Replace("Name/Email: ", string.Empty);
+            s = s.Replace("Account: ", string.Empty);
             s = s.Replace("Password: ", string.Empty);
             s = s.Replace("Note: ", string.Empty);
 
@@ -242,14 +296,14 @@ namespace Lain
                 TreeNode node = new TreeNode(_cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Name()));
                 node.ForeColor = Options.ForegroundColor;
                 node.Tag = Options.ThemeFlag;
-                node.Nodes.Add("Name/Email: ");
+                node.Nodes.Add("Account: ");
                 node.Nodes.Add("Password: ");
                 node.Nodes.Add("Note: ");
                 AccountView.Nodes.Add(node);
             }
 
             txtSearch.Clear();
-            this.Text = string.Format("Lain {0} [{1} accounts]", Program.GetCurrentVersion(), Accounts.Count);
+            this.Text = string.Format("Lain {0} [{1} accounts]", Program.GetCurrentVersionToString(), Accounts.Count);
 
             AccountView.Sort();
         }
@@ -280,7 +334,7 @@ namespace Lain
 
                 if (account != null)
                 {
-                    e.Node.Nodes[0].Text = "Name/Email: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Email());
+                    e.Node.Nodes[0].Text = "Account: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Email());
                     e.Node.Nodes[1].Text = "Password: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Password());
                     e.Node.Nodes[2].Text = "Note: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Note());
                 }
@@ -365,7 +419,6 @@ namespace Lain
         {
             NewForm f = new NewForm(NewType.New);
             f.ShowDialog(this);
-
             LoadAccounts();
         }
 
@@ -400,6 +453,11 @@ namespace Lain
         private void txtPassword_TextChanged(object sender, EventArgs e)
         {
             Search();
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            CheckForUpdate();
         }
     }
 }

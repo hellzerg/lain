@@ -56,23 +56,24 @@
             // 
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPassword.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.ForeColor = System.Drawing.Color.White;
             this.txtPassword.Location = new System.Drawing.Point(18, 126);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(404, 27);
+            this.txtPassword.Size = new System.Drawing.Size(404, 34);
             this.txtPassword.TabIndex = 60;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.label1.Location = new System.Drawing.Point(14, 103);
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Silver;
+            this.label1.Location = new System.Drawing.Point(13, 95);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 20);
+            this.label1.Size = new System.Drawing.Size(102, 28);
             this.label1.TabIndex = 59;
-            this.label1.Tag = "themeable";
+            this.label1.Tag = "";
             this.label1.Text = "Password:";
             // 
             // btnExit
@@ -85,7 +86,7 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(236, 220);
+            this.btnExit.Location = new System.Drawing.Point(239, 229);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(90, 39);
             this.btnExit.TabIndex = 63;
@@ -103,7 +104,7 @@
             this.btnOk.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOk.ForeColor = System.Drawing.Color.White;
-            this.btnOk.Location = new System.Drawing.Point(332, 220);
+            this.btnOk.Location = new System.Drawing.Point(335, 229);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(90, 39);
             this.btnOk.TabIndex = 62;
@@ -121,7 +122,7 @@
             this.btnReset.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(18, 220);
+            this.btnReset.Location = new System.Drawing.Point(18, 229);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(135, 39);
             this.btnReset.TabIndex = 64;
@@ -135,9 +136,9 @@
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(396, 126);
+            this.pictureBox1.Location = new System.Drawing.Point(389, 126);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(26, 27);
+            this.pictureBox1.Size = new System.Drawing.Size(33, 34);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 73;
             this.pictureBox1.TabStop = false;
@@ -152,7 +153,7 @@
             this.btnRestore.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnRestore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRestore.ForeColor = System.Drawing.Color.White;
-            this.btnRestore.Location = new System.Drawing.Point(18, 175);
+            this.btnRestore.Location = new System.Drawing.Point(18, 184);
             this.btnRestore.Name = "btnRestore";
             this.btnRestore.Size = new System.Drawing.Size(135, 39);
             this.btnRestore.TabIndex = 74;
@@ -168,7 +169,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(434, 271);
+            this.ClientSize = new System.Drawing.Size(437, 280);
             this.Controls.Add(this.btnRestore);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnReset);

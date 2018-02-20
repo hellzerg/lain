@@ -115,5 +115,13 @@ namespace Lain
         {
             txtPassword.Text = CryLain.GenerateRandomPassword(32);
         }
+
+        private void txtName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Save();
+            }
+        }
     }
 }

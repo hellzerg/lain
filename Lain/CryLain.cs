@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security;
+using System.Windows.Forms;
 
 namespace Lain
 {
@@ -52,6 +53,7 @@ namespace Lain
             {
                 s = System.Runtime.InteropServices.Marshal.PtrToStringBSTR(ip);
             }
+            catch { }
             finally
             {
                 System.Runtime.InteropServices.Marshal.ZeroFreeBSTR(ip);

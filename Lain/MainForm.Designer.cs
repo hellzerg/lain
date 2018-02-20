@@ -52,6 +52,7 @@
             this.label27 = new System.Windows.Forms.Label();
             this.timerAutoLock = new System.Windows.Forms.Timer(this.components);
             this.helperPanel = new System.Windows.Forms.Panel();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.helperMenu.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.rightPanel.SuspendLayout();
@@ -198,7 +199,7 @@
             this.btnReset.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(10, 514);
+            this.btnReset.Location = new System.Drawing.Point(10, 468);
             this.btnReset.Margin = new System.Windows.Forms.Padding(2);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(110, 42);
@@ -258,7 +259,7 @@
             this.modifyRemoveAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.modifyRemoveAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.modifyRemoveAll.ForeColor = System.Drawing.Color.White;
-            this.modifyRemoveAll.Location = new System.Drawing.Point(10, 468);
+            this.modifyRemoveAll.Location = new System.Drawing.Point(10, 422);
             this.modifyRemoveAll.Margin = new System.Windows.Forms.Padding(2);
             this.modifyRemoveAll.Name = "modifyRemoveAll";
             this.modifyRemoveAll.Size = new System.Drawing.Size(110, 42);
@@ -302,6 +303,7 @@
             // rightPanel
             // 
             this.rightPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rightPanel.Controls.Add(this.btnUpdate);
             this.rightPanel.Controls.Add(this.btnOptions);
             this.rightPanel.Controls.Add(this.btnAdd);
             this.rightPanel.Controls.Add(this.btnAbout);
@@ -386,6 +388,26 @@
             this.helperPanel.Size = new System.Drawing.Size(721, 571);
             this.helperPanel.TabIndex = 74;
             // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpdate.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnUpdate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnUpdate.FlatAppearance.BorderColor = System.Drawing.Color.DodgerBlue;
+            this.btnUpdate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnUpdate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdate.ForeColor = System.Drawing.Color.White;
+            this.btnUpdate.Location = new System.Drawing.Point(10, 514);
+            this.btnUpdate.Margin = new System.Windows.Forms.Padding(2);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(110, 42);
+            this.btnUpdate.TabIndex = 71;
+            this.btnUpdate.Tag = "themeable";
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = false;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -440,5 +462,6 @@
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
         private System.Windows.Forms.Timer timerAutoLock;
         private System.Windows.Forms.Panel helperPanel;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }

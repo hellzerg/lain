@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0] - 2018-02-21
+- Larger scaling and fonts
+- Added: Check for newer version
+- Fixed: Enter key not working in note field
+
 ## [1.9] - 2017-10-26
 - Minor bug fixes
 - General improvements

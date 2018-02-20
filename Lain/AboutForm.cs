@@ -49,7 +49,7 @@ namespace Lain
             string s10 = "deadmoon © 2";
             string s11 = "deadmoon © 20";
             string s12 = "deadmoon © 201";
-            string s13 = "deadmoon © 2017";
+            string s13 = "deadmoon © 2018";
 
             switch (l2.Text)
             {
@@ -94,7 +94,7 @@ namespace Lain
                     t2.Stop();
                     //t1.Start();
                     break;
-                case "deadmoon © 2017":
+                case "deadmoon © 2018":
                     l2.Text = s0;
                     break;
             }
@@ -102,7 +102,7 @@ namespace Lain
 
         private void l2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://carcinos.eu/deadmoon");
+            Process.Start("https://elgaming.eu/deadmoon");
         }
 
         private void t1_Tick(object sender, EventArgs e)
