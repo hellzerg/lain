@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1] - 2018-07-13
+- Clear clipboard when exiting
+- Added questions when deleting accounts when Authorize is disabled
+- Note removed from main window
+- Reset button removed from main window
+
 ## [2.0] - 2018-02-21
 - Larger scaling and fonts
 - Added: Check for newer version

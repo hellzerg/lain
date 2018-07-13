@@ -121,28 +121,27 @@ namespace Lain
                         node.Tag = Options.ThemeFlag;
                         node.Nodes.Add("Account: ");
                         node.Nodes.Add("Password: ");
-                        node.Nodes.Add("Note: ");
                         AccountView.Nodes.Add(node);
                     }
                 }
             }
         }
 
-        private void Reset()
-        {
-            try
-            {
-                if (Directory.Exists(Required.DataFolder))
-                {
-                    Directory.Delete(Required.DataFolder, true);
-                }
-            }
-            catch { }
-            finally
-            {
-                Application.Restart();
-            }
-        }
+        //private void Reset()
+        //{
+        //    try
+        //    {
+        //        if (Directory.Exists(Required.DataFolder))
+        //        {
+        //            Directory.Delete(Required.DataFolder, true);
+        //        }
+        //    }
+        //    catch { }
+        //    finally
+        //    {
+        //        Application.Restart();
+        //    }
+        //}
 
         internal void FixColor()
         {
@@ -160,7 +159,6 @@ namespace Lain
             string s = AccountView.SelectedNode.Text;
             s = s.Replace("Account: ", string.Empty);
             s = s.Replace("Password: ", string.Empty);
-            s = s.Replace("Note: ", string.Empty);
 
             try
             {
@@ -173,7 +171,7 @@ namespace Lain
         {
             if (AccountView.SelectedNode != null)
             {
-                if (Authorize(LoginType.Authorize))
+                if (Authorize(LoginType.Authorize, true))
                 {
                     if (AccountView.SelectedNode.Parent == null)
                     {
@@ -195,27 +193,57 @@ namespace Lain
             }
         }
 
-        private bool Authorize(LoginType type)
+        private bool Authorize(LoginType type, bool simple = false)
         {
-            if (!Options.CurrentOptions.Authorize)
-            {
-                return true;
-            }
-
             bool result = false;
-            LoginForm f = new LoginForm(type);
-            IsDialogOpen = true;
 
-            DialogResult dr = f.ShowDialog();
-            IsDialogOpen = false;
-
-            if (dr == DialogResult.Yes)
+            if (Options.CurrentOptions.Authorize)
             {
-                result = true;
+                LoginForm f = new LoginForm(type);
+
+                IsDialogOpen = true;
+                DialogResult dr = f.ShowDialog();
+                IsDialogOpen = false;
+
+                if (dr == DialogResult.Yes)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
             }
             else
             {
-                result = false;
+                if (simple)
+                {
+                    return true;
+                }
+
+                string title = string.Empty;
+                switch (type)
+                {
+                    case LoginType.Remove:
+                        title = "Delete account?";
+                        break;
+                    case LoginType.RemoveAll:
+                        title = "Delete all accounts?";
+                        break;
+                }
+
+                IsDialogOpen = true;
+                DialogResult dr = MessageBox.Show("Are you sure you want to do this?", title, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                IsDialogOpen = false;
+
+                if (dr == DialogResult.Yes)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
             }
 
             return result;
@@ -298,7 +326,6 @@ namespace Lain
                 node.Tag = Options.ThemeFlag;
                 node.Nodes.Add("Account: ");
                 node.Nodes.Add("Password: ");
-                node.Nodes.Add("Note: ");
                 AccountView.Nodes.Add(node);
             }
 
@@ -328,7 +355,7 @@ namespace Lain
 
         private void AccountView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
-            if (Authorize(LoginType.Authorize))
+            if (Authorize(LoginType.Authorize, true))
             {
                 LainAccount account = Accounts.Find(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(Key), e.Node.Text));
 
@@ -336,7 +363,6 @@ namespace Lain
                 {
                     e.Node.Nodes[0].Text = "Account: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Email());
                     e.Node.Nodes[1].Text = "Password: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Password());
-                    e.Node.Nodes[2].Text = "Note: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Note());
                 }
 
                 account = null;
@@ -388,18 +414,6 @@ namespace Lain
             f.ShowDialog(this);
             IsDialogOpen = false;
             TriggerTimer();
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            IsDialogOpen = true;
-            DialogResult r = MessageBox.Show("Do you really want to reset Lain?\nThis will delete everything!", "Reset Lain?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-            IsDialogOpen = false;
-
-            if (r == DialogResult.Yes)
-            {
-                Reset();
-            }
         }
 
         private void btnAbout_Click(object sender, EventArgs e)
@@ -458,6 +472,15 @@ namespace Lain
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             CheckForUpdate();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                Clipboard.Clear();
+            }
+            catch { }
         }
     }
 }

@@ -24,5 +24,5 @@ https://github.com/hellzerg/lain/blob/master/IMAGES.md
 
 ## Details: ##
 
-* Latest version: 2.0
-* Released: February 21, 2018
+* Latest version: 2.1
+* Released: July 13, 2018

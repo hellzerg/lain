@@ -102,7 +102,7 @@ namespace Lain
 
         private void l2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://elgaming.eu/deadmoon");
+            Process.Start("http://deadmoon.pe.hu");
         }
 
         private void t1_Tick(object sender, EventArgs e)
