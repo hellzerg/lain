@@ -230,7 +230,7 @@
             // 
             // modifyRemoveAll
             // 
-            this.modifyRemoveAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.modifyRemoveAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.modifyRemoveAll.BackColor = System.Drawing.Color.DodgerBlue;
             this.modifyRemoveAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.modifyRemoveAll.FlatAppearance.BorderColor = System.Drawing.Color.DodgerBlue;
@@ -250,7 +250,7 @@
             // 
             // btnOptions
             // 
-            this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOptions.BackColor = System.Drawing.Color.DodgerBlue;
             this.btnOptions.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnOptions.FlatAppearance.BorderColor = System.Drawing.Color.DodgerBlue;

@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2] - 2018-07-14
+- Hotfix: Delete all & Options button anchoring
+
 ## [2.1] - 2018-07-13
 - Clear clipboard when exiting
 - Added questions when deleting accounts when Authorize is disabled
