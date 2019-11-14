@@ -33,8 +33,10 @@ namespace Lain
         public MainForm(SecureString key)
         {
             InitializeComponent();
+
             CheckForIllegalCrossThreadCalls = false;
             DoubleBuffered = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             Options.ApplyTheme(this);
             FixColor();
