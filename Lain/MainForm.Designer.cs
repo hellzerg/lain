@@ -29,10 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.AccountView = new System.Windows.Forms.TreeView();
             this.helperMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ediToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,38 +47,27 @@
             this.btnAbout = new System.Windows.Forms.Button();
             this.modifyRemoveAll = new System.Windows.Forms.Button();
             this.btnOptions = new System.Windows.Forms.Button();
-            this.leftPanel = new System.Windows.Forms.Panel();
+            this.AccountView = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rightPanel = new System.Windows.Forms.Panel();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.topPanel = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.clearPic = new System.Windows.Forms.PictureBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
             this.timerAutoLock = new System.Windows.Forms.Timer(this.components);
             this.helperPanel = new System.Windows.Forms.Panel();
+            this.leftPanel = new System.Windows.Forms.Panel();
             this.helperMenu.SuspendLayout();
-            this.leftPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AccountView)).BeginInit();
             this.rightPanel.SuspendLayout();
             this.topPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clearPic)).BeginInit();
             this.helperPanel.SuspendLayout();
+            this.leftPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // AccountView
-            // 
-            this.AccountView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.AccountView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.AccountView.ContextMenuStrip = this.helperMenu;
-            this.AccountView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AccountView.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AccountView.ForeColor = System.Drawing.Color.White;
-            this.AccountView.Location = new System.Drawing.Point(0, 0);
-            this.AccountView.Margin = new System.Windows.Forms.Padding(2);
-            this.AccountView.Name = "AccountView";
-            this.AccountView.Size = new System.Drawing.Size(719, 569);
-            this.AccountView.TabIndex = 22;
-            this.AccountView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.AccountView_BeforeExpand);
-            this.AccountView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.AccountView_NodeMouseClick);
             // 
             // helperMenu
             // 
@@ -84,29 +77,39 @@
             this.helperMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.helperMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyToolStripMenuItem,
+            this.toolStripMenuItem1,
             this.newToolStripMenuItem,
             this.ediToolStripMenuItem,
             this.removeToolStripMenuItem});
             this.helperMenu.Name = "helperMenu";
             this.helperMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.helperMenu.ShowImageMargin = false;
-            this.helperMenu.Size = new System.Drawing.Size(113, 132);
+            this.helperMenu.Size = new System.Drawing.Size(189, 164);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(112, 32);
-            this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(188, 32);
+            this.copyToolStripMenuItem.Text = "Copy Account";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(188, 32);
+            this.toolStripMenuItem1.Text = "Copy Password";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(112, 32);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(188, 32);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -115,7 +118,7 @@
             this.ediToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ediToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.ediToolStripMenuItem.Name = "ediToolStripMenuItem";
-            this.ediToolStripMenuItem.Size = new System.Drawing.Size(112, 32);
+            this.ediToolStripMenuItem.Size = new System.Drawing.Size(188, 32);
             this.ediToolStripMenuItem.Text = "Edit";
             this.ediToolStripMenuItem.Click += new System.EventHandler(this.ediToolStripMenuItem_Click);
             // 
@@ -124,7 +127,7 @@
             this.removeToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.removeToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(112, 32);
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(188, 32);
             this.removeToolStripMenuItem.Text = "Delete";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
@@ -218,7 +221,7 @@
             this.btnAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAbout.ForeColor = System.Drawing.Color.White;
-            this.btnAbout.Location = new System.Drawing.Point(10, 560);
+            this.btnAbout.Location = new System.Drawing.Point(10, 580);
             this.btnAbout.Margin = new System.Windows.Forms.Padding(2);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(110, 42);
@@ -258,7 +261,7 @@
             this.btnOptions.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnOptions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOptions.ForeColor = System.Drawing.Color.White;
-            this.btnOptions.Location = new System.Drawing.Point(10, 468);
+            this.btnOptions.Location = new System.Drawing.Point(10, 488);
             this.btnOptions.Margin = new System.Windows.Forms.Padding(2);
             this.btnOptions.Name = "btnOptions";
             this.btnOptions.Size = new System.Drawing.Size(110, 42);
@@ -268,16 +271,91 @@
             this.btnOptions.UseVisualStyleBackColor = false;
             this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
             // 
-            // leftPanel
+            // AccountView
             // 
-            this.leftPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.leftPanel.Controls.Add(this.AccountView);
-            this.leftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftPanel.Location = new System.Drawing.Point(0, 0);
-            this.leftPanel.Margin = new System.Windows.Forms.Padding(2);
-            this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(721, 571);
-            this.leftPanel.TabIndex = 71;
+            this.AccountView.AllowUserToAddRows = false;
+            this.AccountView.AllowUserToDeleteRows = false;
+            this.AccountView.AllowUserToOrderColumns = true;
+            this.AccountView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.AccountView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.AccountView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.AccountView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.AccountView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.AccountView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.AccountView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.MediumOrchid;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.AccountView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.AccountView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.AccountView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3});
+            this.AccountView.ContextMenuStrip = this.helperMenu;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.MediumOrchid;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.AccountView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.AccountView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AccountView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.AccountView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.AccountView.Location = new System.Drawing.Point(0, 0);
+            this.AccountView.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.AccountView.Name = "AccountView";
+            this.AccountView.ReadOnly = true;
+            this.AccountView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.AccountView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.AccountView.RowHeadersVisible = false;
+            this.AccountView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.AccountView.RowTemplate.Height = 24;
+            this.AccountView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.AccountView.ShowCellErrors = false;
+            this.AccountView.ShowCellToolTips = false;
+            this.AccountView.ShowEditingIcon = false;
+            this.AccountView.Size = new System.Drawing.Size(757, 591);
+            this.AccountView.TabIndex = 23;
+            this.AccountView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.AccountView_CellMouseDoubleClick);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Title";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 71;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Account";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 102;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Password";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 111;
             // 
             // rightPanel
             // 
@@ -291,10 +369,10 @@
             this.rightPanel.Controls.Add(this.btnModify);
             this.rightPanel.Controls.Add(this.btnLock);
             this.rightPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rightPanel.Location = new System.Drawing.Point(721, 0);
+            this.rightPanel.Location = new System.Drawing.Point(757, 0);
             this.rightPanel.Margin = new System.Windows.Forms.Padding(2);
             this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(132, 614);
+            this.rightPanel.Size = new System.Drawing.Size(132, 634);
             this.rightPanel.TabIndex = 72;
             // 
             // btnUpdate
@@ -307,7 +385,7 @@
             this.btnUpdate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdate.ForeColor = System.Drawing.Color.White;
-            this.btnUpdate.Location = new System.Drawing.Point(10, 514);
+            this.btnUpdate.Location = new System.Drawing.Point(10, 534);
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(110, 42);
@@ -320,29 +398,29 @@
             // topPanel
             // 
             this.topPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.topPanel.Controls.Add(this.pictureBox1);
+            this.topPanel.Controls.Add(this.clearPic);
             this.topPanel.Controls.Add(this.txtSearch);
             this.topPanel.Controls.Add(this.label27);
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPanel.Location = new System.Drawing.Point(0, 0);
             this.topPanel.Margin = new System.Windows.Forms.Padding(2);
             this.topPanel.Name = "topPanel";
-            this.topPanel.Size = new System.Drawing.Size(721, 43);
+            this.topPanel.Size = new System.Drawing.Size(757, 43);
             this.topPanel.TabIndex = 73;
             // 
-            // pictureBox1
+            // clearPic
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(680, 2);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(35, 34);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 71;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.clearPic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearPic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.clearPic.Image = ((System.Drawing.Image)(resources.GetObject("clearPic.Image")));
+            this.clearPic.Location = new System.Drawing.Point(716, 2);
+            this.clearPic.Margin = new System.Windows.Forms.Padding(2);
+            this.clearPic.Name = "clearPic";
+            this.clearPic.Size = new System.Drawing.Size(35, 34);
+            this.clearPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.clearPic.TabIndex = 71;
+            this.clearPic.TabStop = false;
+            this.clearPic.Click += new System.EventHandler(this.clearPic_Click);
             // 
             // txtSearch
             // 
@@ -355,7 +433,7 @@
             this.txtSearch.Location = new System.Drawing.Point(79, 4);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(2);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(636, 27);
+            this.txtSearch.Size = new System.Drawing.Size(672, 27);
             this.txtSearch.TabIndex = 74;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
@@ -383,15 +461,25 @@
             this.helperPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.helperPanel.Location = new System.Drawing.Point(0, 43);
             this.helperPanel.Name = "helperPanel";
-            this.helperPanel.Size = new System.Drawing.Size(721, 571);
+            this.helperPanel.Size = new System.Drawing.Size(757, 591);
             this.helperPanel.TabIndex = 74;
+            // 
+            // leftPanel
+            // 
+            this.leftPanel.Controls.Add(this.AccountView);
+            this.leftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.leftPanel.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.leftPanel.Location = new System.Drawing.Point(0, 0);
+            this.leftPanel.Name = "leftPanel";
+            this.leftPanel.Size = new System.Drawing.Size(757, 591);
+            this.leftPanel.TabIndex = 24;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(853, 614);
+            this.ClientSize = new System.Drawing.Size(889, 634);
             this.Controls.Add(this.helperPanel);
             this.Controls.Add(this.topPanel);
             this.Controls.Add(this.rightPanel);
@@ -407,19 +495,18 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.helperMenu.ResumeLayout(false);
-            this.leftPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.AccountView)).EndInit();
             this.rightPanel.ResumeLayout(false);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clearPic)).EndInit();
             this.helperPanel.ResumeLayout(false);
+            this.leftPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TreeView AccountView;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button btnModify;
@@ -427,19 +514,24 @@
         private System.Windows.Forms.Button btnAbout;
         private System.Windows.Forms.Button modifyRemoveAll;
         private System.Windows.Forms.Button btnOptions;
-        private System.Windows.Forms.Panel leftPanel;
         private System.Windows.Forms.Panel rightPanel;
         private System.Windows.Forms.ContextMenuStrip helperMenu;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox clearPic;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ediToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
         private System.Windows.Forms.Timer timerAutoLock;
         private System.Windows.Forms.Panel helperPanel;
         private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.DataGridView AccountView;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.Panel leftPanel;
     }
 }

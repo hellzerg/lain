@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
+using System.Net;
+using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security;
-using System.Net;
-using System.Diagnostics;
+using System.Text;
+using System.Windows.Forms;
 
 namespace Lain
 {
     public partial class MainForm : Form
     {
         readonly string _latestVersionLink = "https://raw.githubusercontent.com/hellzerg/lain/master/version.txt";
-        readonly string _releasesLink = "https://github.com/hellzerg/lain/releases";
 
         readonly string _noNewVersionMessage = "You already have the latest version!";
         readonly string _betaVersionMessage = "You are using an experimental version!";
@@ -38,6 +33,9 @@ namespace Lain
         public MainForm(SecureString key)
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
+            DoubleBuffered = true;
+
             Options.ApplyTheme(this);
             FixColor();
             TriggerTimer();
@@ -56,6 +54,11 @@ namespace Lain
         private void TriggerTimer()
         {
             timerAutoLock.Interval = Options.CurrentOptions.Minutes * ONE_MINUTE_IN_MILLISECONDS;
+        }
+
+        private string NewDownloadLink(string latestVersion)
+        {
+            return string.Format("https://github.com/hellzerg/lain/releases/download/{0}/Lain-{0}.exe", latestVersion);
         }
 
         private void CheckForUpdate()
@@ -81,11 +84,45 @@ namespace Lain
                 {
                     if (MessageBox.Show(NewVersionMessage(latestVersion), "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
+                        // PATCHING PROCESS
                         try
                         {
-                            Process.Start(_releasesLink);
+                            Assembly currentAssembly = Assembly.GetEntryAssembly();
+
+                            if (currentAssembly == null)
+                            {
+                                currentAssembly = Assembly.GetCallingAssembly();
+                            }
+
+                            string appFolder = Path.GetDirectoryName(currentAssembly.Location);
+                            string appName = Path.GetFileNameWithoutExtension(currentAssembly.Location);
+                            string appExtension = Path.GetExtension(currentAssembly.Location);
+
+                            string archiveFile = Path.Combine(appFolder, appName + "_old" + appExtension);
+                            string appFile = Path.Combine(appFolder, appName + appExtension);
+                            string tempFile = Path.Combine(appFolder, appName + "_tmp" + appExtension);
+
+                            // DOWNLOAD NEW VERSION
+                            client.DownloadFile(NewDownloadLink(latestVersion), tempFile);
+
+                            // DELETE PREVIOUS BACK-UP
+                            if (File.Exists(archiveFile))
+                            {
+                                File.Delete(archiveFile);
+                            }
+
+                            // MAKE BACK-UP
+                            File.Move(appFile, archiveFile);
+
+                            // PATCH
+                            File.Move(tempFile, appFile);
+
+                            Application.Restart();
                         }
-                        catch { }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
                     }
                 }
                 else if (float.Parse(latestVersion) == Program.GetCurrentVersion())
@@ -103,25 +140,24 @@ namespace Lain
         {
             if (string.IsNullOrEmpty(txtSearch.Text))
             {
-                pictureBox1.Visible = false;
+                clearPic.Visible = false;
                 LoadAccounts();
             }
             else
             {
-                pictureBox1.Visible = true;
+                clearPic.Visible = true;
                 _term = txtSearch.Text.Trim().ToLowerInvariant();
-                AccountView.Nodes.Clear();
+                AccountView.Rows.Clear();
+
                 foreach (LainAccount la in Accounts)
                 {
                     _temp = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name());
                     if (_temp.ToLowerInvariant().Contains(_term))
                     {
-                        TreeNode node = new TreeNode(_cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name()));
-                        node.ForeColor = Options.ForegroundColor;
-                        node.Tag = Options.ThemeFlag;
-                        node.Nodes.Add("Account: ");
-                        node.Nodes.Add("Password: ");
-                        AccountView.Nodes.Add(node);
+                        AccountView.Rows.Add(new string[] { _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name()),
+                                _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Email()),
+                                _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Password())
+                            });
                     }
                 }
             }
@@ -145,50 +181,59 @@ namespace Lain
 
         internal void FixColor()
         {
-            foreach (TreeNode node in AccountView.Nodes)
+            AccountView.DefaultCellStyle.SelectionBackColor = Options.ForegroundColor;
+            AccountView.ColumnHeadersDefaultCellStyle.SelectionBackColor = Options.ForegroundColor;
+        }
+
+        private void CopyAccount()
+        {
+            var rows = AccountView.SelectedRows;
+            if (rows.Count <= 0) return;
+
+            if (rows.Count == 1)
             {
-                if ((string)node.Tag == Options.ThemeFlag)
+                try
                 {
-                    node.ForeColor = Options.ForegroundColor;
+                    Clipboard.SetText(rows[0].Cells[1].Value.ToString());
                 }
+                catch { }
             }
         }
 
-        private void Copy()
+        private void CopyPassword()
         {
-            string s = AccountView.SelectedNode.Text;
-            s = s.Replace("Account: ", string.Empty);
-            s = s.Replace("Password: ", string.Empty);
+            var rows = AccountView.SelectedRows;
+            if (rows.Count <= 0) return;
 
-            try
+            if (rows.Count == 1)
             {
-                Clipboard.SetText(s);
+                try
+                {
+                    Clipboard.SetText(rows[0].Cells[2].Value.ToString());
+                }
+                catch { }
             }
-            catch { }
         }
 
         private void Modify()
         {
-            if (AccountView.SelectedNode != null)
+            var rows = AccountView.SelectedRows;
+            if (rows.Count <= 0) return;
+
+            if (rows.Count == 1)
             {
                 if (Authorize(LoginType.Authorize, true))
                 {
-                    if (AccountView.SelectedNode.Parent == null)
-                    {
-                        NewForm f = new NewForm(NewType.Modify, AccountView.SelectedNode.Text);
-                        IsDialogOpen = true;
-                        f.ShowDialog();
-                        IsDialogOpen = false;
-                    }
-                    else
-                    {
-                        NewForm f = new NewForm(NewType.Modify, AccountView.SelectedNode.Parent.Text);
-                        IsDialogOpen = true;
-                        f.ShowDialog();
-                        IsDialogOpen = false;
-                    }
+                    NewForm f = new NewForm(NewType.Modify, rows[0].Cells[0].Value.ToString());
 
-                    LoadAccounts();
+                    IsDialogOpen = true;
+                    DialogResult r = f.ShowDialog();
+                    IsDialogOpen = false;
+
+                    if (r == DialogResult.OK)
+                    {
+                        LoadAccounts();
+                    }
                 }
             }
         }
@@ -251,32 +296,43 @@ namespace Lain
 
         private void Remove()
         {
-            if (AccountView.SelectedNode != null)
+            var rows = AccountView.SelectedRows;
+            if (rows.Count <= 0) return;
+
+            string name;
+            int i;
+
+            if (Authorize(LoginType.Remove))
             {
-                if (Authorize(LoginType.Remove))
+                foreach (DataGridViewRow row in rows)
                 {
-                    string name = string.Empty;
-
-                    if (AccountView.SelectedNode.Parent == null)
-                    {
-                        name = AccountView.SelectedNode.Text;
-                    }
-                    else
-                    {
-                        name = AccountView.SelectedNode.Parent.Text;
-                    }
-
-                    int i = Accounts.FindIndex(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(Key), name));
+                    name = row.Cells[0].Value.ToString();
+                    i = Accounts.FindIndex(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(Key), name));
                     if (i > -1) { Accounts.RemoveAt(i); }
-
-                    LoadAccounts();
                 }
+
+                LoadAccounts();
             }
+        }
+
+        private void CreateNewAccount()
+        {
+            NewForm f = new NewForm(NewType.New);
+            IsDialogOpen = true;
+            DialogResult r = f.ShowDialog(this);
+            IsDialogOpen = false;
+
+            if (r == DialogResult.OK)
+            {
+                LoadAccounts();
+            }
+
+            Program.SaveSettings();
         }
 
         private void RemoveAll()
         {
-            if (AccountView.Nodes.Count > 0)
+            if (AccountView.Rows.Count > 0)
             {
                 if (Authorize(LoginType.RemoveAll))
                 {
@@ -317,74 +373,44 @@ namespace Lain
 
         private void LoadAccounts()
         {
-            AccountView.Nodes.Clear();
+            AccountView.Rows.Clear();
+            AccountView.Refresh();
 
             foreach (LainAccount x in Accounts)
             {
-                TreeNode node = new TreeNode(_cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Name()));
-                node.ForeColor = Options.ForegroundColor;
-                node.Tag = Options.ThemeFlag;
-                node.Nodes.Add("Account: ");
-                node.Nodes.Add("Password: ");
-                AccountView.Nodes.Add(node);
+                AccountView.Rows.Add(new string[] { _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Name()),
+                    _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Email()),
+                    _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Password())
+                        });
             }
 
             txtSearch.Clear();
             this.Text = string.Format("Lain {0} [{1} accounts]", Program.GetCurrentVersionToString(), Accounts.Count);
 
-            AccountView.Sort();
+            AccountView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            AccountView.Sort(AccountView.Columns[0], ListSortDirection.Ascending);
+            
+            if (AccountView.Rows.Count > 0)
+            {
+                AccountView.ClearSelection();
+                AccountView.Rows[0].Selected = true;
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            CheckForIllegalCrossThreadCalls = false;
-            pictureBox1.Visible = false;
+            clearPic.Visible = false;
             LoadAccounts();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            NewForm f = new NewForm(NewType.New);
-            IsDialogOpen = true;
-            f.ShowDialog(this);
-            IsDialogOpen = false;
-            LoadAccounts();
-
-            Program.SaveSettings();
-        }
-
-        private void AccountView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
-        {
-            if (Authorize(LoginType.Authorize, true))
-            {
-                LainAccount account = Accounts.Find(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(Key), e.Node.Text));
-
-                if (account != null)
-                {
-                    e.Node.Nodes[0].Text = "Account: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Email());
-                    e.Node.Nodes[1].Text = "Password: " + _cryLain.Decrypt(CryLain.ToInsecureString(Key), account.Password());
-                }
-
-                account = null;
-                this.Cursor = Cursors.Default;
-            }
-            else
-            {
-                e.Cancel = true;
-            }
-        }
-
-        private void AccountView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Button.Equals(MouseButtons.Right))
-            {
-                AccountView.SelectedNode = e.Node;
-            }
+            CreateNewAccount();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Copy();
+            CopyAccount();
         }
 
         private void btnModify_Click(object sender, EventArgs e)
@@ -424,16 +450,14 @@ namespace Lain
             IsDialogOpen = false;
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void clearPic_Click(object sender, EventArgs e)
         {
             txtSearch.Clear();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewForm f = new NewForm(NewType.New);
-            f.ShowDialog(this);
-            LoadAccounts();
+            CreateNewAccount();
         }
 
         private void ediToolStripMenuItem_Click(object sender, EventArgs e)
@@ -481,6 +505,16 @@ namespace Lain
                 Clipboard.Clear();
             }
             catch { }
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            CopyPassword();
+        }
+
+        private void AccountView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Modify();
         }
     }
 }

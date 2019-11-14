@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3] - 2019-11-14
+- New: Total UI re-designing
+- Fixed: UI-related bugs
+- Improved: You can now update the app automatically by clicking Update
+
 ## [2.2] - 2018-07-14
 - Hotfix: Delete all & Options button anchoring
 

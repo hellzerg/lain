@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Lain
@@ -38,9 +31,9 @@ namespace Lain
                     {
                         this.Text = "Add new account...";
                     }
-                    
+
                     int i = MainForm.Accounts.FindIndex(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), _name));
-                    
+
                     if (i > -1)
                     {
                         txtName.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Name());
@@ -80,6 +73,7 @@ namespace Lain
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
@@ -90,6 +84,7 @@ namespace Lain
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.OK;
             Save();
         }
 

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 
 namespace Lain
 {
@@ -16,7 +13,7 @@ namespace Lain
 
         // Enter current version here
         internal readonly static float Major = 2;
-        internal readonly static float Minor = 2;
+        internal readonly static float Minor = 3;
 
         /* END OF VERSION PROPERTIES */
 
@@ -58,7 +55,7 @@ namespace Lain
             {
                 _mainContext.MainForm = new LoginForm(LoginType.Login);
             }
-            
+
             Application.Run(_mainContext);
         }
 
