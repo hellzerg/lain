@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.4] - 2019-
+## [2.4] - 2019-11-15
 - New: Choose font size
 - New: Hide passwords from list
 - New: Keep window size & position
