@@ -67,6 +67,7 @@ namespace Lain
                 txtNote.Text = string.Empty;
                 account = null;
 
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
         }
@@ -84,7 +85,6 @@ namespace Lain
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
             Save();
         }
 
