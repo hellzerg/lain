@@ -10,14 +10,6 @@ namespace Lain
     {
         const string _salt = "e3080105715443ef14ef2a09be11fa9d";
 
-        internal static string GenerateRandomPassword(int length)
-        {
-            RNGCryptoServiceProvider cryptRNG = new RNGCryptoServiceProvider();
-            byte[] tokenBuffer = new byte[length];
-            cryptRNG.GetBytes(tokenBuffer);
-            return Convert.ToBase64String(tokenBuffer);
-        }
-
         internal static string HashKey(string key)
         {
             using (SHA256 sha256 = SHA256.Create())

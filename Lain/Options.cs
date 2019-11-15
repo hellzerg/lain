@@ -12,7 +12,11 @@ namespace Lain
         public bool Authorize { get; set; }
         public bool AutoStart { get; set; }
         public bool AutoLock { get; set; }
+        public bool HidePasswords { get; set; }
         public int Minutes { get; set; }
+        public int FontSize { get; set; }
+        public Size WindowSize { get; set; }
+        public Point? WindowLocation { get; set; }
     }
 
     internal static class Options
@@ -93,7 +97,7 @@ namespace Lain
         {
             if (File.Exists(_settingsFile))
             {
-                if ((_flag.Color != CurrentOptions.Color) || (_flag.Authorize != CurrentOptions.Authorize) || (_flag.AutoLock != CurrentOptions.AutoLock) || (_flag.AutoStart != CurrentOptions.AutoStart) || (_flag.Minutes != CurrentOptions.Minutes))
+                if ((_flag.HidePasswords != CurrentOptions.HidePasswords) || (_flag.WindowLocation != CurrentOptions.WindowLocation) || (_flag.WindowSize != CurrentOptions.WindowSize) || (_flag.FontSize != CurrentOptions.FontSize) || (_flag.Color != CurrentOptions.Color) || (_flag.Authorize != CurrentOptions.Authorize) || (_flag.AutoLock != CurrentOptions.AutoLock) || (_flag.AutoStart != CurrentOptions.AutoStart) || (_flag.Minutes != CurrentOptions.Minutes))
                 {
                     File.Delete(_settingsFile);
 
@@ -117,8 +121,12 @@ namespace Lain
                 CurrentOptions.Color = Theme.Zerg;
                 CurrentOptions.Authorize = true;
                 CurrentOptions.AutoLock = false;
+                CurrentOptions.HidePasswords = false;
                 CurrentOptions.Minutes = 2;
                 CurrentOptions.AutoStart = false;
+                CurrentOptions.WindowLocation = null;
+                CurrentOptions.WindowSize = new Size(907, 681);
+                CurrentOptions.FontSize = 1;
 
                 using (FileStream fs = File.Open(_settingsFile, FileMode.CreateNew))
                 using (StreamWriter sw = new StreamWriter(fs))
@@ -140,6 +148,10 @@ namespace Lain
                 _flag.AutoLock = CurrentOptions.AutoLock;
                 _flag.AutoStart = CurrentOptions.AutoStart;
                 _flag.Minutes = CurrentOptions.Minutes;
+                _flag.WindowLocation = CurrentOptions.WindowLocation;
+                _flag.WindowSize = CurrentOptions.WindowSize;
+                _flag.FontSize = CurrentOptions.FontSize;
+                _flag.HidePasswords = CurrentOptions.HidePasswords;
             }
         }
     }

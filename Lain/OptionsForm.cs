@@ -47,6 +47,7 @@ namespace Lain
             checkBox2.Checked = Options.CurrentOptions.AutoLock;
             txtTimer.Text = Options.CurrentOptions.Minutes.ToString();
             checkBox3.Checked = Options.CurrentOptions.AutoStart;
+            checkBox4.Checked = Options.CurrentOptions.HidePasswords;
 
             RegisterAutoStart(!Options.CurrentOptions.AutoStart);
 
@@ -69,6 +70,19 @@ namespace Lain
                     break;
                 case Theme.Zerg:
                     zergtheme.Checked = true;
+                    break;
+            }
+
+            switch (Options.CurrentOptions.FontSize)
+            {
+                case 0:
+                    rSmall.Checked = true;
+                    break;
+                case 1:
+                    rNormal.Checked = true;
+                    break;
+                case 2:
+                    rLarge.Checked = true;
                     break;
             }
         }
@@ -184,6 +198,30 @@ namespace Lain
         private void button1_Click(object sender, EventArgs e)
         {
             CreateBackup();
+        }
+
+        private void rSmall_CheckedChanged(object sender, EventArgs e)
+        {
+            Options.CurrentOptions.FontSize = 0;
+            _main.SetFontSize();
+        }
+
+        private void rNormal_CheckedChanged(object sender, EventArgs e)
+        {
+            Options.CurrentOptions.FontSize = 1;
+            _main.SetFontSize();
+        }
+
+        private void rLarge_CheckedChanged(object sender, EventArgs e)
+        {
+            Options.CurrentOptions.FontSize = 2;
+            _main.SetFontSize();
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            Options.CurrentOptions.HidePasswords = checkBox4.Checked;
+            _main.AccountView.Columns[2].Visible = !checkBox4.Checked;
         }
     }
 }

@@ -108,7 +108,7 @@ namespace Lain
 
         private void button1_Click(object sender, EventArgs e)
         {
-            txtPassword.Text = CryLain.GenerateRandomPassword(32);
+            txtPassword.Text = RandomPassword.Generate(32);
         }
 
         private void txtName_KeyDown(object sender, KeyEventArgs e)

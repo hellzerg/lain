@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -28,6 +29,7 @@ namespace Lain
         CryLain _cryLain = new CryLain();
 
         string _temp = string.Empty;
+        string _temp2 = string.Empty;
         string _term = string.Empty;
 
         public MainForm(SecureString key)
@@ -46,6 +48,31 @@ namespace Lain
             DeserializeAccounts();
             Key = key;
             this.Text = string.Format("Lain [{0} accounts]", Accounts.Count);
+        }
+
+        private void RestoreWindowState()
+        {
+            if (Options.CurrentOptions.WindowSize.IsEmpty && Options.CurrentOptions.WindowLocation == null)
+            {
+                return;
+            }
+
+            this.Size = Options.CurrentOptions.WindowSize;
+
+            if (Options.CurrentOptions.WindowLocation != null)
+            {
+                this.Location = (Point)Options.CurrentOptions.WindowLocation;
+            }
+            else
+            {
+                this.CenterToScreen();
+            }
+        }
+
+        private void SaveWindowState()
+        {
+            Options.CurrentOptions.WindowLocation = this.Location;
+            Options.CurrentOptions.WindowSize = this.Size;
         }
 
         private string NewVersionMessage(string latest)
@@ -154,7 +181,9 @@ namespace Lain
                 foreach (LainAccount la in Accounts)
                 {
                     _temp = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name());
-                    if (_temp.ToLowerInvariant().Contains(_term))
+                    _temp2 = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Email());
+
+                    if (_temp.ToLowerInvariant().Contains(_term) || _temp2.ToLowerInvariant().Contains(_term))
                     {
                         AccountView.Rows.Add(new string[] { _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name()),
                                 _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Email()),
@@ -163,6 +192,9 @@ namespace Lain
                     }
                 }
             }
+
+            _temp = string.Empty;
+            _temp2 = string.Empty;
         }
 
         //private void Reset()
@@ -378,6 +410,15 @@ namespace Lain
             AccountView.Rows.Clear();
             AccountView.Refresh();
 
+            if (Options.CurrentOptions.HidePasswords)
+            {
+                AccountView.Columns[2].Visible = false;
+            }
+            else
+            {
+                AccountView.Columns[2].Visible = true;
+            }
+
             foreach (LainAccount x in Accounts)
             {
                 AccountView.Rows.Add(new string[] { _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Name()),
@@ -399,8 +440,27 @@ namespace Lain
             }
         }
 
+        internal void SetFontSize()
+        {
+            if (Options.CurrentOptions.FontSize == 0)
+            {
+                leftPanel.Font = new Font("Segoe UI Semibold", 9f);
+            }
+            if (Options.CurrentOptions.FontSize == 1)
+            {
+                leftPanel.Font = new Font("Segoe UI Semibold", 11f);
+            }
+            if (Options.CurrentOptions.FontSize == 2)
+            {
+                leftPanel.Font = new Font("Segoe UI Semibold", 13f);
+            }
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
+            RestoreWindowState();
+            SetFontSize();
+
             clearPic.Visible = false;
             LoadAccounts();
         }
@@ -502,6 +562,9 @@ namespace Lain
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            SaveWindowState();
+            Options.SaveSettings();
+
             try
             {
                 Clipboard.Clear();

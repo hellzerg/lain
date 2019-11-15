@@ -42,13 +42,20 @@
             this.txtTimer = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnBackup = new System.Windows.Forms.Button();
+            this.sizePanel = new System.Windows.Forms.Panel();
+            this.rSmall = new System.Windows.Forms.RadioButton();
+            this.rNormal = new System.Windows.Forms.RadioButton();
+            this.rLarge = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.sizePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(18, 192);
+            this.checkBox1.Location = new System.Drawing.Point(17, 345);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(256, 32);
             this.checkBox1.TabIndex = 0;
@@ -61,7 +68,7 @@
             this.minimaltheme.AutoSize = true;
             this.minimaltheme.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.minimaltheme.ForeColor = System.Drawing.Color.Gray;
-            this.minimaltheme.Location = new System.Drawing.Point(153, 134);
+            this.minimaltheme.Location = new System.Drawing.Point(153, 126);
             this.minimaltheme.Name = "minimaltheme";
             this.minimaltheme.Size = new System.Drawing.Size(106, 32);
             this.minimaltheme.TabIndex = 76;
@@ -74,7 +81,7 @@
             this.carameltheme.AutoSize = true;
             this.carameltheme.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.carameltheme.ForeColor = System.Drawing.Color.DarkOrange;
-            this.carameltheme.Location = new System.Drawing.Point(153, 58);
+            this.carameltheme.Location = new System.Drawing.Point(153, 50);
             this.carameltheme.Name = "carameltheme";
             this.carameltheme.Size = new System.Drawing.Size(106, 32);
             this.carameltheme.TabIndex = 75;
@@ -87,7 +94,7 @@
             this.limetheme.AutoSize = true;
             this.limetheme.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.limetheme.ForeColor = System.Drawing.Color.LimeGreen;
-            this.limetheme.Location = new System.Drawing.Point(153, 96);
+            this.limetheme.Location = new System.Drawing.Point(153, 88);
             this.limetheme.Name = "limetheme";
             this.limetheme.Size = new System.Drawing.Size(77, 32);
             this.limetheme.TabIndex = 74;
@@ -100,7 +107,7 @@
             this.magmatheme.AutoSize = true;
             this.magmatheme.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.magmatheme.ForeColor = System.Drawing.Color.Tomato;
-            this.magmatheme.Location = new System.Drawing.Point(37, 96);
+            this.magmatheme.Location = new System.Drawing.Point(37, 88);
             this.magmatheme.Name = "magmatheme";
             this.magmatheme.Size = new System.Drawing.Size(101, 32);
             this.magmatheme.TabIndex = 73;
@@ -114,7 +121,7 @@
             this.oceantheme.Checked = true;
             this.oceantheme.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.oceantheme.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.oceantheme.Location = new System.Drawing.Point(37, 58);
+            this.oceantheme.Location = new System.Drawing.Point(37, 50);
             this.oceantheme.Name = "oceantheme";
             this.oceantheme.Size = new System.Drawing.Size(90, 32);
             this.oceantheme.TabIndex = 72;
@@ -128,7 +135,7 @@
             this.zergtheme.AutoSize = true;
             this.zergtheme.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.zergtheme.ForeColor = System.Drawing.Color.MediumOrchid;
-            this.zergtheme.Location = new System.Drawing.Point(37, 134);
+            this.zergtheme.Location = new System.Drawing.Point(37, 126);
             this.zergtheme.Name = "zergtheme";
             this.zergtheme.Size = new System.Drawing.Size(75, 32);
             this.zergtheme.TabIndex = 71;
@@ -139,11 +146,11 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.ForeColor = System.Drawing.Color.DodgerBlue;
             this.label27.Location = new System.Drawing.Point(12, 9);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(238, 35);
+            this.label27.Size = new System.Drawing.Size(192, 28);
             this.label27.TabIndex = 70;
             this.label27.Tag = "themeable";
             this.label27.Text = "Choose your theme";
@@ -159,7 +166,7 @@
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOk.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOk.ForeColor = System.Drawing.Color.White;
-            this.btnOk.Location = new System.Drawing.Point(312, 328);
+            this.btnOk.Location = new System.Drawing.Point(269, 521);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(89, 39);
             this.btnOk.TabIndex = 77;
@@ -172,7 +179,7 @@
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(18, 230);
+            this.checkBox2.Location = new System.Drawing.Point(17, 421);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(144, 32);
             this.checkBox2.TabIndex = 78;
@@ -184,7 +191,7 @@
             // 
             this.checkBox3.AutoSize = true;
             this.checkBox3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.Location = new System.Drawing.Point(18, 268);
+            this.checkBox3.Location = new System.Drawing.Point(17, 459);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(254, 32);
             this.checkBox3.TabIndex = 79;
@@ -199,7 +206,7 @@
             this.txtTimer.Enabled = false;
             this.txtTimer.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTimer.ForeColor = System.Drawing.Color.White;
-            this.txtTimer.Location = new System.Drawing.Point(168, 229);
+            this.txtTimer.Location = new System.Drawing.Point(167, 420);
             this.txtTimer.Name = "txtTimer";
             this.txtTimer.ShortcutsEnabled = false;
             this.txtTimer.Size = new System.Drawing.Size(62, 34);
@@ -212,7 +219,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(236, 231);
+            this.label1.Location = new System.Drawing.Point(235, 422);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 28);
             this.label1.TabIndex = 81;
@@ -228,7 +235,7 @@
             this.btnBackup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackup.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBackup.ForeColor = System.Drawing.Color.White;
-            this.btnBackup.Location = new System.Drawing.Point(12, 328);
+            this.btnBackup.Location = new System.Drawing.Point(12, 521);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(137, 39);
             this.btnBackup.TabIndex = 82;
@@ -237,6 +244,80 @@
             this.btnBackup.UseVisualStyleBackColor = false;
             this.btnBackup.Click += new System.EventHandler(this.button1_Click);
             // 
+            // sizePanel
+            // 
+            this.sizePanel.Controls.Add(this.label2);
+            this.sizePanel.Controls.Add(this.rLarge);
+            this.sizePanel.Controls.Add(this.rNormal);
+            this.sizePanel.Controls.Add(this.rSmall);
+            this.sizePanel.Location = new System.Drawing.Point(12, 174);
+            this.sizePanel.Name = "sizePanel";
+            this.sizePanel.Size = new System.Drawing.Size(276, 165);
+            this.sizePanel.TabIndex = 83;
+            // 
+            // rSmall
+            // 
+            this.rSmall.AutoSize = true;
+            this.rSmall.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rSmall.ForeColor = System.Drawing.Color.White;
+            this.rSmall.Location = new System.Drawing.Point(25, 40);
+            this.rSmall.Name = "rSmall";
+            this.rSmall.Size = new System.Drawing.Size(82, 32);
+            this.rSmall.TabIndex = 77;
+            this.rSmall.Text = "Small";
+            this.rSmall.UseVisualStyleBackColor = true;
+            this.rSmall.CheckedChanged += new System.EventHandler(this.rSmall_CheckedChanged);
+            // 
+            // rNormal
+            // 
+            this.rNormal.AutoSize = true;
+            this.rNormal.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rNormal.ForeColor = System.Drawing.Color.White;
+            this.rNormal.Location = new System.Drawing.Point(25, 78);
+            this.rNormal.Name = "rNormal";
+            this.rNormal.Size = new System.Drawing.Size(100, 32);
+            this.rNormal.TabIndex = 78;
+            this.rNormal.Text = "Normal";
+            this.rNormal.UseVisualStyleBackColor = true;
+            this.rNormal.CheckedChanged += new System.EventHandler(this.rNormal_CheckedChanged);
+            // 
+            // rLarge
+            // 
+            this.rLarge.AutoSize = true;
+            this.rLarge.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rLarge.ForeColor = System.Drawing.Color.White;
+            this.rLarge.Location = new System.Drawing.Point(25, 116);
+            this.rLarge.Name = "rLarge";
+            this.rLarge.Size = new System.Drawing.Size(83, 32);
+            this.rLarge.TabIndex = 79;
+            this.rLarge.Text = "Large";
+            this.rLarge.UseVisualStyleBackColor = true;
+            this.rLarge.CheckedChanged += new System.EventHandler(this.rLarge_CheckedChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(211, 28);
+            this.label2.TabIndex = 84;
+            this.label2.Tag = "themeable";
+            this.label2.Text = "Choose your font size";
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox4.Location = new System.Drawing.Point(17, 383);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(178, 32);
+            this.checkBox4.TabIndex = 84;
+            this.checkBox4.Text = "Hide passwords";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            // 
             // OptionsForm
             // 
             this.AcceptButton = this.btnOk;
@@ -244,7 +325,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.CancelButton = this.btnOk;
-            this.ClientSize = new System.Drawing.Size(413, 379);
+            this.ClientSize = new System.Drawing.Size(370, 572);
+            this.Controls.Add(this.checkBox4);
+            this.Controls.Add(this.sizePanel);
             this.Controls.Add(this.btnBackup);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtTimer);
@@ -270,6 +353,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Options";
             this.Load += new System.EventHandler(this.OptionsForm_Load);
+            this.sizePanel.ResumeLayout(false);
+            this.sizePanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,5 +376,11 @@
         private System.Windows.Forms.TextBox txtTimer;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnBackup;
+        private System.Windows.Forms.Panel sizePanel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RadioButton rLarge;
+        private System.Windows.Forms.RadioButton rNormal;
+        private System.Windows.Forms.RadioButton rSmall;
+        private System.Windows.Forms.CheckBox checkBox4;
     }
 }

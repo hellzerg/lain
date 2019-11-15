@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4] - 2019-
+- New: Choose font size
+- New: Hide passwords from list
+- New: Keep window size & position
+- Improved: More complex random passwords
+- Improved: Search by title & account
+
 ## [2.3] - 2019-11-14
 - New: Total UI re-designing
 - Fixed: UI-related bugs

@@ -91,6 +91,7 @@
     <Compile Include="OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RandomPassword.cs" />
     <Compile Include="Required.cs" />
     <Compile Include="ToolStripRendererMaterial.cs" />
     <Compile Include="Utilities.cs" />
