@@ -17,6 +17,7 @@ namespace Lain
         public int FontSize { get; set; }
         public Size WindowSize { get; set; }
         public Point? WindowLocation { get; set; }
+        public FormWindowState WindowState { get; set; }
     }
 
     internal static class Options
@@ -29,9 +30,6 @@ namespace Lain
         readonly static string _settingsFile = Required.DataFolder + "Lain.json";
 
         internal static SettingsJson CurrentOptions = new SettingsJson();
-
-        // use this to determine if changes have been made
-        static SettingsJson _flag = new SettingsJson();
 
         internal static void ApplyTheme(Form f)
         {
@@ -97,19 +95,16 @@ namespace Lain
         {
             if (File.Exists(_settingsFile))
             {
-                if ((_flag.HidePasswords != CurrentOptions.HidePasswords) || (_flag.WindowLocation != CurrentOptions.WindowLocation) || (_flag.WindowSize != CurrentOptions.WindowSize) || (_flag.FontSize != CurrentOptions.FontSize) || (_flag.Color != CurrentOptions.Color) || (_flag.Authorize != CurrentOptions.Authorize) || (_flag.AutoLock != CurrentOptions.AutoLock) || (_flag.AutoStart != CurrentOptions.AutoStart) || (_flag.Minutes != CurrentOptions.Minutes))
+                File.WriteAllText(_settingsFile, string.Empty);
+
+                using (FileStream fs = File.Open(_settingsFile, FileMode.OpenOrCreate))
+                using (StreamWriter sw = new StreamWriter(fs))
+                using (JsonWriter jw = new JsonTextWriter(sw))
                 {
-                    File.Delete(_settingsFile);
+                    jw.Formatting = Formatting.Indented;
 
-                    using (FileStream fs = File.Open(_settingsFile, FileMode.OpenOrCreate))
-                    using (StreamWriter sw = new StreamWriter(fs))
-                    using (JsonWriter jw = new JsonTextWriter(sw))
-                    {
-                        jw.Formatting = Formatting.Indented;
-
-                        JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(jw, CurrentOptions);
-                    }
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(jw, CurrentOptions);
                 }
             }
         }
@@ -127,6 +122,7 @@ namespace Lain
                 CurrentOptions.WindowLocation = null;
                 CurrentOptions.WindowSize = new Size(907, 681);
                 CurrentOptions.FontSize = 1;
+                CurrentOptions.WindowState = FormWindowState.Normal;
 
                 using (FileStream fs = File.Open(_settingsFile, FileMode.CreateNew))
                 using (StreamWriter sw = new StreamWriter(fs))
@@ -142,16 +138,11 @@ namespace Lain
             {
                 CurrentOptions = JsonConvert.DeserializeObject<SettingsJson>(File.ReadAllText(_settingsFile));
 
-                // initialize flag
-                _flag.Color = CurrentOptions.Color;
-                _flag.Authorize = CurrentOptions.Authorize;
-                _flag.AutoLock = CurrentOptions.AutoLock;
-                _flag.AutoStart = CurrentOptions.AutoStart;
-                _flag.Minutes = CurrentOptions.Minutes;
-                _flag.WindowLocation = CurrentOptions.WindowLocation;
-                _flag.WindowSize = CurrentOptions.WindowSize;
-                _flag.FontSize = CurrentOptions.FontSize;
-                _flag.HidePasswords = CurrentOptions.HidePasswords;
+                if (CurrentOptions.WindowSize.IsEmpty)
+                {
+                    CurrentOptions.WindowSize = new Size(907, 681);
+                    SaveSettings();
+                }
             }
         }
     }

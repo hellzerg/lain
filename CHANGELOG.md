@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5] - 2019-11-21
+- Bugfix when restoring state
+
 ## [2.4] - 2019-11-15
 - New: Choose font size
 - New: Hide passwords from list

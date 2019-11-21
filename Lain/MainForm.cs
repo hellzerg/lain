@@ -52,11 +52,7 @@ namespace Lain
 
         private void RestoreWindowState()
         {
-            if (Options.CurrentOptions.WindowSize.IsEmpty && Options.CurrentOptions.WindowLocation == null)
-            {
-                return;
-            }
-
+            this.WindowState = Options.CurrentOptions.WindowState;
             this.Size = Options.CurrentOptions.WindowSize;
 
             if (Options.CurrentOptions.WindowLocation != null)
@@ -71,8 +67,18 @@ namespace Lain
 
         private void SaveWindowState()
         {
-            Options.CurrentOptions.WindowLocation = this.Location;
-            Options.CurrentOptions.WindowSize = this.Size;
+            Options.CurrentOptions.WindowState = this.WindowState;
+
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                Options.CurrentOptions.WindowLocation = this.Location;
+                Options.CurrentOptions.WindowSize = this.Size;
+            }
+            else
+            {
+                Options.CurrentOptions.WindowLocation = this.RestoreBounds.Location;
+                Options.CurrentOptions.WindowSize = this.RestoreBounds.Size;
+            }
         }
 
         private string NewVersionMessage(string latest)
