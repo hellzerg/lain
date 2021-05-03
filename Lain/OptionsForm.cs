@@ -1,7 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.IO;
-using System.IO.Compression;
 using System.Windows.Forms;
 
 namespace Lain
@@ -171,33 +169,6 @@ namespace Lain
         {
             if (Convert.ToInt32(txtTimer.Text.Trim()) <= 0) Options.CurrentOptions.Minutes = 1;
             else Options.CurrentOptions.Minutes = Convert.ToInt32(txtTimer.Text);
-        }
-
-        private void CreateBackup()
-        {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.DefaultExt = ".Lain";
-            dialog.Title = "Create backup ...";
-            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
-            dialog.FileName = "Backup";
-            dialog.Filter = "All files|*.*";
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    if (Directory.Exists(Required.DataFolder))
-                    {
-                        ZipFile.CreateFromDirectory(Required.DataFolder, dialog.FileName, CompressionLevel.Optimal, false);
-                    }
-                }
-                catch { }
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            CreateBackup();
         }
 
         private void rSmall_CheckedChanged(object sender, EventArgs e)

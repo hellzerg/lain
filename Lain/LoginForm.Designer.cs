@@ -34,9 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
-            this.btnReset = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnRestore = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,9 +43,10 @@
             this.status.AutoSize = true;
             this.status.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.status.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.status.Location = new System.Drawing.Point(12, 9);
+            this.status.Location = new System.Drawing.Point(10, 7);
+            this.status.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(363, 70);
+            this.status.Size = new System.Drawing.Size(290, 56);
             this.status.TabIndex = 56;
             this.status.Tag = "themeable";
             this.status.Text = "Do NOT forget your password,\r\nyou can\'t restore it";
@@ -58,9 +57,10 @@
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.ForeColor = System.Drawing.Color.White;
-            this.txtPassword.Location = new System.Drawing.Point(18, 126);
+            this.txtPassword.Location = new System.Drawing.Point(14, 101);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(404, 34);
+            this.txtPassword.Size = new System.Drawing.Size(324, 29);
             this.txtPassword.TabIndex = 60;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
@@ -69,9 +69,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Silver;
-            this.label1.Location = new System.Drawing.Point(13, 95);
+            this.label1.Location = new System.Drawing.Point(10, 76);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 28);
+            this.label1.Size = new System.Drawing.Size(83, 21);
             this.label1.TabIndex = 59;
             this.label1.Tag = "";
             this.label1.Text = "Password:";
@@ -86,9 +87,10 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(239, 229);
+            this.btnExit.Location = new System.Drawing.Point(191, 183);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(90, 39);
+            this.btnExit.Size = new System.Drawing.Size(72, 31);
             this.btnExit.TabIndex = 63;
             this.btnExit.Tag = "themeable";
             this.btnExit.Text = "Exit";
@@ -104,75 +106,39 @@
             this.btnOk.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOk.ForeColor = System.Drawing.Color.White;
-            this.btnOk.Location = new System.Drawing.Point(335, 229);
+            this.btnOk.Location = new System.Drawing.Point(268, 183);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(90, 39);
+            this.btnOk.Size = new System.Drawing.Size(72, 31);
             this.btnOk.TabIndex = 62;
             this.btnOk.Tag = "themeable";
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
-            // btnReset
-            // 
-            this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnReset.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnReset.FlatAppearance.BorderColor = System.Drawing.Color.DodgerBlue;
-            this.btnReset.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnReset.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(18, 229);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(135, 39);
-            this.btnReset.TabIndex = 64;
-            this.btnReset.Tag = "themeable";
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = false;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(389, 126);
+            this.pictureBox1.Location = new System.Drawing.Point(311, 101);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(33, 34);
+            this.pictureBox1.Size = new System.Drawing.Size(27, 28);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 73;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // btnRestore
-            // 
-            this.btnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRestore.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnRestore.FlatAppearance.BorderColor = System.Drawing.Color.DodgerBlue;
-            this.btnRestore.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnRestore.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnRestore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRestore.ForeColor = System.Drawing.Color.White;
-            this.btnRestore.Location = new System.Drawing.Point(18, 184);
-            this.btnRestore.Name = "btnRestore";
-            this.btnRestore.Size = new System.Drawing.Size(135, 39);
-            this.btnRestore.TabIndex = 74;
-            this.btnRestore.Tag = "themeable";
-            this.btnRestore.Text = "Restore backup";
-            this.btnRestore.UseVisualStyleBackColor = false;
-            this.btnRestore.Click += new System.EventHandler(this.button1_Click);
-            // 
             // LoginForm
             // 
             this.AcceptButton = this.btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(437, 280);
-            this.Controls.Add(this.btnRestore);
+            this.ClientSize = new System.Drawing.Size(350, 224);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.txtPassword);
@@ -182,6 +148,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -200,8 +167,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button btnRestore;
     }
 }

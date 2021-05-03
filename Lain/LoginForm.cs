@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.IO.Compression;
 using System.Windows.Forms;
 
 namespace Lain
@@ -71,22 +70,6 @@ namespace Lain
             }
         }
 
-        private void Reset()
-        {
-            try
-            {
-                if (Directory.Exists(Required.DataFolder))
-                {
-                    Directory.Delete(Required.DataFolder, true);
-                }
-            }
-            catch { }
-            finally
-            {
-                Application.Restart();
-            }
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             switch (_type)
@@ -107,14 +90,6 @@ namespace Lain
             Login();
         }
 
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Do you really want to reset Lain?\nThis will delete everything!", "Reset Lain?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                Reset();
-            }
-        }
-
         private void LoginForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
@@ -122,21 +97,21 @@ namespace Lain
             {
                 case LoginType.Authorize:
                     btnExit.Text = "Cancel";
-                    btnReset.Visible = false;
-                    btnRestore.Visible = false;
+                    //btnReset.Visible = false;
+                    //btnRestore.Visible = false;
                     break;
 
                 case LoginType.Remove:
                     btnExit.Text = "Cancel";
-                    btnReset.Visible = false;
-                    btnRestore.Visible = false;
+                    //btnReset.Visible = false;
+                    //btnRestore.Visible = false;
                     status.Text = "Enter your password\nto delete this account";
                     break;
 
                 case LoginType.RemoveAll:
                     btnExit.Text = "Cancel";
-                    btnReset.Visible = false;
-                    btnRestore.Visible = false;
+                    //btnReset.Visible = false;
+                    //btnRestore.Visible = false;
                     status.Text = "Enter your password\nto delete all your accounts";
                     break;
             }
@@ -158,45 +133,6 @@ namespace Lain
                 _showPassword = true;
                 return;
             }
-        }
-
-        private void RestoreBackup()
-        {
-            if (MessageBox.Show("Do you really want restore a backup?\nThis will delete your current accounts!", "Restore backup?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.DefaultExt = ".Lain";
-                dialog.Title = "Restore backup ...";
-                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
-                dialog.FileName = string.Empty;
-                dialog.Filter = "Lain files|*.Lain";
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        if (Directory.Exists(Required.DataFolder))
-                        {
-                            Directory.Delete(Required.DataFolder, true);
-                        }
-                    }
-                    catch { }
-                    finally
-                    {
-                        try
-                        {
-                            ZipFile.ExtractToDirectory(dialog.FileName, Required.DataFolder);
-                            Application.Restart();
-                        }
-                        catch { }
-                    }
-                }
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            RestoreBackup();
         }
     }
 }

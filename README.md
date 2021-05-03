@@ -8,7 +8,6 @@ Simple, secure and portable password manager
 * Random password generator included
 * Automatic lock when inactive
 * Start with Windows option
-* Backup/restore profile and accounts
 
 ## Downloads: ##
 https://github.com/hellzerg/lain/releases
@@ -24,5 +23,5 @@ https://github.com/hellzerg/lain/blob/master/IMAGES.md
 
 ## Details: ##
 
-* Latest version: 2.5
-* Released: November 21, 2019
+* Latest version: 2.6
+* Released: May 3, 2021

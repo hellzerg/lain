@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.6] - 2021-05-03
+- Removed: Backup & Restore feature
+- Removed: Reset button when locked
+
 ## [2.5] - 2019-11-21
 - Bugfix when restoring state
 

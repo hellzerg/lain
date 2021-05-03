@@ -438,7 +438,7 @@ namespace Lain
 
             AccountView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             AccountView.Sort(AccountView.Columns[0], ListSortDirection.Ascending);
-            
+
             if (AccountView.Rows.Count > 0)
             {
                 AccountView.ClearSelection();
