@@ -97,21 +97,15 @@ namespace Lain
             {
                 case LoginType.Authorize:
                     btnExit.Text = "Cancel";
-                    //btnReset.Visible = false;
-                    //btnRestore.Visible = false;
                     break;
 
                 case LoginType.Remove:
                     btnExit.Text = "Cancel";
-                    //btnReset.Visible = false;
-                    //btnRestore.Visible = false;
                     status.Text = "Enter your password\nto delete this account";
                     break;
 
                 case LoginType.RemoveAll:
                     btnExit.Text = "Cancel";
-                    //btnReset.Visible = false;
-                    //btnRestore.Visible = false;
                     status.Text = "Enter your password\nto delete all your accounts";
                     break;
             }

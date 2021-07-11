@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.7] - 2021-06-11
+- Added: Ability to choose random password length
+- Added: Optional link associated with an account
+- Added: Minimal decoration with icons
+
 ## [2.6] - 2021-05-03
 - Removed: Backup & Restore feature
 - Removed: Reset button when locked

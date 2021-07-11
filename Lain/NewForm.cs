@@ -12,10 +12,13 @@ namespace Lain
 
         bool _showPassword = false;
 
+        readonly int DEFAULT_RANDOM_CHARACTERS = 32;
+
         internal NewForm(NewType type, string info = null)
         {
             InitializeComponent();
             Options.ApplyTheme(this);
+
             _type = type;
             _name = info;
 
@@ -39,6 +42,8 @@ namespace Lain
                         txtName.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Name());
                         txtMail.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Email());
                         txtPassword.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Password());
+
+                        txtLink.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Link());
                         txtNote.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Note());
                     }
 
@@ -58,12 +63,20 @@ namespace Lain
                         break;
                 }
 
-                LainAccount account = new LainAccount(_cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtName.Text), _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtMail.Text), _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtPassword.Text), _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtNote.Text));
+                LainAccount account = new LainAccount(
+                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtName.Text),
+                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtMail.Text),
+                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtPassword.Text),
+                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtLink.Text),
+                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtNote.Text)
+                );
+
                 MainForm.Accounts.Add(account);
 
                 txtName.Text = string.Empty;
                 txtMail.Text = string.Empty;
                 txtPassword.Text = string.Empty;
+                txtLink.Text = string.Empty;
                 txtNote.Text = string.Empty;
                 account = null;
 
@@ -81,6 +94,9 @@ namespace Lain
         private void NewForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
+
+            txtMaxRandomChars.ShortcutsEnabled = false;
+            txtMaxRandomChars.Text = DEFAULT_RANDOM_CHARACTERS.ToString();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -106,9 +122,19 @@ namespace Lain
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnGenerateRandom_Click(object sender, EventArgs e)
         {
-            txtPassword.Text = RandomPassword.Generate(32);
+            if (string.IsNullOrEmpty(txtMaxRandomChars.Text))
+            {
+                txtMaxRandomChars.Text = DEFAULT_RANDOM_CHARACTERS.ToString();
+            }
+
+            if (Convert.ToInt32(txtMaxRandomChars.Text) <= 0)
+            {
+                txtMaxRandomChars.Text = DEFAULT_RANDOM_CHARACTERS.ToString();
+            }
+
+            txtPassword.Text = RandomPassword.Generate(Convert.ToInt32(txtMaxRandomChars.Text));
         }
 
         private void txtName_KeyDown(object sender, KeyEventArgs e)
@@ -117,6 +143,20 @@ namespace Lain
             {
                 Save();
             }
+        }
+
+        private void txtMaxRandomChars_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void btnCopyPassword_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(txtPassword.Text);
+            }
+            catch { }
         }
     }
 }

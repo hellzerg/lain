@@ -30,6 +30,7 @@ namespace Lain
 
         string _temp = string.Empty;
         string _temp2 = string.Empty;
+        string _temp3 = string.Empty;
         string _term = string.Empty;
 
         public MainForm(SecureString key)
@@ -47,7 +48,7 @@ namespace Lain
 
             DeserializeAccounts();
             Key = key;
-            this.Text = string.Format("Lain [{0} accounts]", Accounts.Count);
+            this.Text = string.Format("Lain - {0} accounts", Accounts.Count);
         }
 
         private void RestoreWindowState()
@@ -188,12 +189,14 @@ namespace Lain
                 {
                     _temp = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name());
                     _temp2 = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Email());
+                    _temp3 = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Link());
 
                     if (_temp.ToLowerInvariant().Contains(_term) || _temp2.ToLowerInvariant().Contains(_term))
                     {
                         AccountView.Rows.Add(new string[] { _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name()),
                                 _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Email()),
-                                _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Password())
+                                _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Password()),
+                                _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Link())
                             });
                     }
                 }
@@ -202,23 +205,7 @@ namespace Lain
             _temp = string.Empty;
             _temp2 = string.Empty;
         }
-
-        //private void Reset()
-        //{
-        //    try
-        //    {
-        //        if (Directory.Exists(Required.DataFolder))
-        //        {
-        //            Directory.Delete(Required.DataFolder, true);
-        //        }
-        //    }
-        //    catch { }
-        //    finally
-        //    {
-        //        Application.Restart();
-        //    }
-        //}
-
+        
         internal void FixColor()
         {
             AccountView.DefaultCellStyle.SelectionBackColor = Options.ForegroundColor;
@@ -252,6 +239,24 @@ namespace Lain
                     Clipboard.SetText(rows[0].Cells[2].Value.ToString());
                 }
                 catch { }
+            }
+        }
+
+        private void OpenLink()
+        {
+            var rows = AccountView.SelectedRows;
+            if (rows.Count <= 0) return;
+
+            if (rows.Count == 1)
+            {
+                var link = rows[0].Cells[3].Value;
+                if (link == null) return;
+
+                if (!string.IsNullOrEmpty(link.ToString().Trim()))
+                {
+                    if (!link.ToString().StartsWith("http://") && !link.ToString().StartsWith("https://")) link = "https://" + link;
+                    System.Diagnostics.Process.Start(link.ToString());
+                }
             }
         }
 
@@ -429,12 +434,13 @@ namespace Lain
             {
                 AccountView.Rows.Add(new string[] { _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Name()),
                     _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Email()),
-                    _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Password())
-                        });
+                    _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Password()),
+                    _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Link())
+                });
             }
 
             txtSearch.Clear();
-            this.Text = string.Format("Lain {0} [{1} accounts]", Program.GetCurrentVersionToString(), Accounts.Count);
+            this.Text = string.Format("Lain {0} - {1} accounts", Program.GetCurrentVersionToString(), Accounts.Count);
 
             AccountView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             AccountView.Sort(AccountView.Columns[0], ListSortDirection.Ascending);
@@ -586,6 +592,11 @@ namespace Lain
         private void AccountView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             Modify();
+        }
+
+        private void openLinkBtn_Click(object sender, EventArgs e)
+        {
+            OpenLink();
         }
     }
 }

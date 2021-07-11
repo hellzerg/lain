@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Lain")]
-[assembly: AssemblyCopyright("deadmoon © 2020")]
+[assembly: AssemblyCopyright("deadmoon © ∞")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -107,44 +107,5 @@ namespace Lain
         {
             PasswordVisibility();
         }
-
-        private void RestoreBackup()
-        {
-            if (MessageBox.Show("Do you really want restore a backup?", "Restore backup?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.DefaultExt = ".Lain";
-                dialog.Title = "Restore backup ...";
-                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
-                dialog.FileName = string.Empty;
-                dialog.Filter = "Lain files|*.Lain";
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        if (Directory.Exists(Required.DataFolder))
-                        {
-                            Directory.Delete(Required.DataFolder, true);
-                        }
-                    }
-                    catch { }
-                    finally
-                    {
-                        try
-                        {
-                            ZipFile.ExtractToDirectory(dialog.FileName, Required.DataFolder);
-                            Application.Restart();
-                        }
-                        catch { }
-                    }
-                }
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            RestoreBackup();
-        }
     }
 }

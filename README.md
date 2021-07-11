@@ -1,6 +1,6 @@
 ## Summary: ##
 
-Simple, secure and portable password manager
+Minimal, secure and portable password manager
 
 ## Features: ##
 
@@ -23,5 +23,6 @@ https://github.com/hellzerg/lain/blob/master/IMAGES.md
 
 ## Details: ##
 
-* Latest version: 2.6
-* Released: May 3, 2021
+* Latest version: 2.7
+* Released: July 11, 2021
+* SHA256: 830618E30F39EFE246F2A97B629BC87F251EA0F69B9DA0996A304188E305F46C
