@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -452,6 +453,22 @@ namespace Lain
             }
         }
 
+        // find duplicate passwords
+        private void AnalyzeAccounts()
+        {
+            List<LainAccount> duplicates = new HashSet<LainAccount>(Accounts.Where(c => Accounts.Count(x => x.Password() == c.Password()) > 1)).ToList();
+
+            if (duplicates.Count() <= 0)
+            {
+                MessageBox.Show("There are no accounts with identical passwords.", "Duplicate Passwords Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DuplicatesForm f = new DuplicatesForm(duplicates.OrderBy(g => g.Password()).ToList());
+            duplicates.Clear();
+            f.ShowDialog(this);
+        }
+
         internal void SetFontSize()
         {
             if (Options.CurrentOptions.FontSize == 0)
@@ -597,6 +614,11 @@ namespace Lain
         private void openLinkBtn_Click(object sender, EventArgs e)
         {
             OpenLink();
+        }
+
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            AnalyzeAccounts();
         }
     }
 }

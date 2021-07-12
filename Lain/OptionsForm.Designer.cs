@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsForm));
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.minimaltheme = new System.Windows.Forms.RadioButton();
             this.carameltheme = new System.Windows.Forms.RadioButton();
             this.limetheme = new System.Windows.Forms.RadioButton();
@@ -38,31 +37,19 @@
             this.zergtheme = new System.Windows.Forms.RadioButton();
             this.label27 = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.txtTimer = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.sizePanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.rLarge = new System.Windows.Forms.RadioButton();
-            this.rNormal = new System.Windows.Forms.RadioButton();
-            this.rSmall = new System.Windows.Forms.RadioButton();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new Lain.ColoredCheckBox();
+            this.rLarge = new Lain.ColoredRadioButton();
+            this.rNormal = new Lain.ColoredRadioButton();
+            this.rSmall = new Lain.ColoredRadioButton();
+            this.checkBox3 = new Lain.ColoredCheckBox();
+            this.checkBox2 = new Lain.ColoredCheckBox();
+            this.checkBox1 = new Lain.ColoredCheckBox();
             this.sizePanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(14, 276);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(206, 25);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Always ask for password";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // minimaltheme
             // 
@@ -187,32 +174,6 @@
             this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(14, 337);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(116, 25);
-            this.checkBox2.TabIndex = 78;
-            this.checkBox2.Text = "Auto lock in";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.Location = new System.Drawing.Point(14, 367);
-            this.checkBox3.Margin = new System.Windows.Forms.Padding(2);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(203, 25);
-            this.checkBox3.TabIndex = 79;
-            this.checkBox3.Text = "Start Lain with Windows";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
-            // 
             // txtTimer
             // 
             this.txtTimer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
@@ -266,6 +227,19 @@
             this.label2.Tag = "themeable";
             this.label2.Text = "Choose your font size";
             // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox4.Location = new System.Drawing.Point(14, 306);
+            this.checkBox4.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(145, 25);
+            this.checkBox4.TabIndex = 84;
+            this.checkBox4.Text = "Hide passwords";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            // 
             // rLarge
             // 
             this.rLarge.AutoSize = true;
@@ -276,6 +250,7 @@
             this.rLarge.Name = "rLarge";
             this.rLarge.Size = new System.Drawing.Size(69, 25);
             this.rLarge.TabIndex = 79;
+            this.rLarge.Tag = "";
             this.rLarge.Text = "Large";
             this.rLarge.UseVisualStyleBackColor = true;
             this.rLarge.CheckedChanged += new System.EventHandler(this.rLarge_CheckedChanged);
@@ -290,6 +265,7 @@
             this.rNormal.Name = "rNormal";
             this.rNormal.Size = new System.Drawing.Size(82, 25);
             this.rNormal.TabIndex = 78;
+            this.rNormal.Tag = "";
             this.rNormal.Text = "Normal";
             this.rNormal.UseVisualStyleBackColor = true;
             this.rNormal.CheckedChanged += new System.EventHandler(this.rNormal_CheckedChanged);
@@ -304,22 +280,49 @@
             this.rSmall.Name = "rSmall";
             this.rSmall.Size = new System.Drawing.Size(67, 25);
             this.rSmall.TabIndex = 77;
+            this.rSmall.Tag = "";
             this.rSmall.Text = "Small";
             this.rSmall.UseVisualStyleBackColor = true;
             this.rSmall.CheckedChanged += new System.EventHandler(this.rSmall_CheckedChanged);
             // 
-            // checkBox4
+            // checkBox3
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox4.Location = new System.Drawing.Point(14, 306);
-            this.checkBox4.Margin = new System.Windows.Forms.Padding(2);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(145, 25);
-            this.checkBox4.TabIndex = 84;
-            this.checkBox4.Text = "Hide passwords";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox3.Location = new System.Drawing.Point(14, 367);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(203, 25);
+            this.checkBox3.TabIndex = 79;
+            this.checkBox3.Text = "Start Lain with Windows";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox2.Location = new System.Drawing.Point(14, 337);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(116, 25);
+            this.checkBox2.TabIndex = 78;
+            this.checkBox2.Text = "Auto lock in";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox1.Location = new System.Drawing.Point(14, 276);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(206, 25);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "Always ask for password";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // OptionsForm
             // 
@@ -366,7 +369,7 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox checkBox1;
+        private ColoredCheckBox checkBox1;
         private System.Windows.Forms.RadioButton minimaltheme;
         private System.Windows.Forms.RadioButton carameltheme;
         private System.Windows.Forms.RadioButton limetheme;
@@ -375,15 +378,15 @@
         private System.Windows.Forms.RadioButton zergtheme;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private ColoredCheckBox checkBox2;
+        private ColoredCheckBox checkBox3;
         private System.Windows.Forms.TextBox txtTimer;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel sizePanel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RadioButton rLarge;
-        private System.Windows.Forms.RadioButton rNormal;
-        private System.Windows.Forms.RadioButton rSmall;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private ColoredRadioButton rLarge;
+        private ColoredRadioButton rNormal;
+        private ColoredRadioButton rSmall;
+        private ColoredCheckBox checkBox4;
     }
 }

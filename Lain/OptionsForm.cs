@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Lain
@@ -88,6 +89,7 @@ namespace Lain
         private void OptionsForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
+            txtTimer.ShortcutsEnabled = false;
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -101,6 +103,7 @@ namespace Lain
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
             _main.FixColor();
+            label1.ForeColor = Options.ForegroundColor;
         }
 
         private void magmatheme_CheckedChanged(object sender, EventArgs e)
@@ -109,6 +112,7 @@ namespace Lain
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
             _main.FixColor();
+            label1.ForeColor = Options.ForegroundColor;
         }
 
         private void zergtheme_CheckedChanged(object sender, EventArgs e)
@@ -117,6 +121,7 @@ namespace Lain
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
             _main.FixColor();
+            label1.ForeColor = Options.ForegroundColor;
         }
 
         private void carameltheme_CheckedChanged(object sender, EventArgs e)
@@ -125,6 +130,7 @@ namespace Lain
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
             _main.FixColor();
+            label1.ForeColor = Options.ForegroundColor;
         }
 
         private void limetheme_CheckedChanged(object sender, EventArgs e)
@@ -133,6 +139,7 @@ namespace Lain
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
             _main.FixColor();
+            label1.ForeColor = Options.ForegroundColor;
         }
 
         private void minimaltheme_CheckedChanged(object sender, EventArgs e)
@@ -141,6 +148,7 @@ namespace Lain
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
             _main.FixColor();
+            label1.ForeColor = Options.ForegroundColor;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -157,6 +165,18 @@ namespace Lain
         {
             txtTimer.Enabled = checkBox2.Checked;
             Options.CurrentOptions.AutoLock = checkBox2.Checked;
+
+            if (checkBox2.Checked)
+            {
+                label1.ForeColor = Options.ForegroundColor;
+                label1.Font = new Font(label1.Font, FontStyle.Underline);
+            }
+
+            if (!checkBox2.Checked)
+            {
+                label1.ForeColor = Color.White;
+                label1.Font = new Font(label1.Font, FontStyle.Regular);
+            }
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)

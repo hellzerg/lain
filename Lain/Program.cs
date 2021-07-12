@@ -13,7 +13,7 @@ namespace Lain
 
         // Enter current version here
         internal readonly static float Major = 2;
-        internal readonly static float Minor = 7;
+        internal readonly static float Minor = 8;
 
         /* END OF VERSION PROPERTIES */
 

@@ -89,6 +89,13 @@ namespace Lain
                     tmp.ForeColor = c1;
                 }
             }
+            foreach (RadioButton tmp in Utilities.GetSelfAndChildrenRecursive(f).OfType<RadioButton>().ToList())
+            {
+                if ((string)tmp.Tag == ThemeFlag)
+                {
+                    tmp.ForeColor = c1;
+                }
+            }
         }
 
         internal static void SaveSettings()

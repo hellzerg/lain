@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.8] - 2021-06-12
+- Added: Analyze accounts to find identical passwords
+- Added: Colorized UI
+
 ## [2.7] - 2021-06-11
 - Added: Ability to choose random password length
 - Added: Optional link associated with an account

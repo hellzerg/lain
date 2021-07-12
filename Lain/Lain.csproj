@@ -62,7 +62,19 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ColoredCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ColoredRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CryLain.cs" />
+    <Compile Include="DuplicatesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DuplicatesForm.Designer.cs">
+      <DependentUpon>DuplicatesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmbeddedAssembly.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="LainAccount.cs" />
@@ -105,6 +117,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DuplicatesForm.resx">
+      <DependentUpon>DuplicatesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
