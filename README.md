@@ -1,6 +1,15 @@
+<p align="center">
+   <img src="banner.png">
+</p>
+
 ## Summary: ##
 
 Minimal, secure and portable password manager
+<p align="center">
+	<a href="https://github.com/hellzerg/lain/releases/download/2.8/Lain-2.8.exe" target="_blank">
+		<img src="download-button.png">
+	</a>
+</p> 
 
 ## Features: ##
 
