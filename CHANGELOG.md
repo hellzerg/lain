@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [2.9] - 2022-02-02
-- New: You can now override default salt for an extra layer of protection (Read carefully: https://github.com/hellzerg/lain/SALTS.md)
+- New: You can now override default salt for an extra layer of protection (Read carefully: https://github.com/hellzerg/lain/blob/master/SALTS.md)
 
 ## [2.8] - 2021-06-12
 - New: Analyze accounts to find identical passwords

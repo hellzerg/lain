@@ -22,6 +22,9 @@ Minimal, secure and portable password manager
 ## Downloads: ##
 https://github.com/hellzerg/lain/releases
 
+## Custom salt support: ##
+https://github.com/hellzerg/lain/blob/master/SALTS.md
+
 ## Screenshots: ##
 https://github.com/hellzerg/lain/blob/master/IMAGES.md
 
