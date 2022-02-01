@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [2.9] - 2022-02-02
 - New: You can now override default salt for an extra layer of protection (Read carefully: https://github.com/hellzerg/lain/blob/master/SALTS.md)
+- New: Auto-size columns option available
 - Improved: Better visuals, easier on the eyes
 - Minor bug fixes
 
