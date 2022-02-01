@@ -42,33 +42,34 @@ namespace Lain
 
         private void LoadSettings()
         {
-            checkBox1.Checked = Options.CurrentOptions.Authorize;
-            checkBox2.Checked = Options.CurrentOptions.AutoLock;
+            chkAlwaysPass.Checked = Options.CurrentOptions.Authorize;
+            chkAutoLock.Checked = Options.CurrentOptions.AutoLock;
             txtTimer.Text = Options.CurrentOptions.Minutes.ToString();
-            checkBox3.Checked = Options.CurrentOptions.AutoStart;
-            checkBox4.Checked = Options.CurrentOptions.HidePasswords;
+            chkAutoStart.Checked = Options.CurrentOptions.AutoStart;
+            chkHidePass.Checked = Options.CurrentOptions.HidePasswords;
+            chkAutoSizeColumns.Checked = Options.CurrentOptions.AutoSizeColumns;
 
             RegisterAutoStart(!Options.CurrentOptions.AutoStart);
 
             switch (Options.CurrentOptions.Color)
             {
-                case Theme.Caramel:
-                    carameltheme.Checked = true;
+                case Theme.Amber:
+                    rAmber.Checked = true;
                     break;
-                case Theme.Lime:
-                    limetheme.Checked = true;
+                case Theme.Jade:
+                    rJade.Checked = true;
                     break;
-                case Theme.Magma:
-                    magmatheme.Checked = true;
+                case Theme.Ruby:
+                    rRuby.Checked = true;
                     break;
-                case Theme.Minimal:
-                    minimaltheme.Checked = true;
+                case Theme.Silver:
+                    rSilver.Checked = true;
                     break;
-                case Theme.Ocean:
-                    oceantheme.Checked = true;
+                case Theme.Azurite:
+                    rAzurite.Checked = true;
                     break;
-                case Theme.Zerg:
-                    zergtheme.Checked = true;
+                case Theme.Amethyst:
+                    rAmethyst.Checked = true;
                     break;
             }
 
@@ -94,66 +95,76 @@ namespace Lain
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            Options.SaveSettings();
             this.Close();
+        }
+
+        private void FixColors()
+        {
+            _main.FixColors();
+            if (chkAutoLock.Checked)
+            {
+                lblMins.ForeColor = Options.ForegroundColor;
+                txtTimer.ForeColor = Options.ForegroundColor;
+            }
+            else
+            {
+                lblMins.ForeColor = Color.White;
+                txtTimer.ForeColor = Color.White;
+            }
         }
 
         private void oceantheme_CheckedChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.Color = Theme.Ocean;
+            Options.CurrentOptions.Color = Theme.Azurite;
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
-            _main.FixColor();
-            label1.ForeColor = Options.ForegroundColor;
+            FixColors();
         }
 
         private void magmatheme_CheckedChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.Color = Theme.Magma;
+            Options.CurrentOptions.Color = Theme.Ruby;
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
-            _main.FixColor();
-            label1.ForeColor = Options.ForegroundColor;
+            FixColors();
         }
 
         private void zergtheme_CheckedChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.Color = Theme.Zerg;
+            Options.CurrentOptions.Color = Theme.Amethyst;
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
-            _main.FixColor();
-            label1.ForeColor = Options.ForegroundColor;
+            FixColors();
         }
 
         private void carameltheme_CheckedChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.Color = Theme.Caramel;
+            Options.CurrentOptions.Color = Theme.Amber;
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
-            _main.FixColor();
-            label1.ForeColor = Options.ForegroundColor;
+            FixColors();
         }
 
         private void limetheme_CheckedChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.Color = Theme.Lime;
+            Options.CurrentOptions.Color = Theme.Jade;
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
-            _main.FixColor();
-            label1.ForeColor = Options.ForegroundColor;
+            FixColors();
         }
 
         private void minimaltheme_CheckedChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.Color = Theme.Minimal;
+            Options.CurrentOptions.Color = Theme.Silver;
             Options.ApplyTheme(this);
             Options.ApplyTheme(_main);
-            _main.FixColor();
-            label1.ForeColor = Options.ForegroundColor;
+            FixColors();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.Authorize = checkBox1.Checked;
+            Options.CurrentOptions.Authorize = chkAlwaysPass.Checked;
         }
 
         private void txtTimer_KeyPress(object sender, KeyPressEventArgs e)
@@ -163,25 +174,27 @@ namespace Lain
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            txtTimer.Enabled = checkBox2.Checked;
-            Options.CurrentOptions.AutoLock = checkBox2.Checked;
+            txtTimer.Enabled = chkAutoLock.Checked;
+            Options.CurrentOptions.AutoLock = chkAutoLock.Checked;
 
-            if (checkBox2.Checked)
+            if (chkAutoLock.Checked)
             {
-                label1.ForeColor = Options.ForegroundColor;
-                label1.Font = new Font(label1.Font, FontStyle.Underline);
+                lblMins.ForeColor = Options.ForegroundColor;
+                lblMins.Font = new Font(lblMins.Font, FontStyle.Underline);
+                txtTimer.ForeColor = Options.ForegroundColor;
             }
 
-            if (!checkBox2.Checked)
+            if (!chkAutoLock.Checked)
             {
-                label1.ForeColor = Color.White;
-                label1.Font = new Font(label1.Font, FontStyle.Regular);
+                lblMins.ForeColor = Color.White;
+                lblMins.Font = new Font(lblMins.Font, FontStyle.Regular);
+                txtTimer.ForeColor = Color.White;
             }
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.AutoStart = checkBox3.Checked;
+            Options.CurrentOptions.AutoStart = chkAutoStart.Checked;
             RegisterAutoStart(!Options.CurrentOptions.AutoStart);
         }
 
@@ -211,8 +224,14 @@ namespace Lain
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
-            Options.CurrentOptions.HidePasswords = checkBox4.Checked;
-            _main.AccountView.Columns[2].Visible = !checkBox4.Checked;
+            Options.CurrentOptions.HidePasswords = chkHidePass.Checked;
+            _main.AccountView.Columns[2].Visible = !chkHidePass.Checked;
+        }
+
+        private void chkAutoSizeColumns_CheckedChanged(object sender, EventArgs e)
+        {
+            Options.CurrentOptions.AutoSizeColumns = chkAutoSizeColumns.Checked;
+            _main.SetAutoSizeColumns();
         }
     }
 }

@@ -8,13 +8,15 @@ namespace Lain
 {
     internal class CryLain
     {
-        const string _salt = "e3080105715443ef14ef2a09be11fa9d";
+        // default SALT
+        // can be overriden from command-line
+        internal static string SALT = "e3080105715443ef14ef2a09be11fa9d";
 
         internal static string HashKey(string key)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
-                byte[] hashed = sha256.ComputeHash(Encoding.UTF8.GetBytes(key + _salt));
+                byte[] hashed = sha256.ComputeHash(Encoding.UTF8.GetBytes(key + SALT));
                 return Convert.ToBase64String(hashed);
             }
         }

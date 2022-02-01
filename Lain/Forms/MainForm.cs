@@ -43,13 +43,20 @@ namespace Lain
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             Options.ApplyTheme(this);
-            FixColor();
+            FixColors();
+
             TriggerTimer();
-            helperMenu.Renderer = new ToolStripRendererMaterial();
+            helperMenu.Renderer = new MoonMenuRenderer();
 
             DeserializeAccounts();
             Key = key;
             this.Text = string.Format("Lain - {0} accounts", Accounts.Count);
+
+            RestoreWindowState();
+            SetFontSize();
+
+            clearPic.Visible = false;
+            LoadAccounts();
         }
 
         private void RestoreWindowState()
@@ -154,6 +161,14 @@ namespace Lain
                             // PATCH
                             File.Move(tempFile, appFile);
 
+                            // BYPASS SINGLE-INSTANCE MECHANISM
+                            if (Program.MUTEX != null)
+                            {
+                                Program.MUTEX.ReleaseMutex();
+                                Program.MUTEX.Dispose();
+                                Program.MUTEX = null;
+                            }
+
                             Application.Restart();
                         }
                         catch (Exception ex)
@@ -207,10 +222,13 @@ namespace Lain
             _temp2 = string.Empty;
         }
         
-        internal void FixColor()
+        internal void FixColors()
         {
-            AccountView.DefaultCellStyle.SelectionBackColor = Options.ForegroundColor;
+            AccountView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(65, 65, 65);
+            AccountView.ColumnHeadersDefaultCellStyle.SelectionForeColor = Options.ForegroundColor;
             AccountView.ColumnHeadersDefaultCellStyle.SelectionBackColor = Options.ForegroundColor;
+            AccountView.ColumnHeadersDefaultCellStyle.ForeColor = Options.ForegroundColor;
+            AccountView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 20, 20);
         }
 
         private void CopyAccount()
@@ -443,14 +461,29 @@ namespace Lain
             txtSearch.Clear();
             this.Text = string.Format("Lain {0} - {1} accounts", Program.GetCurrentVersionToString(), Accounts.Count);
 
-            AccountView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            AccountView.Sort(AccountView.Columns[0], ListSortDirection.Ascending);
+            SetAutoSizeColumns();
 
             if (AccountView.Rows.Count > 0)
             {
                 AccountView.ClearSelection();
                 AccountView.Rows[0].Selected = true;
             }
+        }
+
+        internal void SetAutoSizeColumns()
+        {
+            if (Options.CurrentOptions.AutoSizeColumns)
+            {
+                AccountView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                AccountView.Columns[AccountView.ColumnCount - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
+            else
+            {
+                AccountView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                AccountView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            }
+
+            AccountView.Sort(AccountView.Columns[0], ListSortDirection.Ascending);
         }
 
         // find duplicate passwords
@@ -487,11 +520,7 @@ namespace Lain
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            RestoreWindowState();
-            SetFontSize();
-
-            clearPic.Visible = false;
-            LoadAccounts();
+            
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -619,6 +648,22 @@ namespace Lain
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
             AnalyzeAccounts();
+        }
+
+        private void AccountView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex != -1)
+            {
+                DataGridViewRow row = AccountView.Rows[e.RowIndex];
+                AccountView.CurrentCell = row.Cells[e.ColumnIndex == -1 ? 1 : e.ColumnIndex];
+                row.Selected = true;
+                AccountView.Focus();
+            }
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape) txtSearch.Clear();
         }
     }
 }

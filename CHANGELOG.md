@@ -2,14 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.9] - 2022-02-02
+- New: You can now override default salt for an extra layer of protection (Read carefully: https://github.com/hellzerg/lain/SALTS.md)
+
 ## [2.8] - 2021-06-12
-- Added: Analyze accounts to find identical passwords
-- Added: Colorized UI
+- New: Analyze accounts to find identical passwords
+- New: Colorized UI
 
 ## [2.7] - 2021-06-11
-- Added: Ability to choose random password length
-- Added: Optional link associated with an account
-- Added: Minimal decoration with icons
+- New: Ability to choose random password length
+- New: Optional link associated with an account
+- New: Minimal decoration with icons
 
 ## [2.6] - 2021-05-03
 - Removed: Backup & Restore feature
@@ -41,7 +44,7 @@ All notable changes to this project will be documented in this file.
 
 ## [2.0] - 2018-02-21
 - Larger scaling and fonts
-- Added: Check for newer version
+- New: Check for newer version
 - Fixed: Enter key not working in note field
 
 ## [1.9] - 2017-10-26

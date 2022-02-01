@@ -1,13 +1,17 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Lain
 {
     internal class Required
     {
-        internal readonly static string DataFolder = Application.StartupPath + "\\Data\\";
-        internal readonly static string LainSerial = DataFolder + "Lain.Serial";
-        internal readonly static string LainData = DataFolder + "Lain.Data";
+        internal readonly static string DataFolder = Path.Combine(Application.StartupPath, "Data");
+        internal readonly static string LainSerial = Path.Combine(DataFolder, "Lain.serial");
+        internal readonly static string LainData = Path.Combine(DataFolder, "Lain.data");
+
+        // custom SALT file
+        internal readonly static string LainSalt = Path.Combine(DataFolder, "Lain.salt");
 
         internal static void Deploy()
         {
@@ -18,7 +22,12 @@ namespace Lain
                     Directory.CreateDirectory(DataFolder);
                 }
             }
-            catch { }
+            catch (Exception err)
+            {
+                // try running app as admin
+                MessageBox.Show(err.Message, "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Environment.Exit(0);
+            }
         }
     }
 }
