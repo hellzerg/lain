@@ -650,8 +650,10 @@ namespace Lain
             if (e.Button == MouseButtons.Right && e.RowIndex != -1)
             {
                 DataGridViewRow row = AccountView.Rows[e.RowIndex];
+                
                 AccountView.CurrentCell = row.Cells[e.ColumnIndex == -1 ? 1 : e.ColumnIndex];
                 row.Selected = true;
+
                 AccountView.Focus();
             }
         }
