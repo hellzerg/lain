@@ -5,7 +5,7 @@
 #### Salt should be at least 32 characters long. ####
 
 #### Using command-line: ####
-- Run Lain like this: Lain.exe /salt=CUSTOMSALT
+- Lain.exe /salt=CUSTOMSALT
 
 #### Using a file: ####
 - Place a Lain.salt file in Data folder with your desired salt in it and run the app normally.

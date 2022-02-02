@@ -18,7 +18,7 @@ namespace Lain
 
             LoadSettings();
             Options.ApplyTheme(this);
-            
+
             txtTimer.ShortcutsEnabled = false;
         }
 
@@ -93,7 +93,7 @@ namespace Lain
 
         private void OptionsForm_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnOk_Click(object sender, EventArgs e)

@@ -216,7 +216,7 @@ namespace Lain
             _temp = string.Empty;
             _temp2 = string.Empty;
         }
-        
+
         internal void FixColors()
         {
             AccountView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(65, 65, 65);
@@ -515,7 +515,7 @@ namespace Lain
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

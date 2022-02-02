@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Lain
@@ -25,7 +20,7 @@ namespace Lain
             {
                 if (i >= 2)
                 {
-                    if (duplicates[i-1].Password() != duplicates[i].Password())
+                    if (duplicates[i - 1].Password() != duplicates[i].Password())
                     {
                         txtReport.AppendText(Environment.NewLine);
                     }

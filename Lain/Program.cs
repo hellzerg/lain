@@ -208,8 +208,7 @@ namespace Lain
 
         private static bool SanitizeSalt(string salt)
         {
-            return true;
-            //return !string.IsNullOrEmpty(salt) && salt.Length >= 32;
+            return !string.IsNullOrEmpty(salt) && salt.Length >= 32;
         }
 
         internal static void SetMainForm(Form form)
