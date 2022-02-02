@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Lain
 {
@@ -17,6 +20,15 @@ namespace Lain
             using (SHA256 sha256 = SHA256.Create())
             {
                 byte[] hashed = sha256.ComputeHash(Encoding.UTF8.GetBytes(key + SALT));
+                return Convert.ToBase64String(hashed);
+            }
+        }
+
+        private static string HashKeyCustomSalt(string key, string customSalt)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashed = sha256.ComputeHash(Encoding.UTF8.GetBytes(key + customSalt));
                 return Convert.ToBase64String(hashed);
             }
         }
@@ -78,6 +90,31 @@ namespace Lain
             catch { }
 
             return decrypted;
+        }
+
+        internal static bool ChangeSalt(string toSalt, string oldKey)
+        {
+            string _newKey = CryLain.HashKeyCustomSalt(oldKey, toSalt);
+
+            if (string.IsNullOrEmpty(oldKey) || string.IsNullOrEmpty(_newKey)) return false;
+
+            try
+            {
+                File.WriteAllText(Required.LainSerial, _newKey);
+                return true;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message, "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Environment.Exit(0);
+                return false;
+            }
+            finally
+            {
+                oldKey = string.Empty;
+                _newKey = string.Empty;
+                toSalt = string.Empty;
+            }
         }
 
         private string Protect(string plainText, byte[] Key, byte[] IV)

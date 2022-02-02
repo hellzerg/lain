@@ -12,10 +12,14 @@ namespace Lain
         public OptionsForm(MainForm main)
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
+
             _main = main;
 
             LoadSettings();
             Options.ApplyTheme(this);
+            
+            txtTimer.ShortcutsEnabled = false;
         }
 
         private void RegisterAutoStart(bool remove)
@@ -89,8 +93,7 @@ namespace Lain
 
         private void OptionsForm_Load(object sender, EventArgs e)
         {
-            CheckForIllegalCrossThreadCalls = false;
-            txtTimer.ShortcutsEnabled = false;
+            
         }
 
         private void btnOk_Click(object sender, EventArgs e)

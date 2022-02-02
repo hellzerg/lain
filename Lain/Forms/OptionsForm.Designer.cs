@@ -41,11 +41,11 @@
             this.lblMins = new System.Windows.Forms.Label();
             this.sizePanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.chkAutoSizeColumns = new Lain.MoonCheck();
-            this.chkHidePass = new Lain.MoonCheck();
             this.rLarge = new Lain.MoonRadio();
             this.rNormal = new Lain.MoonRadio();
             this.rSmall = new Lain.MoonRadio();
+            this.chkAutoSizeColumns = new Lain.MoonCheck();
+            this.chkHidePass = new Lain.MoonCheck();
             this.chkAutoStart = new Lain.MoonCheck();
             this.chkAutoLock = new Lain.MoonCheck();
             this.chkAlwaysPass = new Lain.MoonCheck();
@@ -164,7 +164,7 @@
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.Image = ((System.Drawing.Image)(resources.GetObject("btnOk.Image")));
             this.btnOk.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOk.Location = new System.Drawing.Point(215, 452);
+            this.btnOk.Location = new System.Drawing.Point(215, 448);
             this.btnOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(71, 31);
@@ -229,32 +229,6 @@
             this.label2.Tag = "themeable";
             this.label2.Text = "Choose your font size";
             // 
-            // chkAutoSizeColumns
-            // 
-            this.chkAutoSizeColumns.AutoSize = true;
-            this.chkAutoSizeColumns.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkAutoSizeColumns.Location = new System.Drawing.Point(16, 285);
-            this.chkAutoSizeColumns.Margin = new System.Windows.Forms.Padding(2);
-            this.chkAutoSizeColumns.Name = "chkAutoSizeColumns";
-            this.chkAutoSizeColumns.Size = new System.Drawing.Size(163, 25);
-            this.chkAutoSizeColumns.TabIndex = 85;
-            this.chkAutoSizeColumns.Text = "Auto-size columns";
-            this.chkAutoSizeColumns.UseVisualStyleBackColor = true;
-            this.chkAutoSizeColumns.CheckedChanged += new System.EventHandler(this.chkAutoSizeColumns_CheckedChanged);
-            // 
-            // chkHidePass
-            // 
-            this.chkHidePass.AutoSize = true;
-            this.chkHidePass.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkHidePass.Location = new System.Drawing.Point(16, 344);
-            this.chkHidePass.Margin = new System.Windows.Forms.Padding(2);
-            this.chkHidePass.Name = "chkHidePass";
-            this.chkHidePass.Size = new System.Drawing.Size(145, 25);
-            this.chkHidePass.TabIndex = 84;
-            this.chkHidePass.Text = "Hide passwords";
-            this.chkHidePass.UseVisualStyleBackColor = true;
-            this.chkHidePass.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
-            // 
             // rLarge
             // 
             this.rLarge.AutoSize = true;
@@ -299,6 +273,32 @@
             this.rSmall.Text = "Small";
             this.rSmall.UseVisualStyleBackColor = true;
             this.rSmall.CheckedChanged += new System.EventHandler(this.rSmall_CheckedChanged);
+            // 
+            // chkAutoSizeColumns
+            // 
+            this.chkAutoSizeColumns.AutoSize = true;
+            this.chkAutoSizeColumns.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAutoSizeColumns.Location = new System.Drawing.Point(16, 285);
+            this.chkAutoSizeColumns.Margin = new System.Windows.Forms.Padding(2);
+            this.chkAutoSizeColumns.Name = "chkAutoSizeColumns";
+            this.chkAutoSizeColumns.Size = new System.Drawing.Size(163, 25);
+            this.chkAutoSizeColumns.TabIndex = 85;
+            this.chkAutoSizeColumns.Text = "Auto-size columns";
+            this.chkAutoSizeColumns.UseVisualStyleBackColor = true;
+            this.chkAutoSizeColumns.CheckedChanged += new System.EventHandler(this.chkAutoSizeColumns_CheckedChanged);
+            // 
+            // chkHidePass
+            // 
+            this.chkHidePass.AutoSize = true;
+            this.chkHidePass.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkHidePass.Location = new System.Drawing.Point(16, 344);
+            this.chkHidePass.Margin = new System.Windows.Forms.Padding(2);
+            this.chkHidePass.Name = "chkHidePass";
+            this.chkHidePass.Size = new System.Drawing.Size(145, 25);
+            this.chkHidePass.TabIndex = 84;
+            this.chkHidePass.Text = "Hide passwords";
+            this.chkHidePass.UseVisualStyleBackColor = true;
+            this.chkHidePass.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // chkAutoStart
             // 
@@ -346,7 +346,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.CancelButton = this.btnOk;
-            this.ClientSize = new System.Drawing.Size(296, 493);
+            this.ClientSize = new System.Drawing.Size(296, 489);
             this.Controls.Add(this.chkAutoSizeColumns);
             this.Controls.Add(this.chkHidePass);
             this.Controls.Add(this.sizePanel);

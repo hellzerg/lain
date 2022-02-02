@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -61,6 +62,7 @@ namespace Lain
                     if (switches.Length == 1)
                     {
                         string arg = switches[0].Trim();
+
                         if (arg.StartsWith("/salt="))
                         {
                             try
@@ -86,6 +88,37 @@ namespace Lain
                                 Environment.Exit(0);
                             }
                         }
+
+                        if (arg.StartsWith("/changesalt="))
+                        {
+                            if (!File.Exists(Required.LainSerial))
+                            {
+                                MessageBox.Show("Lain hasn't need setup with a profile yet.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                Environment.Exit(0);
+                            }
+
+                            string[] salts = arg.Replace("/changesalt=", string.Empty).Split(',');
+
+                            // change default salt to a custom one
+                            if (salts.Length == 2 && SanitizeSalt(salts[1]))
+                            {
+                                AuthorizeToChangeSalt(salts[0]);
+                                ChangeSalt(salts[1], salts[0]);
+                            }
+
+                            // change custom salt, to a new one
+                            else if (salts.Length == 3 && SanitizeSalt(salts[1]) && SanitizeSalt(salts[2]))
+                            {
+                                CryLain.SALT = salts[1];
+                                AuthorizeToChangeSalt(salts[0]);
+                                ChangeSalt(salts[2], salts[0]);
+                            }
+                            else
+                            {
+                                MessageBox.Show("The arguments you provided are invalid.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                Environment.Exit(0);
+                            }
+                        }
                     }
 
                     // custom SALT from file
@@ -93,17 +126,14 @@ namespace Lain
                     {
                         if (File.Exists(Required.LainSalt))
                         {
-                            if (MessageBox.Show("Salt override file detected. Do you want to use it?", "Lain", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            string customSalt = File.ReadAllText(Required.LainSalt, Encoding.UTF8);
+                            if (!SanitizeSalt(customSalt))
                             {
-                                string customSalt = File.ReadAllText(Required.LainSalt, Encoding.UTF8);
-                                if (!SanitizeSalt(customSalt))
-                                {
-                                    MessageBox.Show("Salt should be at least 32 characters.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    Environment.Exit(0);
-                                }
-
-                                CryLain.SALT = customSalt;
+                                MessageBox.Show("Salt should be at least 32 characters.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                Environment.Exit(0);
                             }
+
+                            CryLain.SALT = customSalt;
                         }
                     }
                     catch (Exception err)
@@ -131,9 +161,55 @@ namespace Lain
             }
         }
 
+        private static void ChangeSalt(string salt, string k)
+        {
+            if (CryLain.ChangeSalt(salt, k))
+            {
+                CryLain.SALT = salt;
+                if (File.Exists(Required.LainSalt)) File.WriteAllText(Required.LainSalt, CryLain.SALT, Encoding.UTF8);
+                MessageBox.Show("Salt has been successfully changed.\n\nPlease restart Lain.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Environment.Exit(0);
+            }
+        }
+
+        private static void AuthorizeToChangeSalt(string k)
+        {
+            if (CryLain.HashKey(k) != File.ReadAllText(Required.LainSerial))
+            {
+                MessageBox.Show("The password you provided is incorrect.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Environment.Exit(0);
+            }
+        }
+
+        internal static void RestartLain()
+        {
+            // BYPASS SINGLE-INSTANCE MECHANISM
+            if (Program.MUTEX != null)
+            {
+                Program.MUTEX.ReleaseMutex();
+                Program.MUTEX.Dispose();
+                Program.MUTEX = null;
+            }
+
+            // restart without command-line arguments
+            ProcessStartInfo startInfo = Process.GetCurrentProcess().StartInfo;
+            startInfo.FileName = Application.ExecutablePath;
+            startInfo.Arguments = string.Empty;
+
+            if (!File.Exists(Required.LainSalt)) startInfo.Arguments = $"/salt={CryLain.SALT}";
+
+            MethodInfo exit = typeof(Application).GetMethod("ExitInternal",
+                                System.Reflection.BindingFlags.NonPublic |
+                                System.Reflection.BindingFlags.Static);
+
+            exit.Invoke(null, null);
+            //Process.Start(startInfo);
+        }
+
         private static bool SanitizeSalt(string salt)
         {
-            return !string.IsNullOrEmpty(salt) && salt.Length >= 32;
+            return true;
+            //return !string.IsNullOrEmpty(salt) && salt.Length >= 32;
         }
 
         internal static void SetMainForm(Form form)
@@ -161,6 +237,7 @@ namespace Lain
             }
             finally
             {
+                if (ms != null) ms.Dispose();
                 bytes = null;
                 ms = null;
 

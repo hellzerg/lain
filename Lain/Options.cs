@@ -118,7 +118,7 @@ namespace Lain
             if (!File.Exists(_settingsFile))
             {
                 CurrentOptions.Color = Theme.Amethyst;
-                CurrentOptions.Authorize = true;
+                CurrentOptions.Authorize = false;
                 CurrentOptions.AutoLock = false;
                 CurrentOptions.HidePasswords = true;
                 CurrentOptions.Minutes = 2;

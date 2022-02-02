@@ -162,12 +162,7 @@ namespace Lain
                             File.Move(tempFile, appFile);
 
                             // BYPASS SINGLE-INSTANCE MECHANISM
-                            if (Program.MUTEX != null)
-                            {
-                                Program.MUTEX.ReleaseMutex();
-                                Program.MUTEX.Dispose();
-                                Program.MUTEX = null;
-                            }
+                            Program.RestartLain();
 
                             Application.Restart();
                         }

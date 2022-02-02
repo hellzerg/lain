@@ -62,7 +62,7 @@
             this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(476, 29);
-            this.txtName.TabIndex = 62;
+            this.txtName.TabIndex = 0;
             this.txtName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtName_KeyDown);
             // 
             // label1
@@ -91,7 +91,7 @@
             this.txtMail.Margin = new System.Windows.Forms.Padding(2);
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(476, 29);
-            this.txtMail.TabIndex = 64;
+            this.txtMail.TabIndex = 1;
             this.txtMail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtName_KeyDown);
             // 
             // label2
@@ -120,7 +120,7 @@
             this.txtPassword.Margin = new System.Windows.Forms.Padding(2);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(476, 29);
-            this.txtPassword.TabIndex = 66;
+            this.txtPassword.TabIndex = 2;
             this.txtPassword.UseSystemPasswordChar = true;
             this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtName_KeyDown);
             // 
@@ -152,7 +152,7 @@
             this.txtNote.Name = "txtNote";
             this.txtNote.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtNote.Size = new System.Drawing.Size(476, 179);
-            this.txtNote.TabIndex = 68;
+            this.txtNote.TabIndex = 4;
             // 
             // label4
             // 
@@ -325,7 +325,7 @@
             this.txtLink.Margin = new System.Windows.Forms.Padding(2);
             this.txtLink.Name = "txtLink";
             this.txtLink.Size = new System.Drawing.Size(476, 29);
-            this.txtLink.TabIndex = 81;
+            this.txtLink.TabIndex = 3;
             // 
             // NewForm
             // 
