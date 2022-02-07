@@ -22,6 +22,9 @@ Minimal, secure and portable password manager
 ## Downloads: ##
 https://github.com/hellzerg/lain/releases
 
+## Shortcuts: ##
+https://github.com/hellzerg/lain/blob/master/SHORTCUTS.md
+
 ## Custom salt support: ##
 https://github.com/hellzerg/lain/blob/master/SALTS.md
 
@@ -38,4 +41,4 @@ https://github.com/hellzerg/lain/blob/master/IMAGES.md
 
 * Latest version: 3.0
 * Released: February 7, 2022
-* SHA256: 42EDB57B3FC98E51958B5530C039D62EA834347D5273B05C1EC5259F27347174
+* SHA256: DA792DC5B3AB6D2EE7CAFEE886E5AB3EC91078F1F0DE8C920A3C37548CF7EC6F

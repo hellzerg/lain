@@ -670,52 +670,52 @@ namespace Lain
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Q)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Q)
             {
                 copyToolStripMenuItem.PerformClick();
             }
 
-            if (e.KeyCode == Keys.W)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.W)
             {
                 toolStripMenuItem1.PerformClick();
             }
 
-            if (e.KeyCode == Keys.E)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.E)
             {
                 openLinkBtn.PerformClick();
             }
 
-            if (e.KeyCode == Keys.F)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.F)
             {
                 txtSearch.Focus();
             }
 
-            if (e.KeyCode == Keys.Delete)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Delete)
             {
                 removeToolStripMenuItem.PerformClick();
             }
 
-            if (e.KeyCode == Keys.Enter)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Enter)
             {
                 ediToolStripMenuItem.PerformClick();
             }
 
-            if (e.KeyCode == Keys.N)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.N)
             {
                 CreateNewAccount();
             }
 
-            if (e.KeyCode == Keys.L)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.L)
             {
                 Lock();
             }
 
-            if (e.KeyCode == Keys.O)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.O)
             {
                 btnOptions.PerformClick();
             }
 
-            if (e.KeyCode == Keys.A)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.A)
             {
                 btnAnalyze.PerformClick();
             }
