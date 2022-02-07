@@ -229,6 +229,7 @@ namespace Lain
         {
             Options.CurrentOptions.HidePasswords = chkHidePass.Checked;
             _main.AccountView.Columns[2].Visible = !chkHidePass.Checked;
+            _main.LoadAccounts();
         }
 
         private void chkAutoSizeColumns_CheckedChanged(object sender, EventArgs e)

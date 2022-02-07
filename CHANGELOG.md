@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0] - 2022-02-07
+- New: Shortcuts support for basic functionality
+- Improved: Enhanced security for password strings
+
 ## [2.9] - 2022-02-02
 - New: You can now override default salt for an extra layer of protection (Read carefully: https://github.com/hellzerg/lain/blob/master/SALTS.md)
 - New: Auto-size columns option available

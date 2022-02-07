@@ -31,8 +31,8 @@ namespace Lain
 
         string _temp = string.Empty;
         string _temp2 = string.Empty;
-        string _temp3 = string.Empty;
         string _term = string.Empty;
+        string _temp3 = string.Empty;
 
         public MainForm(SecureString key)
         {
@@ -40,6 +40,8 @@ namespace Lain
 
             CheckForIllegalCrossThreadCalls = false;
             DoubleBuffered = true;
+            KeyPreview = true;
+
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             Options.ApplyTheme(this);
@@ -200,13 +202,14 @@ namespace Lain
                 {
                     _temp = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name());
                     _temp2 = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Email());
-                    _temp3 = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Link());
 
                     if (_temp.ToLowerInvariant().Contains(_term) || _temp2.ToLowerInvariant().Contains(_term))
                     {
+                        if (!Options.CurrentOptions.HidePasswords) _temp3 = _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Password());
+
                         AccountView.Rows.Add(new string[] { _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Name()),
                                 _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Email()),
-                                _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Password()),
+                                _temp3,
                                 _cryLain.Decrypt(CryLain.ToInsecureString(Key), la.Link())
                             });
                     }
@@ -215,6 +218,7 @@ namespace Lain
 
             _temp = string.Empty;
             _temp2 = string.Empty;
+            _temp3 = string.Empty;
         }
 
         internal void FixColors()
@@ -250,7 +254,12 @@ namespace Lain
             {
                 try
                 {
-                    Clipboard.SetText(rows[0].Cells[2].Value.ToString());
+                    string i = rows[0].Cells[0].Value.ToString();
+                    int y = Accounts.FindIndex(x => i == _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Name()));
+                    if (y > -1)
+                    {
+                        Clipboard.SetText(_cryLain.Decrypt(CryLain.ToInsecureString(Key), Accounts[y].Password()));
+                    }
                 }
                 catch { }
             }
@@ -430,29 +439,25 @@ namespace Lain
             }
         }
 
-        private void LoadAccounts()
+        internal void LoadAccounts()
         {
             AccountView.Rows.Clear();
             AccountView.Refresh();
 
-            if (Options.CurrentOptions.HidePasswords)
-            {
-                AccountView.Columns[2].Visible = false;
-            }
-            else
-            {
-                AccountView.Columns[2].Visible = true;
-            }
+            AccountView.Columns[2].Visible = !Options.CurrentOptions.HidePasswords;
 
             foreach (LainAccount x in Accounts)
             {
+                if (!Options.CurrentOptions.HidePasswords) _temp3 = _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Password());
+
                 AccountView.Rows.Add(new string[] { _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Name()),
                     _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Email()),
-                    _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Password()),
+                    _temp3,
                     _cryLain.Decrypt(CryLain.ToInsecureString(Key), x.Link())
                 });
             }
 
+            _temp3 = string.Empty;
             txtSearch.Clear();
             this.Text = string.Format("Lain {0} - {1} accounts", Program.GetCurrentVersionToString(), Accounts.Count);
 
@@ -650,7 +655,7 @@ namespace Lain
             if (e.Button == MouseButtons.Right && e.RowIndex != -1)
             {
                 DataGridViewRow row = AccountView.Rows[e.RowIndex];
-                
+
                 AccountView.CurrentCell = row.Cells[e.ColumnIndex == -1 ? 1 : e.ColumnIndex];
                 row.Selected = true;
 
@@ -661,6 +666,59 @@ namespace Lain
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape) txtSearch.Clear();
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Q)
+            {
+                copyToolStripMenuItem.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.W)
+            {
+                toolStripMenuItem1.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.E)
+            {
+                openLinkBtn.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.F)
+            {
+                txtSearch.Focus();
+            }
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                removeToolStripMenuItem.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                ediToolStripMenuItem.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.N)
+            {
+                CreateNewAccount();
+            }
+
+            if (e.KeyCode == Keys.L)
+            {
+                Lock();
+            }
+
+            if (e.KeyCode == Keys.O)
+            {
+                btnOptions.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.A)
+            {
+                btnAnalyze.PerformClick();
+            }
         }
     }
 }
