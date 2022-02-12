@@ -690,12 +690,12 @@ namespace Lain
                 txtSearch.Focus();
             }
 
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Delete)
+            if (e.KeyCode == Keys.Delete)
             {
                 removeToolStripMenuItem.PerformClick();
             }
 
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 ediToolStripMenuItem.PerformClick();
             }
