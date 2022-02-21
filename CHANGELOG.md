@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1] - 2022-02-21
+- Hotfix: Changed some shortcuts, avoiding conflicts
+
 ## [3.0] - 2022-02-07
 - New: Shortcuts support for basic functionality
 - Improved: Enhanced security for password strings

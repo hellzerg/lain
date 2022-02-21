@@ -688,6 +688,7 @@ namespace Lain
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.F)
             {
                 txtSearch.Focus();
+                if (!string.IsNullOrEmpty(txtSearch.Text)) txtSearch.SelectAll();
             }
 
             if (e.KeyCode == Keys.Delete)
@@ -715,7 +716,7 @@ namespace Lain
                 btnOptions.PerformClick();
             }
 
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.A)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
             {
                 btnAnalyze.PerformClick();
             }
