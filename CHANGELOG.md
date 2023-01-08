@@ -1,6 +1,6 @@
-# Lain Changelog
-
-All notable changes to this project will be documented in this file.
+## [3.1] - 2023-01-08
+- New: Lain properly supports DPI scaling now
+- Security: Newtonsoft.JSON updated to latest version
 
 ## [3.1] - 2022-02-21
 - Hotfix: Changed some shortcuts, avoiding conflicts

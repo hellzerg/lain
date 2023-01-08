@@ -6,7 +6,7 @@
 
 Minimal, secure and portable password manager
 <p align="center">
-	<a href="https://github.com/hellzerg/lain/releases/download/3.1/Lain-3.1.exe" target="_blank">
+	<a href="https://github.com/hellzerg/lain/releases/download/3.2/Lain-3.2.exe" target="_blank">
 		<img src="download-button.png">
 	</a>
 </p> 
@@ -39,6 +39,6 @@ https://github.com/hellzerg/lain/blob/master/IMAGES.md
 
 ## Details: ##
 
-* Latest version: 3.1
-* Released: February 21, 2022
-* SHA256: D1331110DB5B676B73BD1DDD825AA62B3CB17164A0811DEE2E4A24D545F673FF
+* Latest version: 3.2
+* Released: January 8, 2023
+* SHA256: 9BE8B1E14107A0A69D221764CD5EC9070B94DE169FD02207A4E342328CC4170D

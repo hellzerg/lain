@@ -16,7 +16,7 @@ namespace Lain
 
         // Enter current version here
         internal readonly static float Major = 3;
-        internal readonly static float Minor = 1;
+        internal readonly static float Minor = 2;
 
         /* END OF VERSION PROPERTIES */
 
@@ -38,9 +38,14 @@ namespace Lain
         internal static Mutex MUTEX;
         static bool _notRunning;
 
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
+
         [STAThread]
         static void Main(string[] switches)
         {
+            if (Environment.OSVersion.Version.Major >= 6) SetProcessDPIAware();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
