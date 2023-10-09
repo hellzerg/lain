@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Lain
 {
-    internal class MoonMenuRenderer : ToolStripProfessionalRenderer
+    internal sealed class MoonMenuRenderer : ToolStripProfessionalRenderer
     {
         internal MoonMenuRenderer() : base(new MoonColors())
         {

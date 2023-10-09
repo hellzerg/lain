@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Lain
 {
-    public class MoonRadio : RadioButton
+    public sealed class MoonRadio : RadioButton
     {
         protected override void OnCheckedChanged(EventArgs e)
         {

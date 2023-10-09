@@ -1,4 +1,8 @@
-## [3.1] - 2023-01-08
+## [3.3] - 2023-10-09
+- New: Advanced password generator options
+- Improved: Overall performance
+
+## [3.2] - 2023-01-08
 - New: Lain properly supports DPI scaling now
 - Security: Newtonsoft.JSON updated to latest version
 

@@ -22,6 +22,11 @@ namespace Lain
             _type = type;
             _name = info;
 
+            chkLowers.Checked = true;
+            chkUppers.Checked = true;
+            chkSpecials.Checked = true;
+            chkNums.Checked = true;
+
             switch (_type)
             {
                 case NewType.Modify:
@@ -42,7 +47,6 @@ namespace Lain
                         txtName.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Name());
                         txtMail.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Email());
                         txtPassword.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Password());
-
                         txtLink.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Link());
                         txtNote.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Note());
                     }
@@ -124,16 +128,16 @@ namespace Lain
 
         private void btnGenerateRandom_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtMaxRandomChars.Text))
+            if (string.IsNullOrEmpty(txtMaxRandomChars.Text) ||
+                Convert.ToInt32(txtMaxRandomChars.Text) <= 0)
             {
                 txtMaxRandomChars.Text = DEFAULT_RANDOM_CHARACTERS.ToString();
             }
 
-            if (Convert.ToInt32(txtMaxRandomChars.Text) <= 0)
-            {
-                txtMaxRandomChars.Text = DEFAULT_RANDOM_CHARACTERS.ToString();
-            }
-
+            RandomPassword.WithLowerChars = chkLowers.Checked;
+            RandomPassword.WithUpperChars = chkUppers.Checked;
+            RandomPassword.WithSpecialChars = chkSpecials.Checked;
+            RandomPassword.WithNumbers = chkNums.Checked;
             txtPassword.Text = RandomPassword.Generate(Convert.ToInt32(txtMaxRandomChars.Text));
         }
 

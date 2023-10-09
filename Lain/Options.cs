@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Lain
 {
-    public class SettingsJson
+    public sealed class SettingsJson
     {
         public Theme Color { get; set; }
         public bool Authorize { get; set; }

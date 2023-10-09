@@ -46,6 +46,10 @@
             this.btnGenerateRandom = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.txtLink = new System.Windows.Forms.TextBox();
+            this.chkNums = new Lain.MoonCheck();
+            this.chkSpecials = new Lain.MoonCheck();
+            this.chkLowers = new Lain.MoonCheck();
+            this.chkUppers = new Lain.MoonCheck();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -144,14 +148,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNote.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.txtNote.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNote.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNote.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNote.ForeColor = System.Drawing.Color.White;
-            this.txtNote.Location = new System.Drawing.Point(13, 294);
+            this.txtNote.Location = new System.Drawing.Point(17, 365);
             this.txtNote.Margin = new System.Windows.Forms.Padding(2);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtNote.Size = new System.Drawing.Size(476, 179);
+            this.txtNote.Size = new System.Drawing.Size(476, 180);
             this.txtNote.TabIndex = 4;
             // 
             // label4
@@ -159,7 +163,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.label4.Location = new System.Drawing.Point(9, 271);
+            this.label4.Location = new System.Drawing.Point(13, 344);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(113, 19);
@@ -179,7 +183,7 @@
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(318, 491);
+            this.btnCancel.Location = new System.Drawing.Point(318, 559);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(83, 31);
@@ -201,7 +205,7 @@
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.Image = ((System.Drawing.Image)(resources.GetObject("btnOk.Image")));
             this.btnOk.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOk.Location = new System.Drawing.Point(406, 491);
+            this.btnOk.Location = new System.Drawing.Point(406, 559);
             this.btnOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(83, 31);
@@ -229,9 +233,9 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(11, 179);
+            this.label5.Location = new System.Drawing.Point(13, 197);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(55, 19);
@@ -248,7 +252,7 @@
             this.txtMaxRandomChars.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMaxRandomChars.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMaxRandomChars.ForeColor = System.Drawing.Color.White;
-            this.txtMaxRandomChars.Location = new System.Drawing.Point(70, 177);
+            this.txtMaxRandomChars.Location = new System.Drawing.Point(72, 195);
             this.txtMaxRandomChars.Margin = new System.Windows.Forms.Padding(2);
             this.txtMaxRandomChars.MaxLength = 888;
             this.txtMaxRandomChars.Name = "txtMaxRandomChars";
@@ -267,7 +271,7 @@
             this.btnCopyPassword.ForeColor = System.Drawing.Color.White;
             this.btnCopyPassword.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyPassword.Image")));
             this.btnCopyPassword.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCopyPassword.Location = new System.Drawing.Point(289, 177);
+            this.btnCopyPassword.Location = new System.Drawing.Point(403, 174);
             this.btnCopyPassword.Margin = new System.Windows.Forms.Padding(2);
             this.btnCopyPassword.Name = "btnCopyPassword";
             this.btnCopyPassword.Size = new System.Drawing.Size(86, 25);
@@ -288,7 +292,7 @@
             this.btnGenerateRandom.ForeColor = System.Drawing.Color.White;
             this.btnGenerateRandom.Image = ((System.Drawing.Image)(resources.GetObject("btnGenerateRandom.Image")));
             this.btnGenerateRandom.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGenerateRandom.Location = new System.Drawing.Point(148, 177);
+            this.btnGenerateRandom.Location = new System.Drawing.Point(352, 249);
             this.btnGenerateRandom.Margin = new System.Windows.Forms.Padding(2);
             this.btnGenerateRandom.Name = "btnGenerateRandom";
             this.btnGenerateRandom.Size = new System.Drawing.Size(137, 25);
@@ -304,7 +308,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.label6.Location = new System.Drawing.Point(9, 215);
+            this.label6.Location = new System.Drawing.Point(13, 292);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(102, 19);
@@ -321,11 +325,59 @@
             this.txtLink.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLink.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLink.ForeColor = System.Drawing.Color.White;
-            this.txtLink.Location = new System.Drawing.Point(13, 238);
+            this.txtLink.Location = new System.Drawing.Point(17, 313);
             this.txtLink.Margin = new System.Windows.Forms.Padding(2);
             this.txtLink.Name = "txtLink";
             this.txtLink.Size = new System.Drawing.Size(476, 29);
             this.txtLink.TabIndex = 3;
+            // 
+            // chkNums
+            // 
+            this.chkNums.AutoSize = true;
+            this.chkNums.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkNums.Location = new System.Drawing.Point(126, 251);
+            this.chkNums.Margin = new System.Windows.Forms.Padding(2);
+            this.chkNums.Name = "chkNums";
+            this.chkNums.Size = new System.Drawing.Size(117, 23);
+            this.chkNums.TabIndex = 89;
+            this.chkNums.Text = "With numbers";
+            this.chkNums.UseVisualStyleBackColor = true;
+            // 
+            // chkSpecials
+            // 
+            this.chkSpecials.AutoSize = true;
+            this.chkSpecials.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkSpecials.Location = new System.Drawing.Point(126, 224);
+            this.chkSpecials.Margin = new System.Windows.Forms.Padding(2);
+            this.chkSpecials.Name = "chkSpecials";
+            this.chkSpecials.Size = new System.Drawing.Size(112, 23);
+            this.chkSpecials.TabIndex = 88;
+            this.chkSpecials.Text = "With specials";
+            this.chkSpecials.UseVisualStyleBackColor = true;
+            // 
+            // chkLowers
+            // 
+            this.chkLowers.AutoSize = true;
+            this.chkLowers.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkLowers.Location = new System.Drawing.Point(17, 251);
+            this.chkLowers.Margin = new System.Windows.Forms.Padding(2);
+            this.chkLowers.Name = "chkLowers";
+            this.chkLowers.Size = new System.Drawing.Size(104, 23);
+            this.chkLowers.TabIndex = 87;
+            this.chkLowers.Text = "With lowers";
+            this.chkLowers.UseVisualStyleBackColor = true;
+            // 
+            // chkUppers
+            // 
+            this.chkUppers.AutoSize = true;
+            this.chkUppers.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkUppers.Location = new System.Drawing.Point(17, 224);
+            this.chkUppers.Margin = new System.Windows.Forms.Padding(2);
+            this.chkUppers.Name = "chkUppers";
+            this.chkUppers.Size = new System.Drawing.Size(105, 23);
+            this.chkUppers.TabIndex = 86;
+            this.chkUppers.Text = "With uppers";
+            this.chkUppers.UseVisualStyleBackColor = true;
             // 
             // NewForm
             // 
@@ -333,7 +385,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(502, 532);
+            this.ClientSize = new System.Drawing.Size(502, 600);
+            this.Controls.Add(this.chkNums);
+            this.Controls.Add(this.chkSpecials);
+            this.Controls.Add(this.chkLowers);
+            this.Controls.Add(this.chkUppers);
             this.Controls.Add(this.txtLink);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -389,5 +445,9 @@
         private System.Windows.Forms.Button btnGenerateRandom;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtLink;
+        private MoonCheck chkUppers;
+        private MoonCheck chkLowers;
+        private MoonCheck chkSpecials;
+        private MoonCheck chkNums;
     }
 }

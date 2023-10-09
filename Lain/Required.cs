@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Lain
 {
-    internal class Required
+    internal sealed class Required
     {
         internal readonly static string DataFolder = Path.Combine(Application.StartupPath, "Data");
         internal readonly static string LainSerial = Path.Combine(DataFolder, "Lain.serial");

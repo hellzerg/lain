@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Lain
 {
-    public class MoonCheck : CheckBox
+    public sealed class MoonCheck : CheckBox
     {
         protected override void OnCheckedChanged(EventArgs e)
         {

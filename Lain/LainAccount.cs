@@ -3,7 +3,7 @@
 namespace Lain
 {
     [Serializable]
-    public class LainAccount
+    public sealed class LainAccount
     {
         string _Name;
         string _Email;
@@ -12,10 +12,7 @@ namespace Lain
         string _Link;
         string _Note;
 
-        public LainAccount()
-        {
-
-        }
+        public LainAccount() { }
 
         public LainAccount(string name, string email, string password, string link, string note)
         {

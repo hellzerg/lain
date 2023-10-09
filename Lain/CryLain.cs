@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Lain
 {
-    internal class CryLain
+    internal sealed class CryLain
     {
         // default SALT
         // can be overriden from command-line
