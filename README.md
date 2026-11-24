@@ -27,7 +27,7 @@ Lain stores your accounts in an encrypted vault beside the application. It does 
 - Security report for weak, reused, and old passwords, with an optional online breach check.
 - Keyboard shortcuts for common account actions.
 
-- <center>
+<center>
 <h2> ☕ Buy me a delicious espresso</h2>
 </center>
 
