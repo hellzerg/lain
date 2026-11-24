@@ -9,7 +9,7 @@
 Lain stores your accounts in an encrypted vault beside the application. It does not require a cloud account or a hosted service to create, unlock, or use the vault. You control the application files, the encrypted vault, and your backups.
 
 <p align="center">
-  <a href="https://github.com/hellzerg/lain/releases" target="_blank">
+  <a href="https://github.com/hellzerg/lain/releases/download/4.0/Lain-4.0.exe" target="_blank">
     <img src="download-button.png" alt="Download Lain from GitHub Releases" width="256" />
   </a>
 </p>
