@@ -1,5 +1,12 @@
 ﻿namespace Lain
 {
+    public enum ThemeMode
+    {
+        Dark,
+        Light,
+        System
+    }
+
     public enum Theme
     {
         Amethyst,

@@ -1,91 +1,191 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Lain
 {
-    public partial class NewForm : Form
+    public sealed partial class NewForm : Form
     {
-        CryLain _cryLain = new CryLain();
-
         NewType _type;
-        string _name;
+        readonly LainAccount _existing;
+
+        // The account that was saved, so the list can select it.
+        internal LainAccount SavedAccount { get; private set; }
 
         bool _showPassword = false;
 
         readonly int DEFAULT_RANDOM_CHARACTERS = 32;
 
-        internal NewForm(NewType type, string info = null)
+        internal NewForm(NewType type, LainAccount existing = null)
         {
             InitializeComponent();
             Options.ApplyTheme(this);
 
+            nameBox.SetEditor(txtName);
+            mailBox.SetEditor(txtMail);
+            passwordBox.SetEditor(txtPassword);
+            passwordBox.AddTrailing(pictureBox1);
+            passwordBox.AddTrailing(btnCopyPassword);
+            lengthBox.SetEditor(txtMaxRandomChars);
+            linkBox.SetEditor(txtLink);
+            noteBox.SetEditor(txtNote);
+            tagsBox.SetEditor(txtTags);
+
+            Fluent.SetPlaceholder(txtName, "e.g. GitHub");
+            Fluent.SetPlaceholder(txtMail, "name@example.com");
+            Fluent.SetPlaceholder(txtPassword, "Type or generate a password");
+            Fluent.SetPlaceholder(txtLink, "https://");
+            Fluent.SetPlaceholder(txtTags, "Comma-separated, e.g. work, email");
+            Fluent.SetEye(pictureBox1, false);
+
+            chkUppers.Style = CheckStyle.Checkbox;
+            chkLowers.Style = CheckStyle.Checkbox;
+            chkNums.Style = CheckStyle.Checkbox;
+            chkSpecials.Style = CheckStyle.Checkbox;
+            chkFavorite.Style = CheckStyle.Checkbox;
+
+            txtPassword.TextChanged += (s, e) => UpdateStrength();
+            txtName.TextChanged += (s, e) => UpdateStrength();
+            txtMail.TextChanged += (s, e) => UpdateStrength();
+            txtTags.KeyDown += txtName_KeyDown;
+
+            label5.ForeColor = Fluent.TextSecondary;
+            lblValidation.ForeColor = Fluent.Danger;
+            toolTip.SetToolTip(pictureBox1, "Show or hide password");
+            toolTip.SetToolTip(btnCopyPassword, "Copy password");
+            toolTip.SetToolTip(btnGenerateRandom, "Fill in a random password using the options below");
+            Fluent.StyleToolTip(toolTip);
+
             _type = type;
-            _name = info;
+            _existing = existing;
 
             chkLowers.Checked = true;
             chkUppers.Checked = true;
             chkSpecials.Checked = true;
             chkNums.Checked = true;
 
+            lblDates.ForeColor = Fluent.TextSecondary;
+
             switch (_type)
             {
                 case NewType.Modify:
                     btnOk.Text = "Save";
-                    if (!string.IsNullOrEmpty(info))
+                    lblTitle.Text = "Edit account";
+
+                    if (_existing != null)
                     {
-                        this.Text = string.Format("Edit account - {0}", info);
+                        using (VaultKey.Cipher c = MainForm.Key.Begin())
+                        {
+                            txtName.Text = c.Decrypt(_existing.Name());
+                            txtMail.Text = c.Decrypt(_existing.Email());
+                            txtPassword.Text = c.Decrypt(_existing.Password());
+                            txtLink.Text = c.Decrypt(_existing.Link());
+                            txtNote.Text = c.Decrypt(_existing.Note());
+                        }
+                        this.Text = string.Format("Edit account - {0}", txtName.Text);
+
+                        AccountMeta meta = AccountMeta.Read(MainForm.Key, _existing);
+                        txtTags.Text = meta.TagText();
+                        chkFavorite.Checked = meta.Favorite;
+
+                        lblDates.Text = DatesLine(meta);
+                        lblDates.Visible = lblDates.Text.Length > 0;
                     }
                     else
                     {
-                        this.Text = "Add new account...";
-                    }
-
-                    int i = MainForm.Accounts.FindIndex(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), _name));
-
-                    if (i > -1)
-                    {
-                        txtName.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Name());
-                        txtMail.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Email());
-                        txtPassword.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Password());
-                        txtLink.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Link());
-                        txtNote.Text = _cryLain.Decrypt(CryLain.ToInsecureString(MainForm.Key), MainForm.Accounts[i].Note());
+                        this.Text = "Edit account";
                     }
 
                     break;
             }
+
+            FormClosed += (s, e) => ClearFields();
+            Fluent.StyleDialog(this);
+        }
+
+        private void ClearFields()
+        {
+            txtName.Text = string.Empty;
+            txtMail.Text = string.Empty;
+            txtPassword.Text = string.Empty;
+            txtLink.Text = string.Empty;
+            txtNote.Text = string.Empty;
+            txtTags.Text = string.Empty;
+            this.Text = string.Empty;
+        }
+
+        static string DatesLine(AccountMeta meta)
+        {
+            List<string> parts = new List<string>(3);
+            if (meta.Created.HasValue) parts.Add("Created " + MainForm.FormatDate(meta.Created));
+            if (meta.Modified.HasValue) parts.Add("Modified " + MainForm.FormatDate(meta.Modified));
+            if (meta.LastUsed.HasValue) parts.Add("Last used " + MainForm.FormatDate(meta.LastUsed));
+            return string.Join("  \u00B7  ", parts);
+        }
+
+        void UpdateStrength()
+        {
+            strengthMeter.Evaluate(txtPassword.Text, txtName.Text, txtMail.Text);
         }
 
         private void Save()
         {
             if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtMail.Text) && !string.IsNullOrEmpty(txtPassword.Text))
             {
+                AccountMeta meta = AccountMeta.NewNow();
+                int i = -1;
                 switch (_type)
                 {
                     case NewType.Modify:
-                        int i = MainForm.Accounts.FindIndex(x => x.Name() == _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), _name));
-                        if (i > -1) { MainForm.Accounts.RemoveAt(i); }
+                        i = _existing == null ? -1 : MainForm.Accounts.IndexOf(_existing);
+                        if (i > -1)
+                        {
+                            meta = AccountMeta.Read(MainForm.Key, _existing).Clone();
+                            meta.Modified = DateTime.UtcNow;
+                            if (!string.Equals(MainForm.Key.Decrypt(_existing.Password()), txtPassword.Text, StringComparison.Ordinal)) meta.PasswordChanged = DateTime.UtcNow;
+                            _existing.Forget();
+                            MainForm.Accounts.RemoveAt(i);
+                        }
                         break;
                 }
 
-                LainAccount account = new LainAccount(
-                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtName.Text),
-                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtMail.Text),
-                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtPassword.Text),
-                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtLink.Text),
-                    _cryLain.Encrypt(CryLain.ToInsecureString(MainForm.Key), txtNote.Text)
-                );
+                meta.Favorite = chkFavorite.Checked;
+                meta.Tags = AccountMeta.ParseTags(txtTags.Text);
 
-                MainForm.Accounts.Add(account);
+                LainAccount account;
+                using (VaultKey.Cipher c = MainForm.Key.Begin())
+                {
+                    account = new LainAccount(
+                        c.Encrypt(txtName.Text),
+                        c.Encrypt(txtMail.Text),
+                        c.Encrypt(txtPassword.Text),
+                        c.Encrypt(txtLink.Text),
+                        c.Encrypt(txtNote.Text)
+                    );
+                }
+                AccountMeta.Write(MainForm.Key, account, meta);
+
+                // keep the edited account at its old position so the list order stays stable
+                if (i > -1) MainForm.Accounts.Insert(i, account);
+                else MainForm.Accounts.Add(account);
+                SavedAccount = account;
 
                 txtName.Text = string.Empty;
                 txtMail.Text = string.Empty;
                 txtPassword.Text = string.Empty;
                 txtLink.Text = string.Empty;
                 txtNote.Text = string.Empty;
-                account = null;
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
+            }
+            else
+            {
+                lblDates.Visible = false;
+                lblValidation.Visible = true;
+                if (string.IsNullOrEmpty(txtName.Text)) txtName.Focus();
+                else if (string.IsNullOrEmpty(txtMail.Text)) txtMail.Focus();
+                else txtPassword.Focus();
             }
         }
 
@@ -97,10 +197,10 @@ namespace Lain
 
         private void NewForm_Load(object sender, EventArgs e)
         {
-            CheckForIllegalCrossThreadCalls = false;
 
             txtMaxRandomChars.ShortcutsEnabled = false;
-            txtMaxRandomChars.Text = DEFAULT_RANDOM_CHARACTERS.ToString();
+            txtMaxRandomChars.Text = Math.Max(DEFAULT_RANDOM_CHARACTERS,
+                Options.CurrentOptions.EnforceMinLength ? Options.CurrentOptions.GeneratorMinLength : 0).ToString();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -110,35 +210,30 @@ namespace Lain
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            if (_showPassword)
-            {
-                pictureBox1.BackColor = Options.BackgroundColor;
-                txtPassword.UseSystemPasswordChar = true;
-                _showPassword = false;
-                return;
-            }
-            else
-            {
-                pictureBox1.BackColor = Options.ForegroundColor;
-                txtPassword.UseSystemPasswordChar = false;
-                _showPassword = true;
-                return;
-            }
+            _showPassword = !_showPassword;
+            txtPassword.UseSystemPasswordChar = !_showPassword;
+            Fluent.SetEye(pictureBox1, _showPassword);
         }
 
         private void btnGenerateRandom_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtMaxRandomChars.Text) ||
-                Convert.ToInt32(txtMaxRandomChars.Text) <= 0)
+            int length;
+            if (!int.TryParse(txtMaxRandomChars.Text, out length) || length <= 0) length = DEFAULT_RANDOM_CHARACTERS;
+
+            SettingsJson o = Options.CurrentOptions;
+            if (o.EnforceMinLength && length < o.GeneratorMinLength)
             {
-                txtMaxRandomChars.Text = DEFAULT_RANDOM_CHARACTERS.ToString();
+                length = o.GeneratorMinLength;
+                toolTip.Show("Raised to the minimum of " + length + " characters (see Options)", lengthBox, 0, -Fluent.Scale(this, 30), 2000);
             }
+            txtMaxRandomChars.Text = length.ToString();
 
             RandomPassword.WithLowerChars = chkLowers.Checked;
             RandomPassword.WithUpperChars = chkUppers.Checked;
             RandomPassword.WithSpecialChars = chkSpecials.Checked;
             RandomPassword.WithNumbers = chkNums.Checked;
-            txtPassword.Text = RandomPassword.Generate(Convert.ToInt32(txtMaxRandomChars.Text));
+            txtPassword.Text = RandomPassword.GenerateWithMinimums(length, o.EnforceMinPerType ? o.GeneratorMinPerType : 0);
+            lblValidation.Visible = false;
         }
 
         private void txtName_KeyDown(object sender, KeyEventArgs e)
@@ -158,7 +253,12 @@ namespace Lain
         {
             try
             {
-                Clipboard.SetText(txtPassword.Text);
+                if (!string.IsNullOrEmpty(txtPassword.Text))
+                {
+                    SecureClipboard.CopySecret(txtPassword.Text);
+                    toolTip.Show(SecureClipboard.AutoClear ? "Copied, clears in " + SecureClipboard.Seconds + "s" : "Copied",
+                        btnCopyPassword, 0, -Fluent.Scale(this, 30), 1200);
+                }
             }
             catch { }
         }

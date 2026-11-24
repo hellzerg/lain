@@ -9,6 +9,7 @@ namespace Lain
     public sealed class SettingsJson
     {
         public Theme Color { get; set; }
+        public ThemeMode ThemeMode { get; set; }
         public bool Authorize { get; set; }
         public bool AutoStart { get; set; }
         public bool AutoLock { get; set; }
@@ -19,6 +20,27 @@ namespace Lain
         public Size WindowSize { get; set; }
         public Point? WindowLocation { get; set; }
         public FormWindowState WindowState { get; set; }
+
+        // Initializers double as defaults for settings files written before these options existed.
+        public bool ClearClipboard { get; set; } = true;
+        public int ClipboardSeconds { get; set; } = 30;
+        public bool ShowCreatedColumn { get; set; } = true;
+        public bool ShowModifiedColumn { get; set; } = true;
+        public bool CompactRows { get; set; }
+
+        // Password generator minimums (applied in the New/Edit account generator).
+        public bool EnforceMinLength { get; set; } = true;
+        public int GeneratorMinLength { get; set; } = RandomPassword.DefaultMinLength;
+        public bool EnforceMinPerType { get; set; } = true;
+        public int GeneratorMinPerType { get; set; } = 1;
+        public string GeneratorSymbols { get; set; } = RandomPassword.DefaultSymbols;
+
+        // Settings files before 4.0 had one switch for both date columns; read it once, never write it back.
+        [JsonProperty("ShowDateColumns")]
+        bool LegacyShowDateColumns { set { if (!value) ShowCreatedColumn = ShowModifiedColumn = false; } }
+
+        // Successful unlocks used to retire split-vault backups and any v1 backups an earlier build could not remove.
+        public int LegacyBackupUnlocks { get; set; }
     }
 
     internal static class Options
@@ -55,6 +77,8 @@ namespace Lain
                     SetTheme(f, Color.FromArgb(153, 102, 204), Color.FromArgb(134, 89, 179));
                     break;
             }
+
+            Fluent.Apply(f);
         }
 
         private static void SetTheme(Form f, Color c1, Color c2)
@@ -67,7 +91,7 @@ namespace Lain
             {
                 c = x;
 
-                if (x is Button)
+                if (x is Button && !(x is ModernButton))
                 {
                     c.BackColor = c1;
                     c.FlatAppearance.BorderColor = c1;
@@ -91,6 +115,7 @@ namespace Lain
                         c.ActiveLinkColor = c2;
                     }
                 }
+                if (x is IconLabel) ((IconLabel)x).UpdateColor();
                 c.Invalidate();
             });
         }
@@ -118,6 +143,7 @@ namespace Lain
             if (!File.Exists(_settingsFile))
             {
                 CurrentOptions.Color = Theme.Amethyst;
+                CurrentOptions.ThemeMode = ThemeMode.Dark;
                 CurrentOptions.Authorize = false;
                 CurrentOptions.AutoLock = false;
                 CurrentOptions.HidePasswords = true;
@@ -128,6 +154,7 @@ namespace Lain
                 CurrentOptions.WindowSize = new Size(907, 681);
                 CurrentOptions.FontSize = 1;
                 CurrentOptions.WindowState = FormWindowState.Normal;
+                CurrentOptions.GeneratorSymbols = RandomPassword.DefaultSymbols;
 
                 using (FileStream fs = File.Open(_settingsFile, FileMode.CreateNew))
                 using (StreamWriter sw = new StreamWriter(fs))
@@ -141,7 +168,15 @@ namespace Lain
             }
             else
             {
-                CurrentOptions = JsonConvert.DeserializeObject<SettingsJson>(File.ReadAllText(_settingsFile));
+                CurrentOptions = JsonConvert.DeserializeObject<SettingsJson>(File.ReadAllText(_settingsFile)) ?? new SettingsJson();
+                if (!System.Enum.IsDefined(typeof(ThemeMode), CurrentOptions.ThemeMode))
+                    CurrentOptions.ThemeMode = ThemeMode.Dark;
+                CurrentOptions.ClipboardSeconds = SecureClipboard.ClampSeconds(CurrentOptions.ClipboardSeconds);
+                CurrentOptions.GeneratorMinLength = RandomPassword.ClampMinLength(CurrentOptions.GeneratorMinLength);
+                CurrentOptions.GeneratorMinPerType = RandomPassword.ClampMinPerType(CurrentOptions.GeneratorMinPerType);
+                CurrentOptions.GeneratorSymbols = CurrentOptions.GeneratorSymbols == null
+                    ? RandomPassword.DefaultSymbols
+                    : RandomPassword.SanitizeSymbols(CurrentOptions.GeneratorSymbols);
 
                 if (CurrentOptions.WindowSize.IsEmpty)
                 {
@@ -149,6 +184,7 @@ namespace Lain
                     SaveSettings();
                 }
             }
+            RandomPassword.Symbols = CurrentOptions.GeneratorSymbols;
         }
     }
 }

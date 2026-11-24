@@ -7,8 +7,11 @@ namespace Lain
     internal sealed class Required
     {
         internal readonly static string DataFolder = Path.Combine(Application.StartupPath, "Data");
+        internal readonly static string LainVault = Path.Combine(DataFolder, "Lain.vault");
+        // pre-4.0 split vault files, read only to migrate them into Lain.vault
         internal readonly static string LainSerial = Path.Combine(DataFolder, "Lain.serial");
         internal readonly static string LainData = Path.Combine(DataFolder, "Lain.data");
+        internal readonly static string LainKeys = Path.Combine(DataFolder, "Lain.keys");
         internal readonly static string LainSalt = Path.Combine(DataFolder, "Lain.salt");
 
         internal static void Deploy()
@@ -22,7 +25,7 @@ namespace Lain
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message, "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                FluentMessageBox.Show(err.Message, "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Environment.Exit(0);
             }
         }

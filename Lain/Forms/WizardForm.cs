@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Lain
 {
-    public partial class WizardForm : Form
+    public sealed partial class WizardForm : Form
     {
         bool _showPassword = false;
 
@@ -13,28 +13,27 @@ namespace Lain
         {
             InitializeComponent();
             Options.ApplyTheme(this);
+
+            passwordBox.SetEditor(txtPassword);
+            passwordBox.AddTrailing(pictureBox1);
+            verifyBox.SetEditor(txtVerify);
+            verifyBox.AddTrailing(pictureBox2);
+            Fluent.SetPlaceholder(txtPassword, "Choose a strong password");
+            Fluent.SetPlaceholder(txtVerify, "Type it again");
+            Fluent.SetEye(pictureBox1, false);
+            Fluent.SetEye(pictureBox2, false);
+            lblIntro.ForeColor = Fluent.TextSecondary;
+            FormClosed += (s, e) => ClearFields();
+            Fluent.StyleDialog(this);
         }
 
         private void PasswordVisibility()
         {
-            if (_showPassword)
-            {
-                pictureBox1.BackColor = Options.BackgroundColor;
-                pictureBox2.BackColor = Options.BackgroundColor;
-                txtPassword.UseSystemPasswordChar = true;
-                txtVerify.UseSystemPasswordChar = true;
-                _showPassword = false;
-                return;
-            }
-            else
-            {
-                pictureBox1.BackColor = Options.ForegroundColor;
-                pictureBox2.BackColor = Options.ForegroundColor;
-                txtPassword.UseSystemPasswordChar = false;
-                txtVerify.UseSystemPasswordChar = false;
-                _showPassword = true;
-                return;
-            }
+            _showPassword = !_showPassword;
+            txtPassword.UseSystemPasswordChar = !_showPassword;
+            txtVerify.UseSystemPasswordChar = !_showPassword;
+            Fluent.SetEye(pictureBox1, _showPassword);
+            Fluent.SetEye(pictureBox2, _showPassword);
         }
 
         private void Register()
@@ -43,9 +42,11 @@ namespace Lain
             {
                 try
                 {
-                    File.WriteAllText(Required.LainSerial, CryLain.HashKey(txtVerify.Text));
+                    Cursor = Cursors.WaitCursor;
+                    VaultKey key = CryLain.CreateVault(txtVerify.Text);
+                    Cursor = Cursors.Default;
 
-                    Program.SetMainForm(new MainForm(CryLain.ToSecureString(txtVerify.Text)));
+                    Program.SetMainForm(new MainForm(key, new System.Collections.Generic.List<LainAccount>()));
                     txtPassword.Text = string.Empty;
                     txtVerify.Text = string.Empty;
                     this.Close();
@@ -53,28 +54,52 @@ namespace Lain
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "ERROR: Creating account", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Cursor = Cursors.Default;
+                    FluentMessageBox.Show(ex.Message, "ERROR: Creating account", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
+        private void ClearFields()
+        {
+            txtPassword.Text = string.Empty;
+            txtVerify.Text = string.Empty;
+        }
+
         private void ValidatePassword()
         {
-            if ((txtPassword.Text == txtVerify.Text) && (!string.IsNullOrEmpty(txtPassword.Text)) && (!string.IsNullOrEmpty(txtVerify.Text)))
+            bool strong = PasswordStrength.IsAcceptableMasterPassword(txtPassword.Text);
+            bool match = txtPassword.Text == txtVerify.Text && txtPassword.Text.Length > 0;
+            btnOk.Enabled = strong && match;
+
+            if (txtPassword.Text.Length == 0 && txtVerify.Text.Length == 0)
             {
-                txtPassword.ForeColor = Color.Lime;
-                txtVerify.ForeColor = Color.Lime;
+                lblMatch.Text = string.Empty;
+            }
+            else if (!strong)
+            {
+                lblMatch.ForeColor = Fluent.Caution;
+                lblMatch.Text = "Use at least 15 characters and choose a Strong password";
+            }
+            else if (txtVerify.Text.Length == 0)
+            {
+                lblMatch.ForeColor = Fluent.Success;
+                lblMatch.Text = "\u2713  Strong password";
+            }
+            else if (match)
+            {
+                lblMatch.ForeColor = Fluent.Success;
+                lblMatch.Text = "\u2713  Passwords match";
             }
             else
             {
-                txtPassword.ForeColor = Color.Tomato;
-                txtVerify.ForeColor = Color.Tomato;
+                lblMatch.ForeColor = Fluent.Danger;
+                lblMatch.Text = "Passwords don't match yet";
             }
         }
 
         private void WizardForm_Load(object sender, EventArgs e)
         {
-            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void btnExit_Click(object sender, EventArgs e)

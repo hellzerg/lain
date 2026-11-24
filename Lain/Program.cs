@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -15,8 +14,8 @@ namespace Lain
         /* DO NOT LEAVE THEM EMPTY */
 
         // Enter current version here
-        internal readonly static float Major = 3;
-        internal readonly static float Minor = 3;
+        internal readonly static float Major = 4;
+        internal readonly static float Minor = 0;
 
         /* END OF VERSION PROPERTIES */
 
@@ -38,14 +37,9 @@ namespace Lain
         internal static Mutex MUTEX;
         static bool _notRunning;
 
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool SetProcessDPIAware();
-
         [STAThread]
         static void Main(string[] switches)
         {
-            if (Environment.OSVersion.Version.Major >= 6) SetProcessDPIAware();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -74,14 +68,14 @@ namespace Lain
                             {
                                 if (File.Exists(Required.LainSalt))
                                 {
-                                    MessageBox.Show("You can't provide a salt, if the salt override file exists.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    FluentMessageBox.Show("You can't provide a salt, if the salt override file exists.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     Environment.Exit(0);
                                 }
 
                                 string customSalt = arg.Replace("/salt=", string.Empty);
                                 if (!SanitizeSalt(customSalt))
                                 {
-                                    MessageBox.Show("Salt should be at least 32 characters.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    FluentMessageBox.Show("Salt should be at least 32 characters.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     Environment.Exit(0);
                                 }
 
@@ -89,16 +83,22 @@ namespace Lain
                             }
                             catch (Exception err)
                             {
-                                MessageBox.Show(err.Message, "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                FluentMessageBox.Show(err.Message, "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Environment.Exit(0);
                             }
                         }
 
                         if (arg.StartsWith("/changesalt="))
                         {
-                            if (!File.Exists(Required.LainSerial))
+                            if (!CryLain.VaultExists())
                             {
-                                MessageBox.Show("Lain hasn't need setup with a profile yet.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                FluentMessageBox.Show("Lain hasn't need setup with a profile yet.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                Environment.Exit(0);
+                            }
+
+                            if (CryLain.IsModernVault())
+                            {
+                                FluentMessageBox.Show("Your vault already uses a unique random salt, so changing it is no longer needed.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Environment.Exit(0);
                             }
 
@@ -120,7 +120,7 @@ namespace Lain
                             }
                             else
                             {
-                                MessageBox.Show("The arguments you provided are invalid.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                FluentMessageBox.Show("The arguments you provided are invalid.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Environment.Exit(0);
                             }
                         }
@@ -134,7 +134,7 @@ namespace Lain
                             string customSalt = File.ReadAllText(Required.LainSalt, Encoding.UTF8);
                             if (!SanitizeSalt(customSalt))
                             {
-                                MessageBox.Show("Salt should be at least 32 characters.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                FluentMessageBox.Show("Salt should be at least 32 characters.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Environment.Exit(0);
                             }
 
@@ -143,11 +143,11 @@ namespace Lain
                     }
                     catch (Exception err)
                     {
-                        MessageBox.Show(err.Message, "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        FluentMessageBox.Show(err.Message, "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Environment.Exit(0);
                     }
 
-                    if (!File.Exists(Required.LainSerial))
+                    if (!CryLain.VaultExists())
                     {
                         _mainContext.MainForm = new WizardForm();
                     }
@@ -160,7 +160,7 @@ namespace Lain
                 }
                 else
                 {
-                    MessageBox.Show("Lain is already running in the background!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    FluentMessageBox.Show("Lain is already running in the background!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Environment.Exit(0);
                 }
             }
@@ -172,16 +172,16 @@ namespace Lain
             {
                 CryLain.SALT = salt;
                 if (File.Exists(Required.LainSalt)) File.WriteAllText(Required.LainSalt, CryLain.SALT, Encoding.UTF8);
-                MessageBox.Show("Salt has been successfully changed.\n\nPlease restart Lain.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                FluentMessageBox.Show("Salt has been successfully changed.\n\nPlease restart Lain.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Environment.Exit(0);
             }
         }
 
         private static void AuthorizeToChangeSalt(string k)
         {
-            if (CryLain.HashKey(k) != File.ReadAllText(Required.LainSerial))
+            if (!CryLain.VerifyLegacyPassword(k))
             {
-                MessageBox.Show("The password you provided is incorrect.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                FluentMessageBox.Show("The password you provided is incorrect.\n\nLain will now exit.", "Lain", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Environment.Exit(0);
             }
         }
@@ -200,8 +200,6 @@ namespace Lain
             ProcessStartInfo startInfo = Process.GetCurrentProcess().StartInfo;
             startInfo.FileName = Application.ExecutablePath;
             startInfo.Arguments = string.Empty;
-
-            if (!File.Exists(Required.LainSalt)) startInfo.Arguments = $"/salt={CryLain.SALT}";
 
             MethodInfo exit = typeof(Application).GetMethod("ExitInternal",
                                 System.Reflection.BindingFlags.NonPublic |
@@ -229,24 +227,29 @@ namespace Lain
 
         internal static void SaveSettings()
         {
-            MemoryStream ms = new MemoryStream();
-            BinaryFormatter bf = new BinaryFormatter();
-
-            bf.Serialize(ms, MainForm.Accounts);
-            byte[] bytes = ms.ToArray();
-
             try
             {
-                File.WriteAllBytes(Required.LainData, bytes);
+                // nothing to save while the vault is locked; it was saved when it was locked
+                if (MainForm.Key != null) CryLain.SaveVault(MainForm.Key, MainForm.Accounts);
+            }
+            catch (Exception ex)
+            {
+                FluentMessageBox.Show("Your accounts could not be saved.\n\n" + ex.Message, "Lain", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                if (ms != null) ms.Dispose();
-                bytes = null;
-                ms = null;
-
                 Options.SaveSettings();
             }
+        }
+
+        // Saves, then drops the vault key and decrypted-capable data from memory.
+        internal static void CloseVault()
+        {
+            SaveSettings();
+            if (MainForm.Key != null) MainForm.Key.Dispose();
+            MainForm.Key = null;
+            foreach (LainAccount a in MainForm.Accounts) a.Forget();
+            MainForm.Accounts = new System.Collections.Generic.List<LainAccount>();
         }
 
         internal static void ShowMainForm()

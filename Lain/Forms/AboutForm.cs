@@ -4,12 +4,17 @@ using System.Windows.Forms;
 
 namespace Lain
 {
-    public partial class AboutForm : Form
+    public sealed partial class AboutForm : Form
     {
         public AboutForm()
         {
             InitializeComponent();
             Options.ApplyTheme(this);
+
+            lblVersion.Text = string.Format("Version {0}", Program.GetCurrentVersionToString());
+            lblVersion.ForeColor = Fluent.TextSecondary;
+            lblDescription.ForeColor = Fluent.TextSecondary;
+            Fluent.StyleDialog(this);
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -19,7 +24,6 @@ namespace Lain
 
         private void AboutForm_Load(object sender, EventArgs e)
         {
-            CheckForIllegalCrossThreadCalls = false;
 
             t1.Interval = 50;
             t2.Interval = 50;
