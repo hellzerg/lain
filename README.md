@@ -27,6 +27,12 @@ Lain stores your accounts in an encrypted vault beside the application. It does 
 - Security report for weak, reused, and old passwords, with an optional online breach check.
 - Keyboard shortcuts for common account actions.
 
+- <center>
+<h2> ☕ Buy me a delicious espresso</h2>
+</center>
+
+If you find this tool useful, consider showing your support by [donating through PayPal](https://www.paypal.com/paypalme/supportoptimizer).
+
 ## Requirements
 
 - Windows.
@@ -34,10 +40,6 @@ Lain stores your accounts in an encrypted vault beside the application. It does 
 - For FIDO2 security-key support, the Windows WebAuthn API must be available. Lain requires WebAuthn API version 4 or later; the application reports Windows 10 22H2 or Windows 11 as supported environments for this feature.
 
 Lain uses Windows CNG (`bcrypt.dll`) for AES-GCM and the Windows WebAuthn API for security-key operations. The application targets .NET Framework 4.8 and is not a cross-platform application.
-
-<center>
-<h2> ☕ Buy me a delicious espresso</h2>
-</center>
 
 ## Unlock modes and master-password policy
 
