@@ -35,6 +35,10 @@ Lain stores your accounts in an encrypted vault beside the application. It does 
 
 Lain uses Windows CNG (`bcrypt.dll`) for AES-GCM and the Windows WebAuthn API for security-key operations. The application targets .NET Framework 4.8 and is not a cross-platform application.
 
+<center>
+<h2> ☕ Buy me a delicious espresso</h2>
+</center>
+
 ## Unlock modes and master-password policy
 
 Lain supports three modes:
